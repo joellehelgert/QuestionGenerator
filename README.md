@@ -1,6 +1,23 @@
-# QuestionsGenerator
+# HUXE2020 - QuestionsGenerator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+
+## Team Members
+Julia Gruber - S1910629004  
+Joelle Helgert - S1910629006  
+Anna Moser - S1910629007
+
+## Project Idea
+First of all the *Question Generator* shall be a supporting project of our term project, since we need questions to make a quiz game out of it. 
+
+The users shall be able to log in into the application and add questions to their game.
+They can have one or more questionnaires and each of the questionnaire can have a different set of questions.
+The game supports different types of questions which need different input. For example there can be questions for a hiding game and for a buzzer-game. 
+The hiding game would need one wrong answer and the buzzer game only one right answer.
+
+For one question the user shall add at least 4 answers. For each answer they can also upload an image which can be used in the game instead of the text on it's own.
+
+The questions then should be saved in a CMS.
 
 ## Development server
 
