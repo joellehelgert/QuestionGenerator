@@ -9,5 +9,25 @@
 </head>
 <body>
   <app-root></app-root>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAbNjv3ixaawMTjvnKyR_dAYWvFD-EjJlE",
+      authDomain: "adorableapi.firebaseapp.com",
+      databaseURL: "https://adorableapi.firebaseio.com",
+      projectId: "adorableapi",
+      storageBucket: "adorableapi.appspot.com",
+      messagingSenderId: "148611555098",
+      appId: "1:148611555098:web:a8b7736da2ae0c2ddf56a3"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>
