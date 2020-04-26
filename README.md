@@ -1,7 +1,7 @@
 # HUXE2020 - QuestionsGenerator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
-
+The deployed project can be found [here](https://kinectquiz-questiongenerator.netlify.app/)
 ## Team Members
 Julia Gruber - S1910629004  
 Joelle Helgert - S1910629006  
