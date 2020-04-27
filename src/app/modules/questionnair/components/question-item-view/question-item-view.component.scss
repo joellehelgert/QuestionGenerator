@@ -1,0 +1,47 @@
+@import '~src/styles/variables';
+
+.question {
+  &__item {
+
+    &__header {
+      margin-bottom: 1rem;
+    }
+    &__title {
+      margin-top: 0;
+    }
+    &__breadcrumb {
+      margin-top: 0.5rem;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__view {
+      width: 80vw;
+      height: 80vh;
+      margin-top: 10vh;
+      margin-left: 10vh;
+      border-radius: $border-radius;
+      background-color: $color-white;
+      box-shadow: $box-shadow;
+      padding: 1.5rem;
+
+      &__wrapper {
+        position: absolute;
+        width: 100vw;
+        left: 0;
+        height: 100vw;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        content: '';
+      }
+    }
+  }
+
+  &__cross {
+    color: $color-primary;
+    font-size: 2rem;
+  }
+}

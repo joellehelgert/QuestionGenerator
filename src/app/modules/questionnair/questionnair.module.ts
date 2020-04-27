@@ -7,11 +7,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QuestionnairItemComponent } from './components/questionnair-item/questionnair-item.component';
 import { QuestionnairBodyComponent } from './components/questionnair-body/questionnair-body.component';
 import { QuestionnairNavComponent } from './components/questionnair-nav/questionnair-nav.component';
+import { QuestionItemViewComponent } from './components/question-item-view/question-item-view.component';
 
 
 
 @NgModule({
-  declarations: [QuestionComponent, QuestionItemComponent, QuestionnairItemComponent, QuestionnairBodyComponent, QuestionnairNavComponent],
+  declarations: [QuestionComponent, QuestionItemComponent, QuestionnairItemComponent, QuestionnairBodyComponent, QuestionnairNavComponent, QuestionItemViewComponent],
   exports: [QuestionComponent, QuestionItemComponent, QuestionnairItemComponent, QuestionnairBodyComponent, QuestionnairNavComponent],
   imports: [
     CommonModule,
