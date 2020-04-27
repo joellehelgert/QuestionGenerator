@@ -1,0 +1,21 @@
+@import '~src/styles/variables';
+
+.questionnaire {
+  &__item {
+    border-radius: $border-radius;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+
+    &--active {
+      background: $color-gradient;
+      color: $color-white;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin-top: 5rem;
+  }
+}

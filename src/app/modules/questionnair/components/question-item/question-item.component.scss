@@ -1,0 +1,17 @@
+@import '~src/styles/variables';
+
+.question {
+  &__item {
+    padding: 1.5rem;
+    background-color: $color-white;
+    border-radius: calc(#{$border-radius} - 2px);
+
+    &__wrapper {
+      padding: 3px;
+      border-radius: $border-radius;
+      background: $color-gradient;
+      margin-bottom: 0.5rem;
+      box-shadow: $box-shadow;
+    }
+  }
+}
