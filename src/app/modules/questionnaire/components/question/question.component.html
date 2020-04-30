@@ -1,18 +1,17 @@
 <div class="question">
     <div class="question__header">
-        <h3 class="question__heading">Dumb Question</h3>
+        <h3 class="question__heading">{{ type }}</h3>
         <span class="question__plus"><fa-icon [icon]="faPlus"></fa-icon></span>
     </div>
 
-    <div class="question__body">
-        <app-question-item></app-question-item>
-        <app-question-item></app-question-item>
-        <app-question-item></app-question-item>
-        <app-question-item></app-question-item>
-
+    <div class="question__body" *ngFor="let question of questions;" >
+        <div class="question__item__wrapper">
+            <div class="question__item">
+               {{ question.title }}
+            </div>
+        </div>
     </div>
     <div class="question__footer">
         <span>+ add Question</span>
     </div>
-
 </div>

@@ -6,6 +6,7 @@
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;
     white-space: nowrap;
+    text-align: center;
 
     &--active {
       background: $color-gradient;
@@ -18,5 +19,6 @@
     flex-direction: column;
     padding: 1rem;
     margin-top: 5rem;
+    min-width: 200px;
   }
 }

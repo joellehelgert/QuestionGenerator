@@ -1,7 +1,10 @@
-<div class="questionnaire">
-    <h1 class="questionnaire__header">Questionnaire 1</h1>
-    <div class="questionnaire__body" style="display: flex">
-        <app-question></app-question>
-        <app-question></app-question>
+<div *ngFor="let questionnaire of questionnaires;" class="questionnaire">
+    <div *ngIf="questionnaire.isActive">
+        <h1 class="questionnaire__header">{{ questionnaire.title }}</h1>
+        <div class="questionnaire__body" style="display: flex">
+            <app-question [questions]="questionnaire.buzzerQuestions" [type]="'BuzzerQuestions'"></app-question>
+            <app-question [questions]="questionnaire.timeLineQuestions" [type]="'TimeLineQuestions'"></app-question>
+        </div>
     </div>
 </div>
+

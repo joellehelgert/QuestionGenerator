@@ -6,6 +6,7 @@
   box-shadow: $box-shadow;
   margin: 1rem;
   height: calc(100vh - 13rem);
+  min-width: 300px;
 
   &__heading {
     margin: 0;
@@ -19,9 +20,28 @@
 
   &__plus {
     color: $color-primary;
+    cursor: pointer;
   }
 
   &__footer {
     margin: 1.5rem 0.5rem 0 0.5rem;
+
+    span {
+      cursor: pointer;
+    }
+  }
+
+  &__item {
+    padding: 1.5rem;
+    background-color: $color-white;
+    border-radius: calc(#{$border-radius} - 2px);
+
+    &__wrapper {
+      padding: 3px;
+      border-radius: $border-radius;
+      background: $color-gradient;
+      margin-bottom: 0.5rem;
+      box-shadow: $box-shadow;
+    }
   }
 }

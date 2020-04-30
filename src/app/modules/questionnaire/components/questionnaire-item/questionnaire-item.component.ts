@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Questionnaire} from '../questionnaire-body/questionnaire-body.component';
 
 @Component({
   selector: 'app-questionnaire-item',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./questionnaire-item.component.scss']
 })
 export class QuestionnaireItemComponent implements OnInit {
+  @Input() questionnaires: Questionnaire[] = [];
 
   constructor() { }
 
