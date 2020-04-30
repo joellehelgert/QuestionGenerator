@@ -1,0 +1,31 @@
+// Extra small devices (portrait phones, less than 576px) - xs
+// Small devices (landscape phones, less than 768px) - sm
+// Medium devices (tablets, less than 992px) - md
+// Large devices (desktops, less than 1200px) - lg
+@mixin media-breakpoint-down($param) {
+
+  @if $param == xs {
+
+    @media (max-width: 575.98px) {
+      @content
+    }
+
+  } @else if $param == sm {
+
+    @media (max-width: 767.98px) {
+      @content
+    }
+
+  } @else if $param == md {
+
+    @media (max-width: 991.98px) {
+      @content
+    }
+
+  } @else if $param == lg {
+
+    @media (max-width: 1199.98px) {
+      @content
+    }
+  }
+}

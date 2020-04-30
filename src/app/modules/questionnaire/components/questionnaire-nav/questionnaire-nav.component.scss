@@ -5,6 +5,7 @@
     border-radius: $border-radius;
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;
+    white-space: nowrap;
 
     &--active {
       background: $color-gradient;

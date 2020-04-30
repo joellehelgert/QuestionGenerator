@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {faTimes, faAngleRight, faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faTimes, faAngleRight, faEdit, faPlus} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-question-item-view',
@@ -10,6 +10,7 @@ export class QuestionItemViewComponent implements OnInit {
     faTimes = faTimes;
     faAngleRight = faAngleRight;
     faEdit = faEdit;
+    faPlus = faPlus;
 
   constructor() { }
 

@@ -3,14 +3,24 @@
 .question {
   &__item {
 
+    &__footer {
+      margin: 1.5rem 0.5rem 0 0.5rem;
+    }
+
     &__header {
       margin-bottom: 1rem;
     }
     &__title {
       margin-top: 0;
+      margin-bottom: 2rem;
     }
     &__breadcrumb {
       margin-top: 0.5rem;
+      font-style: italic;
+
+      * {
+        color: $color-primary;
+      }
     }
 
     &__header {
@@ -21,18 +31,17 @@
     &__view {
       width: 80vw;
       height: 80vh;
-      margin-top: 10vh;
-      margin-left: 10vh;
       border-radius: $border-radius;
       background-color: $color-white;
       box-shadow: $box-shadow;
       padding: 1.5rem;
+      margin: 10vh auto;
 
       &__wrapper {
         position: absolute;
         width: 100vw;
         left: 0;
-        height: 100vw;
+        height: 100vh;
         top: 0;
         background-color: rgba(0, 0, 0, 0.3);
         content: '';
@@ -43,5 +52,65 @@
   &__cross {
     color: $color-primary;
     font-size: 2rem;
+  }
+}
+
+.answer {
+  &__item {
+    padding: 1.5rem;
+    background-color: $color-white;
+    border-radius: calc(#{$border-radius} - 2px);
+
+    &__wrapper {
+      padding: 3px;
+      border-radius: $border-radius;
+      background: $color-gradient;
+      margin-bottom: 0.5rem;
+      box-shadow: $box-shadow;
+      flex: 0 0 70%;
+
+      @include media-breakpoint-down(md) {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include media-breakpoint-down(md) {
+      display: block;
+    }
+  }
+
+  &__upload {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    background: $color-white;
+    flex: 0 0 20%;
+    text-align: center;
+
+    @include media-breakpoint-down(md) {
+      border: 2px solid $color-primary;
+      position: absolute;
+      bottom: -1rem;
+      right: 1rem;
+    }
+
+    &--colored {
+      background: $color-gradient;
+      font-style: italic;
+      color: $color-white;
+      border: none;
+    }
+
+    * {
+      font-size: 0.8rem;
+    }
   }
 }

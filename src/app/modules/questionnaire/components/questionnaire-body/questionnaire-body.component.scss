@@ -1,5 +1,11 @@
+@import '~src/styles/variables';
+
 .questionnaire {
   &__wrapper {
     display: flex;
+
+    @include media-breakpoint-down(md) {
+      display: block;
+    }
   }
 }
