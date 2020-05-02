@@ -7,7 +7,7 @@ import { Question, BuzzerQuestion, TimeLineQuestion, QuestionType } from '../que
 export interface Questionnaire extends Entity {
   id: number;
   title: string;
-  museum: Museum; // maybe recheck how references in firebase are down
+  museumId: string;
   buzzerQuestions: BuzzerQuestion[];
   timeLineQuestions: TimeLineQuestion[];
   isActive: boolean;

@@ -66,7 +66,7 @@ const timeLineQuestion3: TimeLineQuestion = {
 const questionnaire1: Questionnaire = {
     id: 1,
     title: 'Questionnaire Test 1',
-    museum: { name: 'test', path: 'test-musem' },
+    museumId: 'test-museum',
     buzzerQuestions: [buzzerQuestion1, buzzerQuestion1, buzzerQuestion1, buzzerQuestion1],
     timeLineQuestions: [timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
     isActive: true
