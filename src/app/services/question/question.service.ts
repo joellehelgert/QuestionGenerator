@@ -1,17 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
 
+export enum QuestionType {
+  TimeLine,
+  Buzzer,
+}
+
 export interface Answer {
-  text: string;
-  order: number;
   id: number;
+  title: string;
 }
 
 export interface Question extends Entity {
-  question: string;
+  id: number;
+  title: string;
   answers: Answer[];
+  type: QuestionType;
 }
+
+export interface BuzzerAnswer extends Answer {
+  isTrue: boolean;
+}
+
+export interface BuzzerQuestion extends Question {
+  answers: BuzzerAnswer[];
+}
+
+export interface TimeLineAnswer extends Answer {
+  image?: ImageData;
+}
+
+export interface TimeLineQuestion extends Question {
+  answers: TimeLineAnswer[];
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +42,8 @@ export interface Question extends Entity {
 export class AnswerService {
   private crudService: FirestoreCrudService<Question>;
 
-  constructor(private firestore: AngularFirestore, path: string) {
-    this.crudService = new FirestoreCrudService<Question>(firestore, path);
+  constructor(private firestore: AngularFirestore) { // @Inject('path') path: string) {
+    this.crudService = new FirestoreCrudService<Question>(firestore, '');
   }
 
   getAllAnswers() {
