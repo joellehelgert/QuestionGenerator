@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "adorableapi": {
+      "hosting": {
+        "QuestionsGenerator": [
+          "adorableapi"
+        ]
+      }
+    }
+  }
+}
