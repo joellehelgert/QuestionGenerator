@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import {Question, QuestionType} from 'src/app/services/question/question.service';
+import {BuzzerAnswer, Question, QuestionType, TimeLineAnswer} from 'src/app/services/question/question.service';
+import {tryReadFile} from "../../../../../../node_modules/tslint/lib/files/reading";
 
 @Component({
   selector: 'app-question',
@@ -21,23 +22,52 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  /*
+  export interface Answer {
+  id: number;
+  title: string;
+}
+export interface BuzzerAnswer extends Answer {
+  isTrue: boolean;
+}
+
+export interface TimeLineAnswer extends Answer {
+  image?: ImageData;
+}
+   */
 
   addQuestion() {
     this.showQuestionView = true;
-    console.log(this.type);
 
     if (this.type === 'BuzzerQuestions') {
-      this.question = {
+        const answerTrue: BuzzerAnswer = {
+            id: -1,
+            title: 'Your BuzzerQuestion Answer here',
+            image: null,
+            isTrue: true
+        };
+        const answerFalse: BuzzerAnswer = {
+            id: -1,
+            title: 'Your BuzzerQuestion Answer here',
+            image: null,
+            isTrue: false
+        };
+        this.question = {
         id: -1,
         title: 'Is this a new question?',
-        answers: [],
+        answers: [answerTrue, answerFalse, answerFalse, answerFalse],
         type: QuestionType.Buzzer,
       };
     } else if (this.type === 'TimeLineQuestions') {
+        const answer: TimeLineAnswer = {
+            id: -1,
+            title: 'Your TimeLineQuestion Answer here',
+            image: null
+        };
         this.question = {
             id: -1,
             title: 'Is this a new question?',
-            answers: [],
+            answers: [answer, answer, answer, answer],
             type: QuestionType.TimeLine,
         };
     }

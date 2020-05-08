@@ -20,11 +20,12 @@ export interface Question extends Entity {
 }
 
 export interface BuzzerAnswer extends Answer {
+  image: ImageData;
   isTrue: boolean;
 }
 
 export interface TimeLineAnswer extends Answer {
-  image?: ImageData;
+  image: ImageData;
 }
 
 
