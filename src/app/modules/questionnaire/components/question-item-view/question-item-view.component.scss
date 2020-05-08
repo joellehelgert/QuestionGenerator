@@ -2,17 +2,26 @@
 
 .question {
   &__item {
-
     &__footer {
       margin: 1.5rem 0.5rem 0 0.5rem;
+
+
+      span {
+        cursor: pointer;
+      }
     }
 
     &__header {
       margin-bottom: 1rem;
     }
+
     &__title {
       margin-top: 0;
       margin-bottom: 2rem;
+      border: none;
+      font-size: 1.5rem;
+      font-family: $font-family-default;
+      font-weight: $font-weight-bold;
     }
     &__breadcrumb {
       margin-top: 0.5rem;
@@ -35,16 +44,27 @@
       background-color: $color-white;
       box-shadow: $box-shadow;
       padding: 1.5rem;
-      margin: 10vh auto;
+      margin: 10vh auto 0;
+      z-index: 1;
+      position: relative;
 
       &__wrapper {
         position: absolute;
-        width: 100vw;
-        left: 0;
-        height: 100vh;
         top: 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        content: '';
+        left: 0;
+        width: 100vw;
+        max-width:100%;
+
+        &:before {
+          position: absolute;
+          width: 100vw;
+          left: 0;
+          height: 100vh;
+          top: 0;
+          background-color: rgba(0, 0, 0, 0.3);
+          content: '';
+          z-index: 0;
+        }
       }
     }
   }
@@ -52,6 +72,7 @@
   &__cross {
     color: $color-primary;
     font-size: 2rem;
+    cursor: pointer;
   }
 }
 
@@ -60,6 +81,10 @@
     padding: 1.5rem;
     background-color: $color-white;
     border-radius: calc(#{$border-radius} - 2px);
+    width: calc(100% - 3rem);
+    border: none;
+    font-family: $font-family-default;
+    font-size: 1rem;
 
     &__wrapper {
       padding: 3px;
@@ -94,6 +119,7 @@
     background: $color-white;
     flex: 0 0 20%;
     text-align: center;
+    cursor: pointer;
 
     @include media-breakpoint-down(md) {
       border: 2px solid $color-primary;

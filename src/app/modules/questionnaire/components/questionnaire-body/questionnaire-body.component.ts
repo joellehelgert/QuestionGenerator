@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BuzzerAnswer, BuzzerQuestion, TimeLineAnswer, TimeLineQuestion, QuestionType } from 'src/app/services/question/question.service';
+import { BuzzerAnswer, TimeLineAnswer, QuestionType, Question } from 'src/app/services/question/question.service';
 import { Questionnaire, QuestionnaireService } from 'src/app/services/questionnaire/questionnaire.service';
 
 // buzzerQuestion
@@ -19,7 +19,7 @@ const buzzerAnswer3: BuzzerAnswer = {
     isTrue: true,
 };
 
-const buzzerQuestion1: BuzzerQuestion = {
+const buzzerQuestion1: Question = {
     id: 1,
     title: 'Whats the buzzer?',
     answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3],
@@ -41,21 +41,21 @@ const timeLineAnswer3: TimeLineAnswer = {
     title: 'Number three',
 };
 
-const timeLineQuestion1: TimeLineQuestion = {
+const timeLineQuestion1: Question = {
     id: 1,
     title: 'Whats the Time Line?',
     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3],
     type: QuestionType.TimeLine
 };
 
-const timeLineQuestion2: TimeLineQuestion = {
+const timeLineQuestion2: Question = {
     id: 2,
     title: 'Hello Time Line?',
     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3],
     type: QuestionType.TimeLine
 };
 
-const timeLineQuestion3: TimeLineQuestion = {
+const timeLineQuestion3: Question = {
     id: 3,
     title: 'Whoop whoop',
     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3],

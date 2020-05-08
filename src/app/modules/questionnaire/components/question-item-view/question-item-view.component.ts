@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {faTimes, faAngleRight, faEdit, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {faTimes, faAngleRight, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {Answer, Question} from 'src/app/services/question/question.service';
 
 @Component({
   selector: 'app-question-item-view',
@@ -9,12 +10,19 @@ import {faTimes, faAngleRight, faEdit, faPlus} from '@fortawesome/free-solid-svg
 export class QuestionItemViewComponent implements OnInit {
     faTimes = faTimes;
     faAngleRight = faAngleRight;
-    faEdit = faEdit;
     faPlus = faPlus;
+    @Input() question: Question;
+    @Input() questionnaire = '';
 
-  constructor() { }
+    @Output() closeClicked = new EventEmitter<MouseEvent>();
 
-  ngOnInit(): void {
-  }
+    constructor() { }
+
+    ngOnInit(): void {
+    }
+
+    trackByFn(index: number, answer: Answer) {
+        return answer.id;
+    }
 
 }

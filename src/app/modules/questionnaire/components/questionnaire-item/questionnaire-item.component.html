@@ -2,8 +2,8 @@
     <div *ngIf="questionnaire.isActive">
         <h1 class="questionnaire__header">{{ questionnaire.title }}</h1>
         <div class="questionnaire__body" style="display: flex">
-            <app-question [questions]="questionnaire.buzzerQuestions" [type]="'BuzzerQuestions'"></app-question>
-            <app-question [questions]="questionnaire.timeLineQuestions" [type]="'TimeLineQuestions'"></app-question>
+            <app-question [questions]="questionnaire.buzzerQuestions" [type]="'BuzzerQuestions'" [questionnaireTitle]="questionnaire.title"></app-question>
+            <app-question [questions]="questionnaire.timeLineQuestions" [type]="'TimeLineQuestions'" [questionnaireTitle]="questionnaire.title"></app-question>
         </div>
     </div>
 </div>
