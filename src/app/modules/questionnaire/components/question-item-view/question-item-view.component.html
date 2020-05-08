@@ -2,7 +2,7 @@
     <div class="question__item__view">
         <div class="question__item__header">
         <span class="question__item__breadcrumb">
-            {{ questionnaire }} <fa-icon [icon]="faAngleRight"></fa-icon> {{ question.type}}
+            {{ questionnaire }} <fa-icon [icon]="faAngleRight"></fa-icon> {{ questionType }}
         </span>
             <span class="question__cross" (click)="closeClicked.emit($event)"><fa-icon [icon]="faTimes"></fa-icon></span>
         </div>

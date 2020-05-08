@@ -12,34 +12,27 @@ export class QuestionComponent implements OnInit {
   faPlus = faPlus;
   showQuestionView = false;
   question: Question;
+  questionType: string;
 
   @Input() questionnaireTitle = '';
   @Input() questions: Question[] = [];
-  @Input() type = '';
+  @Input() type: QuestionType;
 
 
   constructor() { }
 
   ngOnInit(): void {
+      if (this.type === 0) {
+          this.questionType = 'TimeLineQuestions';
+      } else if (this.type === 1) {
+          this.questionType = 'BuzzerQuestions';
+      }
   }
-  /*
-  export interface Answer {
-  id: number;
-  title: string;
-}
-export interface BuzzerAnswer extends Answer {
-  isTrue: boolean;
-}
-
-export interface TimeLineAnswer extends Answer {
-  image?: ImageData;
-}
-   */
 
   addQuestion() {
     this.showQuestionView = true;
 
-    if (this.type === 'BuzzerQuestions') {
+    if (this.type === 1) {
         const answerTrue: BuzzerAnswer = {
             id: -1,
             title: 'Your BuzzerQuestion Answer here',
@@ -58,7 +51,7 @@ export interface TimeLineAnswer extends Answer {
         answers: [answerTrue, answerFalse, answerFalse, answerFalse],
         type: QuestionType.Buzzer,
       };
-    } else if (this.type === 'TimeLineQuestions') {
+    } else if (this.type === 0) {
         const answer: TimeLineAnswer = {
             id: -1,
             title: 'Your TimeLineQuestion Answer here',

@@ -12,6 +12,7 @@ export class QuestionItemViewComponent implements OnInit {
     faAngleRight = faAngleRight;
     faPlus = faPlus;
     faCheck = faCheck;
+    questionType: string;
     @Input() question: Question;
     @Input() questionnaire = '';
 
@@ -20,6 +21,11 @@ export class QuestionItemViewComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        if (this.question.type === 0) {
+            this.questionType = 'TimeLineQuestions';
+        } else if (this.question.type === 1) {
+            this.questionType = 'BuzzerQuestions';
+        }
     }
 
     trackByFn(index: number, answer: Answer) {
