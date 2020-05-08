@@ -87,6 +87,40 @@
     font-size: 2rem;
     cursor: pointer;
   }
+
+  &__true {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border-radius: 0.5rem;
+    background: $color-gradient;
+    box-shadow: $box-shadow;
+    margin-left: 2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-white;
+    font-size: 1.3rem;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      height: 30px;
+      width: 30px;
+      border-radius: calc(0.5rem - 3px);
+      top: 3px;
+      left: 3px;
+      background-color: $color-white;
+      position: absolute;
+    }
+
+    &--colored {
+      &:before{
+        content: none;
+      }
+    }
+  }
 }
 
 .answer {
@@ -105,7 +139,7 @@
       background: $color-gradient;
       margin-bottom: 0.5rem;
       box-shadow: $box-shadow;
-      flex: 0 0 70%;
+      flex: 1;
 
       @include media-breakpoint-down(md) {
         margin-bottom: 2rem;
@@ -133,12 +167,14 @@
     flex: 0 0 20%;
     text-align: center;
     cursor: pointer;
+    margin-left: 2rem;
 
     @include media-breakpoint-down(md) {
       border: 2px solid $color-primary;
       position: absolute;
       bottom: -1rem;
       right: 1rem;
+      margin-left: 0;
     }
 
     &--colored {

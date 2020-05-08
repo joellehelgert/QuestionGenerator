@@ -14,6 +14,12 @@
                     <div class="answer__item__wrapper">
                         <input [value]="answer.title" class="answer__item">
                     </div>
+                    <ng-container *ngIf="question.type === 1 && !answer.isTrue">
+                        <span class="question__true"></span>
+                    </ng-container>
+                    <ng-container *ngIf="question.type === 1 && answer.isTrue">
+                        <span class="question__true question__true--colored"><fa-icon [icon]="faCheck"></fa-icon></span>
+                    </ng-container>
                     <ng-container *ngIf="answer.image">
                         <div class="answer__upload">
                             <fa-icon [icon]="faTimes"></fa-icon> super_image.png

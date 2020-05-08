@@ -1,5 +1,5 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
-import {faTimes, faAngleRight, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faTimes, faAngleRight, faPlus, faCheck} from '@fortawesome/free-solid-svg-icons';
 import {Answer, Question} from 'src/app/services/question/question.service';
 
 @Component({
@@ -11,6 +11,7 @@ export class QuestionItemViewComponent implements OnInit {
     faTimes = faTimes;
     faAngleRight = faAngleRight;
     faPlus = faPlus;
+    faCheck = faCheck;
     @Input() question: Question;
     @Input() questionnaire = '';
 
