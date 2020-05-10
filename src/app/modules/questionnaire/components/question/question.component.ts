@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {BuzzerAnswer, Question, QuestionType, TimeLineAnswer} from 'src/app/services/question/question.service';
-import {tryReadFile} from "../../../../../../node_modules/tslint/lib/files/reading";
 
 @Component({
   selector: 'app-question',
@@ -46,11 +45,11 @@ export class QuestionComponent implements OnInit {
             isTrue: false
         };
         this.question = {
-        id: -1,
-        title: 'Is this a new question?',
-        answers: [answerTrue, answerFalse, answerFalse, answerFalse],
-        type: QuestionType.Buzzer,
-      };
+            id: -1,
+            title: 'Is this a new question?',
+            answers: [answerTrue, answerFalse, answerFalse, answerFalse],
+            type: QuestionType.Buzzer,
+        };
     } else if (this.type === 0) {
         const answer: TimeLineAnswer = {
             id: -1,
@@ -69,6 +68,17 @@ export class QuestionComponent implements OnInit {
   updateQuestion(question: Question) {
       this.showQuestionView = true;
       this.question = question;
+  }
+
+  onSaveQuestion(question: Question) {
+      if (question.id < 0) {
+          this.questions.push(question);
+          question.id = 0; // @Todo set fitting ID
+          // @Todo add in db
+      } else {
+          // @Todo update in db
+      }
+      this.showQuestionView = false;
   }
 
   onCloseClicked() {

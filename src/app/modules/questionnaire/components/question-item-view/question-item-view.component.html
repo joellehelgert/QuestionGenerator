@@ -8,17 +8,17 @@
         </div>
 
         <div class="question__item__body">
-            <input [value]="question.title" class="question__item__title">
+            <input [value]="tempQuestion.title" class="question__item__title" (input)="onInputTitle($event)">
             <div class="question__item__body__inner">
-                <div class="answer__wrapper" *ngFor="let answer of question.answers; trackBy: trackByFn; let i = index">
+                <div class="answer__wrapper" *ngFor="let answer of tempQuestion.answers; trackBy: trackByFn; let i = index">
                     <div class="answer__item__wrapper">
-                        <input [value]="answer.title" class="answer__item">
+                        <input [value]="answer.title" class="answer__item" (input)="onInputAnswer(i, $event)">
                     </div>
-                    <ng-container *ngIf="question.type === 1 && !answer.isTrue">
-                        <span class="question__true"></span>
+                    <ng-container *ngIf="tempQuestion.type === 1 && !answer.isTrue">
+                        <span class="question__true" (click)="onCheckboxClick(i)"></span>
                     </ng-container>
-                    <ng-container *ngIf="question.type === 1 && answer.isTrue">
-                        <span class="question__true question__true--colored"><fa-icon [icon]="faCheck"></fa-icon></span>
+                    <ng-container *ngIf="tempQuestion.type === 1 && answer.isTrue">
+                        <span class="question__true question__true--colored" (click)="onCheckboxClick(i)"><fa-icon [icon]="faCheck"></fa-icon></span>
                     </ng-container>
                     <ng-container *ngIf="answer.image">
                         <div class="answer__upload">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="question__item__footer">
-            <span class="question__item__save">Save Question</span>
+            <span class="question__item__save" (click)="save()">Save Question</span>
         </div>
     </div>
 </div>
