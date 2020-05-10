@@ -1,6 +1,6 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {faTimes, faAngleRight, faPlus, faCheck} from '@fortawesome/free-solid-svg-icons';
-import {Answer, Question} from 'src/app/services/question/question.service';
+import {Answer, BuzzerAnswer, Question} from 'src/app/services/question/question.service';
 
 @Component({
   selector: 'app-question-item-view',
@@ -51,7 +51,7 @@ export class QuestionItemViewComponent implements OnInit {
     }
 
     onCheckboxClick(index: number) {
-        // this.tempQuestion.answers[index].isTrue = !this.tempQuestion.answers[index].isTrue;
+        (this.tempQuestion.answers[index] as BuzzerAnswer).isTrue = !(this.tempQuestion.answers[index] as BuzzerAnswer).isTrue;
     }
 
 }
