@@ -21,19 +21,12 @@ export interface Question extends Entity {
 }
 
 export interface BuzzerAnswer extends Answer {
+  image: ImageData;
   isTrue: boolean;
 }
 
-export interface BuzzerQuestion extends Question {
-  answers: BuzzerAnswer[];
-}
-
 export interface TimeLineAnswer extends Answer {
-  image?: ImageData;
-}
-
-export interface TimeLineQuestion extends Question {
-  answers: TimeLineAnswer[];
+  image: ImageData;
 }
 
 

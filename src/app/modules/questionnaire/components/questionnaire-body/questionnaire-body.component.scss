@@ -3,6 +3,7 @@
 .questionnaire {
   &__wrapper {
     display: flex;
+    margin: 2rem 0 3rem 0;
 
     @include media-breakpoint-down(md) {
       display: block;

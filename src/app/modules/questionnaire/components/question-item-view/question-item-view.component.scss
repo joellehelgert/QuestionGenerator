@@ -2,17 +2,28 @@
 
 .question {
   &__item {
-
     &__footer {
-      margin: 1.5rem 0.5rem 0 0.5rem;
+      text-align: center;
     }
 
     &__header {
       margin-bottom: 1rem;
     }
+
     &__title {
       margin-top: 0;
       margin-bottom: 2rem;
+      border: none;
+      font-size: 1.5rem;
+      font-family: $font-family-default;
+      font-weight: $font-weight-bold;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid transparent;
+      width: 100%;
+
+      &:focus {
+        border-color: black;
+      }
     }
     &__breadcrumb {
       margin-top: 0.5rem;
@@ -30,28 +41,99 @@
 
     &__view {
       width: 80vw;
-      height: 80vh;
       border-radius: $border-radius;
       background-color: $color-white;
       box-shadow: $box-shadow;
       padding: 1.5rem;
-      margin: 10vh auto;
+      z-index: 1;
+      position: relative;
 
       &__wrapper {
         position: absolute;
-        width: 100vw;
-        left: 0;
-        height: 100vh;
         top: 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        content: '';
+        left: 0;
+        width: 100vw;
+        max-width: 100%;
+        height: 100vh;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        &:before {
+          position: absolute;
+          width: 100vw;
+          left: 0;
+          height: 100vh;
+          top: 0;
+          background-color: rgba(0, 0, 0, 0.3);
+          content: '';
+          z-index: 0;
+        }
       }
+    }
+
+    &__save {
+      display: inline-block;
+      padding: 0.5rem 2rem;
+      border-radius: $border-radius;
+      flex: 0 0 20%;
+      text-align: center;
+      cursor: pointer;
+      background: $color-gradient;
+      color: $color-white;
+      border: none;
+      margin-top: 3rem;
     }
   }
 
   &__cross {
     color: $color-primary;
     font-size: 2rem;
+    cursor: pointer;
+  }
+
+  &__true {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border-radius: 0.5rem;
+    background: $color-gradient;
+    box-shadow: $box-shadow;
+    margin-left: 2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-white;
+    font-size: 1.3rem;
+    cursor: pointer;
+
+    @include media-breakpoint-down(md) {
+      position: absolute;
+      bottom: -1rem;
+      right: 10rem;
+      margin-left: 0;
+    }
+
+    &:before {
+      content: '';
+      height: 30px;
+      width: 30px;
+      border-radius: calc(0.5rem - 3px);
+      top: 3px;
+      left: 3px;
+      background-color: $color-white;
+      position: absolute;
+    }
+
+    &--colored {
+      &:before{
+        content: none;
+      }
+    }
   }
 }
 
@@ -60,6 +142,10 @@
     padding: 1.5rem;
     background-color: $color-white;
     border-radius: calc(#{$border-radius} - 2px);
+    width: calc(100% - 3rem);
+    border: none;
+    font-family: $font-family-default;
+    font-size: 1rem;
 
     &__wrapper {
       padding: 3px;
@@ -67,7 +153,7 @@
       background: $color-gradient;
       margin-bottom: 0.5rem;
       box-shadow: $box-shadow;
-      flex: 0 0 70%;
+      flex: 1;
 
       @include media-breakpoint-down(md) {
         margin-bottom: 2rem;
@@ -94,12 +180,15 @@
     background: $color-white;
     flex: 0 0 20%;
     text-align: center;
+    cursor: pointer;
+    margin-left: 2rem;
 
     @include media-breakpoint-down(md) {
       border: 2px solid $color-primary;
       position: absolute;
       bottom: -1rem;
       right: 1rem;
+      margin-left: 0;
     }
 
     &--colored {

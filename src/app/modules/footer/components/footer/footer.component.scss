@@ -1,0 +1,23 @@
+@import '~src/styles/variables';
+
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+  box-shadow: $box-shadow;
+  color: $color-primary;
+  font-family: $font-family-special;
+
+  @include media-breakpoint-down(md) {
+    display: block;
+    text-align: center;
+  }
+
+  &__enjoy {
+    @include media-breakpoint-down(md) {
+      margin-top: 0.5rem;
+    }
+  }
+}

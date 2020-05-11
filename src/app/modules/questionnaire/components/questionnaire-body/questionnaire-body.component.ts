@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BuzzerAnswer, BuzzerQuestion, TimeLineAnswer, TimeLineQuestion, QuestionType, QuestionService, Question } from '../../../../services/question/question.service';
+import { BuzzerAnswer, TimeLineAnswer, QuestionType, QuestionService, Question } from '../../../../services/question/question.service';
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
@@ -9,22 +9,25 @@ const buzzerAnswer1: BuzzerAnswer = {
     id: 1,
     title: 'Number one',
     isTrue: false,
+    image: null,
 };
 const buzzerAnswer2: BuzzerAnswer = {
     id: 2,
     title: 'Number two',
     isTrue: false,
+    image: null,
 };
 const buzzerAnswer3: BuzzerAnswer = {
     id: 3,
     title: 'Number three',
     isTrue: true,
+    image: null,
 };
 
-const buzzerQuestion1: BuzzerQuestion = {
+const buzzerQuestion1: Question = {
     id: 1,
     title: 'Whats the buzzer?',
-    answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3],
+    answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3, buzzerAnswer1],
     type: QuestionType.Buzzer
 };
 
@@ -33,34 +36,37 @@ const buzzerQuestion1: BuzzerQuestion = {
 const timeLineAnswer1: TimeLineAnswer = {
     id: 1,
     title: 'Number one',
+    image: null,
 };
 const timeLineAnswer2: TimeLineAnswer = {
     id: 2,
     title: 'Number two',
+    image: null,
 };
 const timeLineAnswer3: TimeLineAnswer = {
     id: 3,
     title: 'Number three',
+    image: null,
 };
 
-const timeLineQuestion1: TimeLineQuestion = {
+const timeLineQuestion1: Question = {
     id: 1,
     title: 'Whats the Time Line?',
-    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3],
+    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
     type: QuestionType.TimeLine
 };
 
-const timeLineQuestion2: TimeLineQuestion = {
+const timeLineQuestion2: Question = {
     id: 2,
     title: 'Hello Time Line?',
-    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3],
+    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
     type: QuestionType.TimeLine
 };
 
-const timeLineQuestion3: TimeLineQuestion = {
+const timeLineQuestion3: Question = {
     id: 3,
     title: 'Whoop whoop',
-    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3],
+    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
     type: QuestionType.TimeLine
 };
 
@@ -117,12 +123,12 @@ export class QuestionnaireBodyComponent implements OnInit {
                         catchError(error => {
                             console.error('error', error);
                             this.error = error;
-                            return of([] as Questionnaire[]);
+                            return of({} as Questionnaire);
                         })
                     );
                 }
 
-                return of([] as Questionnaire[]); // creates an empty observable
+                return of({} as Questionnaire); // creates an empty observable
             }),
         ).subscribe((questionnaire) => {
             if (questionnaire.questions) {
@@ -138,7 +144,7 @@ export class QuestionnaireBodyComponent implements OnInit {
                     ).subscribe((data) => {
                         this.loadingQuestions = false;
                         this.questionnaire = questionnaire;
-                        console.log("subscribe", data);
+                        console.log('subscribe', data);
                         if (!this.questionnaire.questions || this.questionnaire.questions.length <= 0) {
                             this.questionnaire.questions = [data.questions];
                         } else {
@@ -174,5 +180,4 @@ export class QuestionnaireBodyComponent implements OnInit {
             console.log('sub', this.questionnaires);
         });
     }
-
 }

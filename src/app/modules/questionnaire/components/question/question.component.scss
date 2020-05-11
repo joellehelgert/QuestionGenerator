@@ -5,7 +5,7 @@
   padding: 1.5rem;
   box-shadow: $box-shadow;
   margin: 1rem;
-  height: calc(100vh - 13rem);
+  height: calc(100vh - 22rem);
   min-width: 300px;
 
   &__heading {
@@ -35,6 +35,7 @@
     padding: 1.5rem;
     background-color: $color-white;
     border-radius: calc(#{$border-radius} - 2px);
+    cursor: pointer;
 
     &__wrapper {
       padding: 3px;
