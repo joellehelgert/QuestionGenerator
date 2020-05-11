@@ -6,7 +6,7 @@
         </span>
     </div>
 
-    <div class="question__body" *ngFor="let question of questions;">
+    <div class="question__body" *ngFor="let question of questions.questions;">
         <div class="question__item__wrapper">
             <div class="question__item" (click)="updateQuestion(question)">
                 {{ question.title }}

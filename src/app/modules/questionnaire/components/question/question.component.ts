@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer } from 'src/app/services/question/question.service';
+import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from 'src/app/services/question/question.service';
 
 @Component({
     selector: 'app-question',
@@ -14,11 +14,13 @@ export class QuestionComponent implements OnInit {
     questionType: string;
 
     @Input() questionnaireTitle = '';
-    @Input() questions: Question[] = [];
+    @Input() questions: FirebaseQuestionObject;
     @Input() type: QuestionType;
 
 
-    constructor() { }
+    constructor(private questionService: QuestionService) {
+
+    }
 
     ngOnInit(): void {
         if (this.type === 0) {
@@ -72,11 +74,21 @@ export class QuestionComponent implements OnInit {
 
     onSaveQuestion(question: Question) {
         if (question.id < 0) {
-            this.questions.push(question);
+            // this.questions.push(question);
             question.id = 0; // @Todo set fitting ID
             // @Todo add in db
         } else {
             // @Todo update in db
+            console.log(this.questions);
+            this.questions.questions.map(q => {
+                if (q.id === question.id) {
+                    return question;
+                }
+                return q;
+            });
+            // this.questions.push(question);
+            // this.questions[oldQuest.id] = question;
+            this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
         }
         this.showQuestionView = false;
     }

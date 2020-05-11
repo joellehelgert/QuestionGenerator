@@ -8,9 +8,19 @@ export interface Questionnaire extends Entity {
   id: number;
   title: string;
   museumId: string;
-  questions: Question[];
-  questionReferences: FirebaseQuestionObject[];
+  questions: {
+    path: string;
+    questions: Question[];
+  };
+  questionReferences: Reference[];
   isActive: boolean;
+}
+
+interface Reference {
+  id: string;
+  parent?: {
+    path?: string;
+  };
 }
 
 

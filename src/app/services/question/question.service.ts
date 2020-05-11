@@ -36,10 +36,6 @@ export interface TimeLineAnswer extends Answer {
  * in the questionnaire. The questionnaire allows both types for the questions property.
  */
 export interface FirebaseQuestionObject {
-  id: string;
-  parent?: {
-    path?: string;
-  };
   path: string;
   questions: Question[];
 }
@@ -50,10 +46,10 @@ export interface FirebaseQuestionObject {
   providedIn: 'root'
 })
 export class QuestionService {
-  private crudService: FirestoreCrudService<Question>;
+  private crudService: FirestoreCrudService<FirebaseQuestionObject>;
 
   constructor(private firestore: AngularFirestore) { // @Inject('path') path: string) {
-    this.crudService = new FirestoreCrudService<Question>(firestore, 'buzzerQuestions');
+    this.crudService = new FirestoreCrudService<FirebaseQuestionObject>(firestore, 'buzzerQuestions');
   }
 
   getAllQuestions(path: string, parentPath?: string) {
@@ -68,7 +64,13 @@ export class QuestionService {
 
   addQuestion(questionnaire: Questionnaire, question: Question) {
     this.setCorrespondingBasePath(question.type);
-    return this.crudService.add(question);
+    // return this.crudService.add(question);
+  }
+
+  updateQuestion(questions: FirebaseQuestionObject, type: QuestionType) {
+    this.setCorrespondingBasePath(type);
+    console.log('path in update', questions);
+    return this.crudService.update(questions);
   }
 
   removeQuestion(question: Question) {
@@ -92,33 +94,6 @@ export class QuestionService {
 
     //   return this.crudService.update({ ...questionnaire, timeLineQuestions: questions });
     // }
-  }
-
-  getAllAnswers() {
-    return this.crudService.list();
-  }
-
-  getAnswer(question: Question) {
-    return this.crudService.get(question.path);
-  }
-
-  addAnswer(question: Question, answer: Answer, path?: string) {
-    question.answers.push(answer);
-    return this.crudService.add(question, path);
-  }
-
-  removeAnswer(question: Question, answer: Answer) {
-    const answers = question.answers.map(item => {
-      if (answer.id !== item.id) {
-        return item;
-      }
-    });
-
-    return this.crudService.update({ ...question, answers });
-  }
-
-  updateAnswer(original: Question, updatedQuestion: Partial<Question>) {
-    return this.crudService.update({ ...original, updatedQuestion } as Question); // TODO Typing?
   }
 
   setCorrespondingBasePath(type: QuestionType) {

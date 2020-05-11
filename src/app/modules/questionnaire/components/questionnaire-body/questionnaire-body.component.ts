@@ -147,9 +147,9 @@ export class QuestionnaireBodyComponent implements OnInit {
                     ).subscribe((data: FirebaseQuestionObject) => {
                         this.loadingQuestions = false;
                         if (!this.questionnaire.questions || this.questionnaire.questions.length <= 0) {
-                            this.questionnaire.questions = [data.questions];
+                            this.questionnaire.questions = [data];
                         } else {
-                            this.questionnaire.questions.push(data.questions);
+                            this.questionnaire.questions.push(data);
                         }
                     });
                 });
