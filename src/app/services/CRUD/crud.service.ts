@@ -5,13 +5,6 @@ import { map } from 'rxjs/operators';
 // We need a base Entity interface that our models will extend
 export interface Entity {
   path?: string;
-  location?: {
-    id?: string;
-    parent?: {
-      path?: string;
-    }
-  };
-
 }
 
 export class FirestoreCrudService<T extends Entity> {

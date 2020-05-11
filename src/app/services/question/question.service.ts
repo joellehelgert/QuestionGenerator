@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, Reference } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
 import { Questionnaire } from '../questionnaire/questionnaire.service';
 
@@ -28,6 +28,19 @@ export interface BuzzerAnswer extends Answer {
 export interface TimeLineAnswer extends Answer {
   image: ImageData;
 }
+
+/**
+ * In Firebase the questions are not saved directly in the questionnaire objects
+ * since they are not needed for the overview and therefore would be loaded even though they are not needed.
+ * The FirebaseQuestionObject than represents the Questions object wich can be loaded later and be stored
+ * in the questionnaire. The questionnaire allows both types for the questions property.
+ */
+export interface FirebaseQuestionObject {
+  id: number;
+  path: string;
+  questions: Question[];
+}
+
 
 
 @Injectable({

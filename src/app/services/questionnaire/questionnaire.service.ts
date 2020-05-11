@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, Reference } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
 import { Question, QuestionService } from '../question/question.service';
 import { map } from 'rxjs/operators';
@@ -8,7 +8,7 @@ export interface Questionnaire extends Entity {
   id: number;
   title: string;
   museumId: string;
-  questions: Question[];
+  questions: Question[] | Reference<any>[];
   isActive: boolean;
 }
 

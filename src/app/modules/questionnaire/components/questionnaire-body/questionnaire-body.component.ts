@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BuzzerAnswer, TimeLineAnswer, QuestionType, QuestionService, Question } from '../../../../services/question/question.service';
+import { BuzzerAnswer, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from '../../../../services/question/question.service';
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
+import { Reference } from '@angular/fire/firestore/angular-fire-firestore';
 
 // buzzerQuestion
 const buzzerAnswer1: BuzzerAnswer = {
@@ -24,12 +25,12 @@ const buzzerAnswer3: BuzzerAnswer = {
     image: null,
 };
 
-const buzzerQuestion1: Question = {
-    id: 1,
-    title: 'Whats the buzzer?',
-    answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3, buzzerAnswer1],
-    type: QuestionType.Buzzer
-};
+// const buzzerQuestion1: Question = {
+//     id: 1,
+//     title: 'Whats the buzzer?',
+//     answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3, buzzerAnswer1],
+//     type: QuestionType.Buzzer
+// };
 
 
 // timelineQuestion
@@ -49,37 +50,37 @@ const timeLineAnswer3: TimeLineAnswer = {
     image: null,
 };
 
-const timeLineQuestion1: Question = {
-    id: 1,
-    title: 'Whats the Time Line?',
-    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
-    type: QuestionType.TimeLine
-};
+// const timeLineQuestion1: Question = {
+//     id: 1,
+//     title: 'Whats the Time Line?',
+//     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
+//     type: QuestionType.TimeLine
+// };
 
-const timeLineQuestion2: Question = {
-    id: 2,
-    title: 'Hello Time Line?',
-    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
-    type: QuestionType.TimeLine
-};
+// const timeLineQuestion2: Question = {
+//     id: 2,
+//     title: 'Hello Time Line?',
+//     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
+//     type: QuestionType.TimeLine
+// };
 
-const timeLineQuestion3: Question = {
-    id: 3,
-    title: 'Whoop whoop',
-    answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
-    type: QuestionType.TimeLine
-};
+// const timeLineQuestion3: Question = {
+//     id: 3,
+//     title: 'Whoop whoop',
+//     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
+//     type: QuestionType.TimeLine
+// };
 
 // questionnaire
-const questionnaire1: Questionnaire = {
-    id: 1,
-    title: 'Questionnaire Test 1',
-    museumId: 'test-museum',
-    questions: [buzzerQuestion1,
-        buzzerQuestion1, buzzerQuestion1,
-        buzzerQuestion1, timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
-    isActive: true
-};
+// const questionnaire1: Questionnaire = {
+//     id: 1,
+//     title: 'Questionnaire Test 1',
+//     museumId: 'test-museum',
+//     questions: [buzzerQuestion1,
+//         buzzerQuestion1, buzzerQuestion1,
+//         buzzerQuestion1, timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
+//     isActive: true
+// };
 
 
 @Component({
@@ -126,7 +127,6 @@ export class QuestionnaireBodyComponent implements OnInit {
                             return of({} as Questionnaire);
                         })
                     );
-                    console.log('result', result);
                     return result;
                 }
 
@@ -135,26 +135,22 @@ export class QuestionnaireBodyComponent implements OnInit {
         ).subscribe((questionnaire) => {
             this.questionnaire = questionnaire;
             console.log('questionnaire', questionnaire);
-            if (questionnaire.questions) {
-                questionnaire.questions.map(location => {
-                    this.questionService.getAllQuestions(location.id, location.parent.path//).pipe(
-                        // switchMap((question) => {
-                        //     console.log('question in second switch map ', question);
-                        //     if (question) {
-                        //         console.log('question that is returned', question);
-                        //         return [question];
-                        //     }
-                        //     return of([] as Question[]); // creates an empty observable
-                        // })
-                    ).subscribe((data) => {
+            if (questionnaire.questions as Reference<any>[]) {
+                questionnaire.questions.forEach(location => {
+                    this.questionService.getAllQuestions(location.id, location.parent.path).pipe(
+                        switchMap((question) => {
+                            console.log('question in second switch map ', question);
+                            if (question) {
+                                console.log('question that is returned', question);
+                                return [question];
+                            }
+                            return of({} as FirebaseQuestionObject); // creates an empty observable
+                        })
+                    ).subscribe((data: FirebaseQuestionObject) => {
                         this.loadingQuestions = false;
-                        console.log('subscribe', data);
-                        console.log(this.questionnaire.questions);
                         if (!this.questionnaire.questions || this.questionnaire.questions.length <= 0) {
-                            console.log('if');
                             this.questionnaire.questions = [data.questions];
                         } else {
-                            console.log('else');
                             this.questionnaire.questions.push(data.questions);
                         }
 
