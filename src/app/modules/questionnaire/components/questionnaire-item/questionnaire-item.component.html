@@ -2,7 +2,7 @@
     <h1 class="questionnaire__header">{{ questionnaire.title }}</h1>
     <div class="questionnaire__body" style="display: flex">
         <app-question *ngFor="let questions of questionnaire.questions" [questions]="questions"
-            [questionnaireTitle]="questionnaire.title" [questionnaireTitle]="questionnaire.title"
-            [type]="questions[0].type"></app-question>
+            [questionnaireTitle]="questionnaire.title" [questionnaireTitle]="questionnaire.title" [type]="1">
+        </app-question>
     </div>
 </div>

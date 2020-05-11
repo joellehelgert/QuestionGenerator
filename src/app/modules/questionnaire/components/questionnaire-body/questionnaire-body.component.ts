@@ -112,44 +112,53 @@ export class QuestionnaireBodyComponent implements OnInit {
     }
 
     loadQuestionnaire() {
-        this.questionnaireService.getAllQuestionnaires().pipe(
+        this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
             tap(() => {
                 this.error = null;
                 this.loadingQuestions = true;
             }),
             switchMap((search) => {
                 if (search) {
-                    return this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
+                    const result = this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
                         catchError(error => {
                             console.error('error', error);
                             this.error = error;
                             return of({} as Questionnaire);
                         })
                     );
+                    console.log('result', result);
+                    return result;
                 }
 
                 return of({} as Questionnaire); // creates an empty observable
             }),
         ).subscribe((questionnaire) => {
+            this.questionnaire = questionnaire;
+            console.log('questionnaire', questionnaire);
             if (questionnaire.questions) {
-                questionnaire.questions.forEach(location => {
-                    this.questionService.getAllQuestions(location.id, location.parent.path).pipe(
-                        switchMap((question) => {
-                            console.log('question in second switch map ', question);
-                            if (question) {
-                                return [question];
-                            }
-                            return of([] as Question[]); // creates an empty observable
-                        })
+                questionnaire.questions.map(location => {
+                    this.questionService.getAllQuestions(location.id, location.parent.path//).pipe(
+                        // switchMap((question) => {
+                        //     console.log('question in second switch map ', question);
+                        //     if (question) {
+                        //         console.log('question that is returned', question);
+                        //         return [question];
+                        //     }
+                        //     return of([] as Question[]); // creates an empty observable
+                        // })
                     ).subscribe((data) => {
                         this.loadingQuestions = false;
-                        this.questionnaire = questionnaire;
                         console.log('subscribe', data);
+                        console.log(this.questionnaire.questions);
                         if (!this.questionnaire.questions || this.questionnaire.questions.length <= 0) {
+                            console.log('if');
                             this.questionnaire.questions = [data.questions];
                         } else {
+                            console.log('else');
                             this.questionnaire.questions.push(data.questions);
                         }
+
+                        console.log('after adding', this.questionnaire);
                     });
                 });
             }
