@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, Reference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
-import { Question, QuestionService } from '../question/question.service';
+import { Question, QuestionService, FirebaseQuestionObject } from '../question/question.service';
 import { map } from 'rxjs/operators';
 
 export interface Questionnaire extends Entity {
@@ -9,7 +9,7 @@ export interface Questionnaire extends Entity {
   title: string;
   museumId: string;
   questions: Question[];
-  questionReferences: Reference<any>[];
+  questionReferences: FirebaseQuestionObject[];
   isActive: boolean;
 }
 
@@ -21,7 +21,7 @@ export class QuestionnaireService {
   private crudService: FirestoreCrudService<Questionnaire>;
   private questionService: QuestionService;
 
-  constructor(private firestore: AngularFirestore) { // , @Inject('path') path: string) {
+  constructor(private firestore: AngularFirestore) {
     this.crudService = new FirestoreCrudService<Questionnaire>(firestore, 'questionaires');
     this.questionService = new QuestionService(firestore);
   }

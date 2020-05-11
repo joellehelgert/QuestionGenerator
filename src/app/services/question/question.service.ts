@@ -36,7 +36,10 @@ export interface TimeLineAnswer extends Answer {
  * in the questionnaire. The questionnaire allows both types for the questions property.
  */
 export interface FirebaseQuestionObject {
-  id: number;
+  id: string;
+  parent?: {
+    path?: string;
+  };
   path: string;
   questions: Question[];
 }

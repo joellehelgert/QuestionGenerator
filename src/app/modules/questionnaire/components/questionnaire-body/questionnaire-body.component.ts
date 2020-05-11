@@ -3,7 +3,6 @@ import { BuzzerAnswer, TimeLineAnswer, QuestionService, FirebaseQuestionObject }
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
-import { Reference } from '@angular/fire/firestore/angular-fire-firestore';
 
 // buzzerQuestion
 const buzzerAnswer1: BuzzerAnswer = {
