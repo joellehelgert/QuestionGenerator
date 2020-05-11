@@ -1,6 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
+import { Questionnaire } from '../questionnaire/questionnaire.service';
 
 export enum QuestionType {
   TimeLine,
@@ -28,41 +29,68 @@ export interface TimeLineAnswer extends Answer {
   image: ImageData;
 }
 
+/**
+ * In Firebase the questions are not saved directly in the questionnaire objects
+ * since they are not needed for the overview and therefore would be loaded even though they are not needed.
+ * The FirebaseQuestionObject than represents the Questions object wich can be loaded later and be stored
+ * in the questionnaire. The questionnaire allows both types for the questions property.
+ */
+export interface FirebaseQuestionObject {
+  path: string;
+  questions: Question[];
+}
+
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class AnswerService {
-  private crudService: FirestoreCrudService<Question>;
+export class QuestionService {
+  private crudService: FirestoreCrudService<FirebaseQuestionObject>;
 
   constructor(private firestore: AngularFirestore) { // @Inject('path') path: string) {
-    this.crudService = new FirestoreCrudService<Question>(firestore, '');
+    this.crudService = new FirestoreCrudService<FirebaseQuestionObject>(firestore, 'buzzerQuestions');
   }
 
-  getAllAnswers() {
-    return this.crudService.list();
+  getAllQuestions(path: string, parentPath?: string) {
+    this.firestore.collection(parentPath);
+    return this.crudService.get(path);
   }
 
-  getAnswer(question: Question) {
-    return this.crudService.get(question.path);
+  getQuestion(path) {
+    return this.crudService.get(path);
   }
 
-  addAnswer(question: Question, answer: Answer, path?: string) {
-    question.answers.push(answer);
-    return this.crudService.add(question, path);
+  updateQuestion(questions: FirebaseQuestionObject, type: QuestionType) {
+    this.setCorrespondingBasePath(type);
+    return this.crudService.update(questions);
   }
 
-  removeAnswer(question: Question, answer: Answer) {
-    const answers = question.answers.map(item => {
-      if (answer.id !== item.id) {
-        return item;
-      }
-    });
+  removeQuestion(question: Question) {
+    this.setCorrespondingBasePath(question.type);
+    // if (question.type === QuestionType.Buzzer) {
+    //   const questions = questionnaire.buzzerQuestions.map(item => {
+    //     if (item.path !== question.path) {
+    //       return question as BuzzerQuestion;
+    //     }
+    //   });
 
-    return this.crudService.update({ ...question, answers });
+    //   return this.crudService.update({ ...questionnaire, buzzerQuestions: questions });
+    // }
+
+    // if (question.type === QuestionType.TimeLine) {
+    //   const questions = questionnaire.timeLineQuestions.map(item => {
+    //     if (item.path !== question.path) {
+    //       return question;
+    //     }
+    //   });
+
+    //   return this.crudService.update({ ...questionnaire, timeLineQuestions: questions });
+    // }
   }
 
-  updateAnswer(original: Question, updatedQuestion: Partial<Question>) {
-    return this.crudService.update({ ...original, updatedQuestion } as Question); // TODO Typing?
+  setCorrespondingBasePath(type: QuestionType) {
+    const basepath = type === QuestionType.TimeLine ? 'timeLineQuestions' : 'buzzerQuestions';
+    this.firestore.collection(basepath);
   }
 }

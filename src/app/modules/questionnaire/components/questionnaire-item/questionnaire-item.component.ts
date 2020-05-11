@@ -8,7 +8,7 @@ import { QuestionType} from 'src/app/services/question/question.service';
   styleUrls: ['./questionnaire-item.component.scss']
 })
 export class QuestionnaireItemComponent implements OnInit {
-  @Input() questionnaires: Questionnaire[] = [];
+  @Input() questionnaire: Questionnaire;
 
   constructor() { }
 

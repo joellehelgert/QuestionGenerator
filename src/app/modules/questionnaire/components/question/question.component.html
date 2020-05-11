@@ -1,15 +1,15 @@
 <div class="question">
     <div class="question__header">
-        <h3 class="question__heading">
-            {{ questionType }}
-        </h3>
-        <span class="question__plus" (click)="addQuestion()"><fa-icon [icon]="faPlus"></fa-icon></span>
+        <h3 class="question__heading">{{ questionType }}</h3>
+        <span class="question__plus" (click)="addQuestion()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+        </span>
     </div>
 
-    <div class="question__body" *ngFor="let question of questions;" >
+    <div class="question__body" *ngFor="let question of questions.questions;">
         <div class="question__item__wrapper">
             <div class="question__item" (click)="updateQuestion(question)">
-               {{ question.title }}
+                {{ question.title }}
             </div>
         </div>
     </div>
@@ -20,5 +20,6 @@
 </div>
 
 <div *ngIf="showQuestionView">
-    <app-question-item-view (closeClicked)="onCloseClicked()" (saveQuestion)="onSaveQuestion(question)" [questionnaire]="questionnaireTitle" [question]="question"></app-question-item-view>
+    <app-question-item-view (closeClicked)="onCloseClicked()" (saveQuestion)="onSaveQuestion(question)" (removeQuestion)="onRemoveQuestion(question)"
+        [questionnaire]="questionnaireTitle" [question]="question" [questionType]="questionType"></app-question-item-view>
 </div>

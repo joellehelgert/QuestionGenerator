@@ -1,4 +1,10 @@
 <div class="questionnaire__wrapper">
-    <app-questionnaire-nav></app-questionnaire-nav>
-    <app-questionnaire-item [questionnaires]="questionnaires"></app-questionnaire-item>
+    <div class="loading" *ngIf="loadingOverview || loadingQuestions">
+        LOADING:
+    </div>
+    <ng-container *ngIf="!loadingOverview && !loadingQuestions">
+        <pre *ngIf="error"> {{ error }} </pre>
+        <app-questionnaire-nav [questionnaires]="questionnaires"></app-questionnaire-nav>
+        <app-questionnaire-item [questionnaire]="questionnaire"></app-questionnaire-item>
+    </ng-container>
 </div>

@@ -1,6 +1,4 @@
 <div class="questionnaire__nav">
-    <span class="questionnaire__item questionnaire__item--active">Questionnaire 1</span>
-    <span class="questionnaire__item">Questionnaire 2</span>
-    <span class="questionnaire__item">Questionnaire 3</span>
-    <span class="questionnaire__item">Questionnaire 4</span>
+    <span class="questionnaire__item questionnaire__item--active"
+        *ngFor="let questionnaire of questionnaires">{{ questionnaire.title }}</span>
 </div>
