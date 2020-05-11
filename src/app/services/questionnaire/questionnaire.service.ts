@@ -2,14 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
 import { Museum } from '../museum/museum.service';
-import { Question, BuzzerQuestion, TimeLineQuestion, QuestionType } from '../question/question.service';
+import { Question, QuestionType } from '../question/question.service';
 
 export interface Questionnaire extends Entity {
   id: number;
   title: string;
   museumId: string;
-  buzzerQuestions: BuzzerQuestion[];
-  timeLineQuestions: TimeLineQuestion[];
+  buzzerQuestions: Question[];
+  timeLineQuestions: Question[];
   isActive: boolean;
 }
 
@@ -34,6 +34,7 @@ export class QuestionnaireService {
     return this.crudService.get(questionnaire.path);
   }
 
+  /*
   addQuestion(questionnaire: Questionnaire, question: Question) {
     if (QuestionType.Buzzer) {
       questionnaire.buzzerQuestions.push(question as BuzzerQuestion);
@@ -65,6 +66,7 @@ export class QuestionnaireService {
       return this.crudService.update({ ...questionnaire, timeLineQuestions: questions });
     }
   }
+  */
 
   // Questionnaire
   removeQuestionnaire(questionnaire: Questionnaire) {

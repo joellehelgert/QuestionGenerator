@@ -1,54 +1,41 @@
-<div class="question__item__view__wrapper" style="display: none">
+<div class="question__item__view__wrapper">
     <div class="question__item__view">
         <div class="question__item__header">
         <span class="question__item__breadcrumb">
-            Questionnaire 1 <fa-icon [icon]="faAngleRight"></fa-icon> Dumb Questions
+            {{ questionnaire }} <fa-icon [icon]="faAngleRight"></fa-icon> {{ questionType }}
         </span>
-            <span class="question__cross"><fa-icon [icon]="faTimes"></fa-icon></span>
-
+            <span class="question__cross" (click)="closeClicked.emit($event)"><fa-icon [icon]="faTimes"></fa-icon></span>
         </div>
 
         <div class="question__item__body">
-            <h2 class="question__item__title">
-                Do zebras have white or black stripes? <fa-icon [icon]="faEdit"></fa-icon>
-            </h2>
+            <input [value]="tempQuestion.title" class="question__item__title" (input)="onInputTitle($event)">
             <div class="question__item__body__inner">
-                <div class="answer__wrapper">
+                <div class="answer__wrapper" *ngFor="let answer of tempQuestion.answers; trackBy: trackByFn; let i = index">
                     <div class="answer__item__wrapper">
-                        <div class="answer__item">
-                            They do have black stripes.
+                        <input [value]="answer.title" class="answer__item" (input)="onInputAnswer(i, $event)">
+                    </div>
+                    <ng-container *ngIf="tempQuestion.type === 1 && !answer.isTrue">
+                        <span class="question__true" (click)="onCheckboxClick(i)"></span>
+                    </ng-container>
+                    <ng-container *ngIf="tempQuestion.type === 1 && answer.isTrue">
+                        <span class="question__true question__true--colored" (click)="onCheckboxClick(i)"><fa-icon [icon]="faCheck"></fa-icon></span>
+                    </ng-container>
+                    <ng-container *ngIf="answer.image">
+                        <div class="answer__upload">
+                            <fa-icon [icon]="faTimes"></fa-icon> super_image.png
                         </div>
-                    </div>
-                    <div class="answer__upload">
-                        <fa-icon [icon]="faTimes"></fa-icon> super_image.png
-                    </div>
-                </div>
-
-                <div class="answer__wrapper">
-                    <div class="answer__item__wrapper">
-                        <div class="answer__item">
-                            They do have black stripes.
+                    </ng-container>
+                    <ng-container *ngIf="!answer.image">
+                        <div class="answer__upload answer__upload--colored">
+                            <fa-icon [icon]="faPlus"></fa-icon> add image
                         </div>
-                    </div>
-                    <div class="answer__upload answer__upload--colored">
-                        <fa-icon [icon]="faPlus"></fa-icon> add image
-                    </div>
-                </div>
-                <div class="answer__wrapper">
-                    <div class="answer__item__wrapper">
-                        <div class="answer__item">
-                            They do have black stripes.
-                        </div>
-                    </div>
-                    <div class="answer__upload answer__upload--colored">
-                        <fa-icon [icon]="faPlus"></fa-icon> add image
-                    </div>
+                    </ng-container>
                 </div>
             </div>
         </div>
 
         <div class="question__item__footer">
-            <span>+ add Answer</span>
+            <span class="question__item__save" (click)="save()">Save Question</span>
         </div>
     </div>
 </div>

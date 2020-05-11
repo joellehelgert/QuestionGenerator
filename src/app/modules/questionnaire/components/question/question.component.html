@@ -1,17 +1,24 @@
 <div class="question">
     <div class="question__header">
-        <h3 class="question__heading">{{ type }}</h3>
-        <span class="question__plus"><fa-icon [icon]="faPlus"></fa-icon></span>
+        <h3 class="question__heading">
+            {{ questionType }}
+        </h3>
+        <span class="question__plus" (click)="addQuestion()"><fa-icon [icon]="faPlus"></fa-icon></span>
     </div>
 
     <div class="question__body" *ngFor="let question of questions;" >
         <div class="question__item__wrapper">
-            <div class="question__item">
+            <div class="question__item" (click)="updateQuestion(question)">
                {{ question.title }}
             </div>
         </div>
     </div>
+
     <div class="question__footer">
-        <span>+ add Question</span>
+        <span (click)="addQuestion()">+ add Question</span>
     </div>
+</div>
+
+<div *ngIf="showQuestionView">
+    <app-question-item-view (closeClicked)="onCloseClicked()" (saveQuestion)="onSaveQuestion(question)" [questionnaire]="questionnaireTitle" [question]="question"></app-question-item-view>
 </div>

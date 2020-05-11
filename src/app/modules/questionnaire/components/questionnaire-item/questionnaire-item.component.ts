@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Questionnaire } from 'src/app/services/questionnaire/questionnaire.service';
+import { Questionnaire} from 'src/app/services/questionnaire/questionnaire.service';
+import { QuestionType} from 'src/app/services/question/question.service';
 
 @Component({
   selector: 'app-questionnaire-item',
@@ -13,5 +14,4 @@ export class QuestionnaireItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
