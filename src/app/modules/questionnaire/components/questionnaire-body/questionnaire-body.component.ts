@@ -119,6 +119,7 @@ export class QuestionnaireBodyComponent implements OnInit {
                 this.loadingQuestions = true;
             }),
             switchMap((search) => {
+                console.log('search', search);
                 if (search) {
                     const result = this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
                         catchError(error => {
@@ -134,14 +135,12 @@ export class QuestionnaireBodyComponent implements OnInit {
             }),
         ).subscribe((questionnaire) => {
             this.questionnaire = questionnaire;
-            console.log('questionnaire', questionnaire);
-            if (questionnaire.questions as Reference<any>[]) {
-                questionnaire.questions.forEach(location => {
+            if (questionnaire.questionReferences) {
+                questionnaire.questionReferences.forEach(location => {
                     this.questionService.getAllQuestions(location.id, location.parent.path).pipe(
                         switchMap((question) => {
-                            console.log('question in second switch map ', question);
+                            console.log('question', question);
                             if (question) {
-                                console.log('question that is returned', question);
                                 return [question];
                             }
                             return of({} as FirebaseQuestionObject); // creates an empty observable
@@ -153,8 +152,6 @@ export class QuestionnaireBodyComponent implements OnInit {
                         } else {
                             this.questionnaire.questions.push(data.questions);
                         }
-
-                        console.log('after adding', this.questionnaire);
                     });
                 });
             }

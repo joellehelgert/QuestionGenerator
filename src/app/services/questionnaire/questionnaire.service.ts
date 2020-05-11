@@ -8,7 +8,8 @@ export interface Questionnaire extends Entity {
   id: number;
   title: string;
   museumId: string;
-  questions: Question[] | Reference<any>[];
+  questions: Question[];
+  questionReferences: Reference<any>[];
   isActive: boolean;
 }
 
