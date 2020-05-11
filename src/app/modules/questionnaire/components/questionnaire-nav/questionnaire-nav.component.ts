@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Questionnaire } from '../../../../services/questionnaire/questionnaire.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-questionnaire-nav',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./questionnaire-nav.component.scss']
 })
 export class QuestionnaireNavComponent implements OnInit {
+  @Input() questionnaires: Observable<Questionnaire>;
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log('nav', this.questionnaires);
   }
 
 }

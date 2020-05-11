@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
+import { Questionnaire } from '../questionnaire/questionnaire.service';
 
 export enum QuestionType {
   TimeLine,
@@ -39,11 +40,49 @@ export interface TimeLineQuestion extends Question {
 @Injectable({
   providedIn: 'root'
 })
-export class AnswerService {
+export class QuestionService {
   private crudService: FirestoreCrudService<Question>;
 
   constructor(private firestore: AngularFirestore) { // @Inject('path') path: string) {
-    this.crudService = new FirestoreCrudService<Question>(firestore, '');
+    this.crudService = new FirestoreCrudService<Question>(firestore, 'buzzerQuestions');
+  }
+
+  getAllQuestions(path: string, parentPath?: string) {
+    console.log('parentpaht', parentPath);
+    this.firestore.collection(parentPath);
+    return this.crudService.get(path);
+  }
+
+  getQuestion(path) {
+    return this.crudService.get(path);
+  }
+
+  addQuestion(questionnaire: Questionnaire, question: Question) {
+    this.setCorrespondingBasePath(question.type);
+    return this.crudService.add(question);
+  }
+
+  removeQuestion(question: Question) {
+    this.setCorrespondingBasePath(question.type);
+    // if (question.type === QuestionType.Buzzer) {
+    //   const questions = questionnaire.buzzerQuestions.map(item => {
+    //     if (item.path !== question.path) {
+    //       return question as BuzzerQuestion;
+    //     }
+    //   });
+
+    //   return this.crudService.update({ ...questionnaire, buzzerQuestions: questions });
+    // }
+
+    // if (question.type === QuestionType.TimeLine) {
+    //   const questions = questionnaire.timeLineQuestions.map(item => {
+    //     if (item.path !== question.path) {
+    //       return question;
+    //     }
+    //   });
+
+    //   return this.crudService.update({ ...questionnaire, timeLineQuestions: questions });
+    // }
   }
 
   getAllAnswers() {
@@ -71,5 +110,10 @@ export class AnswerService {
 
   updateAnswer(original: Question, updatedQuestion: Partial<Question>) {
     return this.crudService.update({ ...original, updatedQuestion } as Question); // TODO Typing?
+  }
+
+  setCorrespondingBasePath(type: QuestionType) {
+    const basepath = type === QuestionType.TimeLine ? 'timeLineQuestions' : 'buzzerQuestions';
+    this.firestore.collection(basepath);
   }
 }

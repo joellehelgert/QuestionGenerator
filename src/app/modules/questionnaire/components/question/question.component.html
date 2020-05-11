@@ -1,13 +1,15 @@
 <div class="question">
     <div class="question__header">
         <h3 class="question__heading">{{ type }}</h3>
-        <span class="question__plus"><fa-icon [icon]="faPlus"></fa-icon></span>
+        <span class="question__plus">
+            <fa-icon [icon]="faPlus"></fa-icon>
+        </span>
     </div>
 
-    <div class="question__body" *ngFor="let question of questions;" >
+    <div class="question__body" *ngFor="let question of questions;">
         <div class="question__item__wrapper">
             <div class="question__item">
-               {{ question.title }}
+                {{ question.title }}
             </div>
         </div>
     </div>

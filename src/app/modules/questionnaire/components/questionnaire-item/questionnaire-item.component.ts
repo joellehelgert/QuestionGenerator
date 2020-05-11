@@ -7,11 +7,12 @@ import { Questionnaire } from 'src/app/services/questionnaire/questionnaire.serv
   styleUrls: ['./questionnaire-item.component.scss']
 })
 export class QuestionnaireItemComponent implements OnInit {
-  @Input() questionnaires: Questionnaire[] = [];
+  @Input() questionnaire: Questionnaire;
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log('item', this.questionnaire);
   }
 
 }

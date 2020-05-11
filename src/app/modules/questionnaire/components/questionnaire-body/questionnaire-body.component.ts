@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BuzzerAnswer, BuzzerQuestion, TimeLineAnswer, TimeLineQuestion, QuestionType } from 'src/app/services/question/question.service';
-import { Questionnaire, QuestionnaireService } from 'src/app/services/questionnaire/questionnaire.service';
+import { BuzzerAnswer, BuzzerQuestion, TimeLineAnswer, TimeLineQuestion, QuestionType, QuestionService, Question } from '../../../../services/question/question.service';
+import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
+import { of } from 'rxjs';
+import { tap, switchMap, catchError } from 'rxjs/operators';
 
 // buzzerQuestion
 const buzzerAnswer1: BuzzerAnswer = {
@@ -67,8 +69,9 @@ const questionnaire1: Questionnaire = {
     id: 1,
     title: 'Questionnaire Test 1',
     museumId: 'test-museum',
-    buzzerQuestions: [buzzerQuestion1, buzzerQuestion1, buzzerQuestion1, buzzerQuestion1],
-    timeLineQuestions: [timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
+    questions: [buzzerQuestion1,
+        buzzerQuestion1, buzzerQuestion1,
+        buzzerQuestion1, timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
     isActive: true
 };
 
@@ -79,19 +82,97 @@ const questionnaire1: Questionnaire = {
     styleUrls: ['./questionnaire-body.component.scss']
 })
 export class QuestionnaireBodyComponent implements OnInit {
-    questionnaires = [questionnaire1];
-    questionnaire = questionnaire1;
+    questionnaires: Questionnaire[] | any[];
+    questionnaire: Questionnaire | any;
+    loadingOverview = true;
+    loadingQuestions = true;
+    error = null;
+    activeQuestionnaire = 'testQuestionaire';
 
-    constructor(private questionaireService: QuestionnaireService) {
+    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) {
     }
 
     ngOnInit(): void {
-        this.questionaireService.getQuestionnaire('testQuestionaire').subscribe({
-            next(res) {
-                console.log(res);
+        this.loadQuestionnaires();
+        this.loadQuestionnaire();
+
+        console.log('body', this.questionnaire);
+
+    }
+
+    setActiveQuestionnaire(path: string) {
+        this.activeQuestionnaire = path;
+        this.loadQuestionnaire();
+    }
+
+    loadQuestionnaire() {
+        this.questionnaireService.getAllQuestionnaires().pipe(
+            tap(() => {
+                this.error = null;
+                this.loadingQuestions = true;
+            }),
+            switchMap((search) => {
+                if (search) {
+                    return this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
+                        catchError(error => {
+                            console.error('error', error);
+                            this.error = error;
+                            return of([] as Questionnaire[]);
+                        })
+                    );
+                }
+
+                return of([] as Questionnaire[]); // creates an empty observable
+            }),
+        ).subscribe((questionnaire) => {
+            if (questionnaire.questions) {
+                questionnaire.questions.forEach(location => {
+                    this.questionService.getAllQuestions(location.id, location.parent.path).pipe(
+                        switchMap((question) => {
+                            console.log('question in second switch map ', question);
+                            if (question) {
+                                return [question];
+                            }
+                            return of([] as Question[]); // creates an empty observable
+                        })
+                    ).subscribe((data) => {
+                        this.loadingQuestions = false;
+                        this.questionnaire = questionnaire;
+                        console.log("subscribe", data);
+                        if (!this.questionnaire.questions || this.questionnaire.questions.length <= 0) {
+                            this.questionnaire.questions = [data.questions];
+                        } else {
+                            this.questionnaire.questions.push(data.questions);
+                        }
+                    });
+                });
             }
         });
+    }
 
+    loadQuestionnaires() {
+        this.questionnaireService.getAllQuestionnaires().pipe(
+            tap(() => {
+                this.error = null;
+                this.loadingOverview = true;
+                this.loadingQuestions = true;
+            }),
+            switchMap((search) => {
+                if (search) {
+                    return this.questionnaireService.getAllQuestionnaires().pipe(catchError(error => {
+                        console.error('error', error);
+                        this.error = error;
+                        return of([]);
+                    }));
+                }
+
+                return of([] as Questionnaire[]); // creates an empty observable
+            }),
+        ).subscribe((questionnaires) => {
+            this.loadingOverview = false;
+            this.questionnaires = questionnaires;
+            console.log('sub', this.questionnaires);
+        });
     }
 
 }

@@ -1,15 +1,14 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
-import { Museum } from '../museum/museum.service';
-import { Question, BuzzerQuestion, TimeLineQuestion, QuestionType } from '../question/question.service';
+import { Question, QuestionService } from '../question/question.service';
+import { map } from 'rxjs/operators';
 
 export interface Questionnaire extends Entity {
   id: number;
   title: string;
   museumId: string;
-  buzzerQuestions: BuzzerQuestion[];
-  timeLineQuestions: TimeLineQuestion[];
+  questions: Question[];
   isActive: boolean;
 }
 
@@ -19,51 +18,11 @@ export interface Questionnaire extends Entity {
 })
 export class QuestionnaireService {
   private crudService: FirestoreCrudService<Questionnaire>;
+  private questionService: QuestionService;
 
   constructor(private firestore: AngularFirestore) { // , @Inject('path') path: string) {
     this.crudService = new FirestoreCrudService<Questionnaire>(firestore, 'questionaires');
-  }
-
-  // Questions
-  getAllQuestions() {
-    return this.crudService.list();
-  }
-
-  getQuestion(questionnaire: Questionnaire, question) {
-    // TODO now ownly returns the questionnaire
-    return this.crudService.get(questionnaire.path);
-  }
-
-  addQuestion(questionnaire: Questionnaire, question: Question) {
-    if (QuestionType.Buzzer) {
-      questionnaire.buzzerQuestions.push(question as BuzzerQuestion);
-    } else {
-      questionnaire.timeLineQuestions.push(question);
-    }
-
-    return this.crudService.update(questionnaire);
-  }
-
-  removeQuestion(questionnaire: Questionnaire, question: Question) {
-    if (question.type === QuestionType.Buzzer) {
-      const questions = questionnaire.buzzerQuestions.map(item => {
-        if (item.path !== question.path) {
-          return question as BuzzerQuestion;
-        }
-      });
-
-      return this.crudService.update({ ...questionnaire, buzzerQuestions: questions });
-    }
-
-    if (question.type === QuestionType.TimeLine) {
-      const questions = questionnaire.timeLineQuestions.map(item => {
-        if (item.path !== question.path) {
-          return question;
-        }
-      });
-
-      return this.crudService.update({ ...questionnaire, timeLineQuestions: questions });
-    }
+    this.questionService = new QuestionService(firestore);
   }
 
   // Questionnaire
@@ -72,7 +31,7 @@ export class QuestionnaireService {
   }
 
   updateQuestionnaire(original: Questionnaire, updatedQuestion: Partial<Questionnaire>) {
-    return this.crudService.update({ ...original, updatedQuestion } as Questionnaire); // TODO Typing?
+    return this.crudService.update({ ...original, updatedQuestion } as Questionnaire);
   }
 
   addQuestionnaire(questionnaire: Questionnaire) {
@@ -80,6 +39,25 @@ export class QuestionnaireService {
   }
 
   getQuestionnaire(path: string) {
-    return this.crudService.get(path);
+    return this.firestore
+      .collection('questionaires')
+      .doc<Questionnaire>(path)
+      .snapshotChanges()
+      .pipe(
+        // We want to map the document into a Typed JS Object
+        map(doc => {
+          // Only if the entity exists should we build an object out of it
+          if (doc.payload.exists) {
+            const data = doc.payload.data() as Questionnaire;
+            const payloadId = doc.payload.id;
+            return { path: payloadId, ...data };
+          }
+        })
+      );
+  }
+
+
+  getAllQuestionnaires() {
+    return this.crudService.list();
   }
 }
