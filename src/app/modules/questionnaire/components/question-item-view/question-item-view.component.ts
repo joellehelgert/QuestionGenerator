@@ -12,23 +12,18 @@ export class QuestionItemViewComponent implements OnInit {
     faAngleRight = faAngleRight;
     faPlus = faPlus;
     faCheck = faCheck;
-    questionType: string;
     tempQuestion: Question = null;
     @Input() question: Question;
     @Input() questionnaire = '';
+    @Input() questionType = '';
     @Output() closeClicked = new EventEmitter<MouseEvent>();
     @Output() saveQuestion = new EventEmitter();
+    @Output() removeQuestion = new EventEmitter();
 
     constructor() {}
 
     ngOnInit(): void {
-        // @Todo change to copy this.tempQuestion = { ...this.question };
         this.tempQuestion = this.question;
-        if (this.question.type === 0) {
-            this.questionType = 'TimeLineQuestions';
-        } else if (this.question.type === 1) {
-            this.questionType = 'BuzzerQuestions';
-        }
     }
 
     trackByFn(index: number, answer: Answer) {
@@ -39,11 +34,13 @@ export class QuestionItemViewComponent implements OnInit {
         this.saveQuestion.emit(this.tempQuestion);
         this.tempQuestion = null;
     }
+    remove() {
+        this.removeQuestion.emit(this.tempQuestion);
+        this.tempQuestion = null;
+    }
 
     onInputTitle(event: InputEvent) {
-        console.log(this.tempQuestion.title);
         this.tempQuestion.title = (event.target as HTMLInputElement).value;
-        console.log(this.tempQuestion.title);
     }
 
     onInputAnswer(index: number, event: InputEvent) {

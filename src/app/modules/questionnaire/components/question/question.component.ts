@@ -49,7 +49,7 @@ export class QuestionComponent implements OnInit {
             this.question = {
                 id: -1,
                 title: 'Is this a new question?',
-                answers: [answerTrue, answerFalse, answerFalse, answerFalse],
+                answers: [answerTrue, answerFalse, {...answerFalse}, {...answerFalse}],
                 type: QuestionType.Buzzer,
             };
         } else if (this.type === 0) {
@@ -61,7 +61,7 @@ export class QuestionComponent implements OnInit {
             this.question = {
                 id: -1,
                 title: 'Is this a new question?',
-                answers: [answer, answer, answer, answer],
+                answers: [answer, {...answer}, {...answer}, {...answer}],
                 type: QuestionType.TimeLine,
             };
         }
@@ -73,23 +73,36 @@ export class QuestionComponent implements OnInit {
     }
 
     onSaveQuestion(question: Question) {
+        // @Todo set fitting Question Type right
         if (question.id < 0) {
-            // this.questions.push(question);
-            question.id = 0; // @Todo set fitting ID
-            // @Todo add in db
+            const length = this.questions.questions.length;
+            if (length < 1) {
+                question.id = 0;
+            } else {
+                question.id = this.questions.questions[length - 1].id + 1;
+            }
+            this.questions.questions.push(question);
+            this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
         } else {
-            // @Todo update in db
-            console.log(this.questions);
             this.questions.questions.map(q => {
                 if (q.id === question.id) {
                     return question;
                 }
                 return q;
             });
-            // this.questions.push(question);
-            // this.questions[oldQuest.id] = question;
             this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
         }
+        this.showQuestionView = false;
+    }
+
+    onRemoveQuestion(question: Question) {
+        // @Todo set fitting Question Type right
+        const id = this.questions.questions.indexOf(question);
+        if ( id > -1 ) {
+            this.questions.questions.splice(id, 1);
+        }
+        this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
+
         this.showQuestionView = false;
     }
 

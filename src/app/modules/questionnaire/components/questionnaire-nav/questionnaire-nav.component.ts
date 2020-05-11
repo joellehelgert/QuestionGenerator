@@ -13,7 +13,6 @@ export class QuestionnaireNavComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('nav', this.questionnaires);
   }
 
 }

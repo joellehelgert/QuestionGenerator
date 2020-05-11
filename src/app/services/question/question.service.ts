@@ -53,7 +53,6 @@ export class QuestionService {
   }
 
   getAllQuestions(path: string, parentPath?: string) {
-    console.log('parentpaht', parentPath);
     this.firestore.collection(parentPath);
     return this.crudService.get(path);
   }
@@ -62,14 +61,8 @@ export class QuestionService {
     return this.crudService.get(path);
   }
 
-  addQuestion(questionnaire: Questionnaire, question: Question) {
-    this.setCorrespondingBasePath(question.type);
-    // return this.crudService.add(question);
-  }
-
   updateQuestion(questions: FirebaseQuestionObject, type: QuestionType) {
     this.setCorrespondingBasePath(type);
-    console.log('path in update', questions);
     return this.crudService.update(questions);
   }
 

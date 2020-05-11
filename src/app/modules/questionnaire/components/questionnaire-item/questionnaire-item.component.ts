@@ -13,6 +13,5 @@ export class QuestionnaireItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('item', this.questionnaire);
   }
 }

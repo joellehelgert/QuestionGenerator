@@ -101,9 +101,6 @@ export class QuestionnaireBodyComponent implements OnInit {
     ngOnInit(): void {
         this.loadQuestionnaires();
         this.loadQuestionnaire();
-
-        console.log('body', this.questionnaire);
-
     }
 
     setActiveQuestionnaire(path: string) {
@@ -118,7 +115,6 @@ export class QuestionnaireBodyComponent implements OnInit {
                 this.loadingQuestions = true;
             }),
             switchMap((search) => {
-                console.log('search', search);
                 if (search) {
                     const result = this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
                         catchError(error => {
@@ -138,7 +134,6 @@ export class QuestionnaireBodyComponent implements OnInit {
                 questionnaire.questionReferences.forEach(location => {
                     this.questionService.getAllQuestions(location.id, location.parent.path).pipe(
                         switchMap((question) => {
-                            console.log('question', question);
                             if (question) {
                                 return [question];
                             }
@@ -178,7 +173,6 @@ export class QuestionnaireBodyComponent implements OnInit {
         ).subscribe((questionnaires) => {
             this.loadingOverview = false;
             this.questionnaires = questionnaires;
-            console.log('sub', this.questionnaires);
         });
     }
 }
