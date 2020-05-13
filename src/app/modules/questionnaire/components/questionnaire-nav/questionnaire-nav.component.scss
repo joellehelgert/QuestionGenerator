@@ -20,5 +20,9 @@
     padding: 1rem;
     margin-top: 5rem;
     min-width: 200px;
+
+    @include media-breakpoint-down(md) {
+      margin-top: 0;
+    }
   }
 }

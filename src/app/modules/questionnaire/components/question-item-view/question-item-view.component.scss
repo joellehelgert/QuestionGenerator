@@ -4,6 +4,7 @@
   &__item {
     &__footer {
       text-align: center;
+      position: relative;
     }
 
     &__header {
@@ -40,6 +41,7 @@
     }
 
     &__view {
+      max-width: 1000px;
       width: 80vw;
       border-radius: $border-radius;
       background-color: $color-white;
@@ -86,6 +88,17 @@
       color: $color-white;
       border: none;
       margin-top: 3rem;
+    }
+
+    &__delete {
+      color: $color-primary;
+      position: absolute;
+      right: 0;
+      left: auto;
+      top: auto;
+      font-size: 1.2rem;
+      bottom: 0.3rem;
+      cursor: pointer;
     }
   }
 
