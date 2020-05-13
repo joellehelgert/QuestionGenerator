@@ -2,5 +2,6 @@ $color-primary: #EB3349;
 $color-secondary: #F76B00;
 
 $color-gradient: linear-gradient(90deg, $color-primary 0%, $color-secondary 100%);
+$color-gradient--diagonal: linear-gradient(45deg, $color-primary 0%, $color-secondary 100%);
 
 $color-white: #fff;
