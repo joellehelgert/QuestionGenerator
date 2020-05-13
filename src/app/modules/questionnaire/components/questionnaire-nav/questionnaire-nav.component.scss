@@ -22,7 +22,18 @@
     min-width: 200px;
 
     @include media-breakpoint-down(md) {
-      margin-top: 0;
+      display: none;
+    }
+
+    &--mobile {
+      display: none;
+      flex-direction: column;
+      padding: 1rem;
+      min-width: 200px;
+
+      @include media-breakpoint-down(md) {
+        display: flex;
+      }
     }
   }
 }

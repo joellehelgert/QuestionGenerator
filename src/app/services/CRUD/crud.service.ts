@@ -19,6 +19,10 @@ export class FirestoreCrudService<T extends Entity> {
     this.collection = this.afs.collection(collectionName);
   }
 
+  setFirestoreBasePath(path) {
+      this.collection = this.afs.collection(path);
+  }
+
   /**
    * We look for the Entity we want to add as well
    * as an Optional Id, which will allow us to set

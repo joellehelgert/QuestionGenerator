@@ -8,11 +8,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./questionnaire-nav.component.scss']
 })
 export class QuestionnaireNavComponent implements OnInit {
+  activeQuestionnaire: Questionnaire = null;
   @Input() questionnaires: Observable<Questionnaire>;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.activeQuestionnaire = this.questionnaires[0];
   }
 
 }
