@@ -1,7 +1,8 @@
 @import '~src/styles/variables';
 
 .loader {
-  margin: auto;
+	margin: auto;
+	margin-top: 35vh;
 	position: relative;
 	display: grid;
   grid-template-columns: 33% 33% 33%;

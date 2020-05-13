@@ -9,12 +9,10 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
 import { HeaderModule } from './modules/header/header.module';
 import { FooterModule } from './modules/footer/footer.module';
 import { environment } from '../environments/environment';
-import { LoadingComponent } from './modules/loading/loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoadingComponent,
   ],
   imports: [
     BrowserModule,
