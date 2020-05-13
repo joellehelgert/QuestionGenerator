@@ -35,13 +35,25 @@ export class QuestionComponent implements OnInit {
 
         if (this.type === 1) {
             const answerTrue: BuzzerAnswer = {
-                id: -1,
+                id: 0,
                 title: 'Your BuzzerQuestion Answer here',
                 image: null,
                 isTrue: true
             };
             const answerFalse: BuzzerAnswer = {
-                id: -1,
+                id: 1,
+                title: 'Your BuzzerQuestion Answer here',
+                image: null,
+                isTrue: false
+            };
+            const answerFalse2: BuzzerAnswer = {
+                id: 2,
+                title: 'Your BuzzerQuestion Answer here',
+                image: null,
+                isTrue: false
+            };
+            const answerFalse3: BuzzerAnswer = {
+                id: 3,
                 title: 'Your BuzzerQuestion Answer here',
                 image: null,
                 isTrue: false
@@ -49,19 +61,34 @@ export class QuestionComponent implements OnInit {
             this.question = {
                 id: -1,
                 title: 'Is this a new question?',
-                answers: [answerTrue, answerFalse, {...answerFalse}, {...answerFalse}],
+                answers: [answerTrue, answerFalse, answerFalse2, answerFalse3],
                 type: QuestionType.Buzzer,
             };
         } else if (this.type === 0) {
             const answer: TimeLineAnswer = {
-                id: -1,
+                id: 0,
+                title: 'Your TimeLineQuestion Answer here',
+                image: null
+            };
+            const answer2: TimeLineAnswer = {
+                id: 1,
+                title: 'Your TimeLineQuestion Answer here',
+                image: null
+            };
+            const answer3: TimeLineAnswer = {
+                id: 2,
+                title: 'Your TimeLineQuestion Answer here',
+                image: null
+            };
+            const answer4: TimeLineAnswer = {
+                id: 3,
                 title: 'Your TimeLineQuestion Answer here',
                 image: null
             };
             this.question = {
                 id: -1,
                 title: 'Is this a new question?',
-                answers: [answer, {...answer}, {...answer}, {...answer}],
+                answers: [answer, answer2, answer3, answer4],
                 type: QuestionType.TimeLine,
             };
         }
