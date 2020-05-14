@@ -60,7 +60,7 @@ export class QuestionComponent implements OnInit {
             };
             this.question = {
                 id: -1,
-                title: 'Is this a new question?',
+                title: 'Is this a new Buzzer question?',
                 answers: [answerTrue, answerFalse, answerFalse2, answerFalse3],
                 type: QuestionType.Buzzer,
             };
@@ -87,7 +87,7 @@ export class QuestionComponent implements OnInit {
             };
             this.question = {
                 id: -1,
-                title: 'Is this a new question?',
+                title: 'Is this a new TimeLine question?',
                 answers: [answer, answer2, answer3, answer4],
                 type: QuestionType.TimeLine,
             };
@@ -100,7 +100,6 @@ export class QuestionComponent implements OnInit {
     }
 
     onSaveQuestion(question: Question) {
-        // @Todo set fitting Question Type right
         if (question.id < 0) {
             const length = this.questions.questions.length;
             if (length < 1) {
@@ -109,7 +108,7 @@ export class QuestionComponent implements OnInit {
                 question.id = this.questions.questions[length - 1].id + 1;
             }
             this.questions.questions.push(question);
-            this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
+            this.questionService.updateQuestion(this.questions, question.type);
         } else {
             this.questions.questions.map(q => {
                 if (q.id === question.id) {
@@ -117,18 +116,17 @@ export class QuestionComponent implements OnInit {
                 }
                 return q;
             });
-            this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
+            this.questionService.updateQuestion(this.questions, question.type);
         }
         this.showQuestionView = false;
     }
 
     onRemoveQuestion(question: Question) {
-        // @Todo set fitting Question Type right
         const id = this.questions.questions.indexOf(question);
         if ( id > -1 ) {
             this.questions.questions.splice(id, 1);
         }
-        this.questionService.updateQuestion(this.questions, QuestionType.Buzzer);
+        this.questionService.updateQuestion(this.questions, question.type);
 
         this.showQuestionView = false;
     }

@@ -52,9 +52,11 @@ export class QuestionService {
     this.crudService = new FirestoreCrudService<FirebaseQuestionObject>(firestore, 'buzzerQuestions');
   }
 
+
+
   getAllQuestions(path: string, parentPath?: string) {
-    this.firestore.collection(parentPath);
-    return this.crudService.get(path);
+      this.crudService.setFirestoreBasePath(parentPath);
+      return this.crudService.get(path);
   }
 
   getQuestion(path) {
@@ -90,7 +92,7 @@ export class QuestionService {
   }
 
   setCorrespondingBasePath(type: QuestionType) {
-    const basepath = type === QuestionType.TimeLine ? 'timeLineQuestions' : 'buzzerQuestions';
-    this.firestore.collection(basepath);
+    const basepath = (type === QuestionType.TimeLine ? 'timelineQuestions' : 'buzzerQuestions');
+    this.crudService.setFirestoreBasePath(basepath);
   }
 }
