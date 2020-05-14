@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import { Questionnaire } from '../../../../services/questionnaire/questionnaire.service';
 import { Observable } from 'rxjs';
 
@@ -8,13 +9,30 @@ import { Observable } from 'rxjs';
   styleUrls: ['./questionnaire-nav.component.scss']
 })
 export class QuestionnaireNavComponent implements OnInit {
-  activeQuestionnaire: Questionnaire = null;
+  faAngle = faAngleDown;
+  selectOpen = false;
+
+  @Input() activeQuestionnaireItem: Questionnaire;
   @Input() questionnaires: Observable<Questionnaire>;
+  @Output() changeQuestionnaire = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
-    this.activeQuestionnaire = this.questionnaires[0];
   }
 
+  onOpen() {
+    this.selectOpen = !this.selectOpen;
+    if (this.selectOpen) {
+       this.faAngle = faAngleUp;
+    } else {
+        this.faAngle = faAngleDown;
+    }
+  }
+
+  onClick(questionnaire: Questionnaire) {
+      this.changeQuestionnaire.emit(questionnaire);
+      this.selectOpen = false;
+      this.faAngle = faAngleDown;
+  }
 }

@@ -93,18 +93,19 @@ export class QuestionnaireBodyComponent implements OnInit {
     loadingOverview = true;
     loadingQuestions = true;
     error = null;
-    activeQuestionnaire = 'testQuestionaire';
+    activeQuestionnaireItem: Questionnaire;
+    activeQuestionnaire = '';
 
     constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) {
     }
 
     ngOnInit(): void {
         this.loadQuestionnaires();
-        this.loadQuestionnaire();
     }
 
-    setActiveQuestionnaire(path: string) {
-        this.activeQuestionnaire = path;
+    setActiveQuestionnaire(activeQuestionnaireItem: Questionnaire) {
+        this.activeQuestionnaireItem = activeQuestionnaireItem;
+        this.activeQuestionnaire = this.activeQuestionnaireItem.path;
         this.loadQuestionnaire();
     }
 
@@ -173,6 +174,8 @@ export class QuestionnaireBodyComponent implements OnInit {
         ).subscribe((questionnaires) => {
             this.loadingOverview = false;
             this.questionnaires = questionnaires;
+            this.questionnaires.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+            this.setActiveQuestionnaire(this.questionnaires[0]);
         });
     }
 }

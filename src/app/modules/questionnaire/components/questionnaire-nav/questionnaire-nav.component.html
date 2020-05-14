@@ -1,16 +1,28 @@
 <div class="questionnaire__nav">
-    <span class="questionnaire__item questionnaire__item--active"
-          *ngFor="let questionnaire of questionnaires">{{ questionnaire.title }}</span>
-    <span class="questionnaire__item">allo</span>
-    <span class="questionnaire__item">test test</span>
+    <ng-container *ngFor="let questionnaire of questionnaires">
+        <ng-container *ngIf="questionnaire === activeQuestionnaireItem">
+            <span class="questionnaire__item questionnaire__item--active">{{ questionnaire.title }}</span>
+        </ng-container>
+        <ng-container *ngIf="questionnaire !== activeQuestionnaireItem">
+            <span class="questionnaire__item" (click)="onClick(questionnaire)" >{{ questionnaire.title }}</span>
+        </ng-container>
+    </ng-container>
 </div>
 
 <div class="questionnaire__nav--mobile">
 
     <span class="questionnaire__item questionnaire__item--active"
-          *ngFor="let questionnaire of questionnaires">{{ questionnaire.title }}</span>
-    <div class="questionnaire__item__wrapper">
-        <span class="questionnaire__item">allo</span>
-        <span class="questionnaire__item">test test</span>
-    </div>
+          [class.questionnaire__item--active--open]="selectOpen"
+          (click)="onOpen()"
+    >{{ activeQuestionnaireItem.title }}<fa-icon class="icon" [icon]="faAngle"></fa-icon></span>
+
+    <ng-container *ngIf="selectOpen">
+        <div class="questionnaire__item__wrapper">
+            <ng-container *ngFor="let questionnaire of questionnaires">
+                <ng-container *ngIf="questionnaire !== activeQuestionnaireItem">
+                    <div class="questionnaire__item" (click)="onClick(questionnaire)" >{{ questionnaire.title }}</div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </ng-container>
 </div>

@@ -7,10 +7,41 @@
     margin-bottom: 1rem;
     white-space: nowrap;
     text-align: center;
+    cursor: pointer;
 
     &--active {
       background: $color-gradient;
       color: $color-white;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      &--active {
+        border-radius: $border-radius;
+
+        &--open {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      &:hover {
+        background-color: darken($color-white, 5%);
+      }
+    }
+
+    &__wrapper {
+      box-shadow: $box-shadow;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      overflow: hidden;
+      position: absolute;
+      top: 3.5rem;
+      left: 1rem;
+      width: calc(100% - 2rem);
+      background-color: $color-white;
     }
   }
 
@@ -19,7 +50,7 @@
     flex-direction: column;
     padding: 1rem;
     margin-top: 5rem;
-    min-width: 200px;
+    width: 250px;
 
     @include media-breakpoint-down(md) {
       display: none;
@@ -29,11 +60,16 @@
       display: none;
       flex-direction: column;
       padding: 1rem;
-      min-width: 200px;
+      position: relative;
 
       @include media-breakpoint-down(md) {
         display: flex;
       }
     }
   }
+}
+
+.icon {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
 }

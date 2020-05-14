@@ -3,7 +3,7 @@
 
     <ng-container *ngIf="!loadingOverview && !loadingQuestions">
         <pre *ngIf="error"> {{ error }} </pre>
-        <app-questionnaire-nav [questionnaires]="questionnaires"></app-questionnaire-nav>
+        <app-questionnaire-nav [questionnaires]="questionnaires" [activeQuestionnaireItem]="activeQuestionnaireItem" (changeQuestionnaire)="setActiveQuestionnaire(activeQuestionnaireItem)"></app-questionnaire-nav>
         <app-questionnaire-item [questionnaire]="questionnaire"></app-questionnaire-item>
     </ng-container>
 </div>
