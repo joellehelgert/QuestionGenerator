@@ -1,5 +1,8 @@
 @import '~src/styles/variables';
 
+:host {
+	width: 100%;
+}
 .loader {
 	margin: auto;
 	margin-top: 35vh;
