@@ -3,6 +3,9 @@
 .questionnaire {
   &__body {
     display: flex;
+    @include media-breakpoint-down(md) {
+      justify-content: center;
+    }
   }
 
   &__header {
@@ -16,6 +19,7 @@
 
 .carousel-indicators {
   bottom: -3rem;
+  display: none;
 
   li{
     height: 20px;
@@ -23,6 +27,18 @@
     background: $color-gradient;
     border: none;
     border-radius: 10px ;
+  }
 
+  @include media-breakpoint-down(md) {
+    display: flex;
   }
 }
+
+/*
+.carousel-item {
+  display: block;
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+*/

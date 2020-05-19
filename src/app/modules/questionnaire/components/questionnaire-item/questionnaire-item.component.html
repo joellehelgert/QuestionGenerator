@@ -3,11 +3,13 @@
     <div class="questionnaire__body" style="display: flex">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" *ngFor="let questions of questionnaire.questions; let i = index" [data-slide-to]="i">
-              </li>
+                <ng-container *ngFor="let questions of questionnaire.questions; let i = index">
+                    <li data-target="#carouselExampleIndicators" [attr.data-slide-to]="i" [class.active]="i == 0">
+                    </li>
+                </ng-container>
             </ol>
             <div class="carousel-inner">
-              <div class="carousel-item" *ngFor="let questions of questionnaire.questions; let i = index">
+              <div class="carousel-item" *ngFor="let questions of questionnaire.questions; let i = index" [class.active]="i == 0">
                <app-question [questions]="questions"[questionnaireTitle]="questionnaire.title" [questionnaireTitle]="questionnaire.title" [type]="i">
                </app-question>
               </div>
