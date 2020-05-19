@@ -9,10 +9,14 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
 import { HeaderModule } from './modules/header/header.module';
 import { FooterModule } from './modules/footer/footer.module';
 import { environment } from '../environments/environment';
+import { LoginComponent } from './modules/login/login/login.component';
+import { RegisterComponent } from './modules/login/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
