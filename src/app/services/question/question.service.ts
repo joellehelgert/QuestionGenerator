@@ -53,12 +53,8 @@ export class QuestionService {
   }
 
   getAllQuestions(path: string, parentPath?: string) {
-    this.firestore.collection(parentPath);
-    return this.crudService.get(path);
-  }
-
-  getQuestion(path) {
-    return this.crudService.get(path);
+      this.crudService.setFirestoreBasePath(parentPath);
+      return this.crudService.get(path);
   }
 
   updateQuestion(questions: FirebaseQuestionObject, type: QuestionType) {
@@ -66,31 +62,8 @@ export class QuestionService {
     return this.crudService.update(questions);
   }
 
-  removeQuestion(question: Question) {
-    this.setCorrespondingBasePath(question.type);
-    // if (question.type === QuestionType.Buzzer) {
-    //   const questions = questionnaire.buzzerQuestions.map(item => {
-    //     if (item.path !== question.path) {
-    //       return question as BuzzerQuestion;
-    //     }
-    //   });
-
-    //   return this.crudService.update({ ...questionnaire, buzzerQuestions: questions });
-    // }
-
-    // if (question.type === QuestionType.TimeLine) {
-    //   const questions = questionnaire.timeLineQuestions.map(item => {
-    //     if (item.path !== question.path) {
-    //       return question;
-    //     }
-    //   });
-
-    //   return this.crudService.update({ ...questionnaire, timeLineQuestions: questions });
-    // }
-  }
-
   setCorrespondingBasePath(type: QuestionType) {
-    const basepath = type === QuestionType.TimeLine ? 'timeLineQuestions' : 'buzzerQuestions';
-    this.firestore.collection(basepath);
+    const basepath = (type === QuestionType.TimeLine ? 'timelineQuestions' : 'buzzerQuestions');
+    this.crudService.setFirestoreBasePath(basepath);
   }
 }

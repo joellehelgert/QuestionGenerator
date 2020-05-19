@@ -20,23 +20,13 @@
                     <ng-container *ngIf="tempQuestion.type === 1 && answer.isTrue">
                         <span class="question__true question__true--colored" (click)="onCheckboxClick(i)"><fa-icon [icon]="faCheck"></fa-icon></span>
                     </ng-container>
-                    <ng-container *ngIf="answer.image">
-                        <div class="answer__upload">
-                            <fa-icon [icon]="faTimes"></fa-icon> super_image.png
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="!answer.image">
-                        <div class="answer__upload answer__upload--colored">
-                            <fa-icon [icon]="faPlus"></fa-icon> add image
-                        </div>
-                    </ng-container>
                 </div>
             </div>
         </div>
 
         <div class="question__item__footer">
             <span class="question__item__save" (click)="save()">Save Question</span>
-            <span class="question__item__save" (click)="remove()">Remove me</span>
+            <span class="question__item__delete" (click)="remove()"><fa-icon [icon]="faTrash"></fa-icon></span>
         </div>
     </div>
 </div>
