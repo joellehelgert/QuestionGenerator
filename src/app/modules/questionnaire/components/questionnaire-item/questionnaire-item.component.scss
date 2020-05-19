@@ -20,6 +20,7 @@
 .carousel-indicators {
   bottom: -3rem;
   display: none;
+  position: static;
 
   li{
     height: 20px;
@@ -40,6 +41,7 @@
   float: none !important;
   width: auto !important;
   margin-right: 0 !important;
+  position: static;
 
   @include media-breakpoint-down(md) {
     display: none !important;
@@ -53,6 +55,11 @@
   }
 }
 
+.carousel {
+  position: static;
+}
+
 .carousel-inner {
   display: flex;
+  position: static;
 }
