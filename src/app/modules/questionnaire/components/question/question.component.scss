@@ -5,7 +5,8 @@
   padding: 1.5rem 0.5rem;
   box-shadow: $box-shadow;
   margin: 1rem;
-  width: 330px;
+  width: 300px;
+  max-width: calc(100vw - 2rem);
 
 
   &__body {

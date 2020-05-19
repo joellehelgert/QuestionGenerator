@@ -34,11 +34,25 @@
   }
 }
 
-/*
+
 .carousel-item {
-  display: block;
+  display: block !important;
+  float: none !important;
+  width: auto !important;
+  margin-right: 0 !important;
+
   @include media-breakpoint-down(md) {
-    display: none;
+    display: none !important;
+    float: left !important;
+    width: 100% !important;
+    margin-right: -100% !important;
+
+    &.active {
+      display: block !important;
+    }
   }
 }
-*/
+
+.carousel-inner {
+  display: flex;
+}
