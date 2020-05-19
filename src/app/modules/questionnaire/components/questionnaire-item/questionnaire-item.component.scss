@@ -13,3 +13,16 @@
     }
   }
 }
+
+.carousel-indicators {
+  bottom: -3rem;
+
+  li{
+    height: 20px;
+    width: 20px;
+    background: $color-gradient;
+    border: none;
+    border-radius: 10px ;
+
+  }
+}
