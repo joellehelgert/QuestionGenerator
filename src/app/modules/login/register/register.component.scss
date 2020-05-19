@@ -1,0 +1,60 @@
+@import '~src/styles/variables';
+
+.auth {
+  border-radius: $border-radius;
+  padding: 1.5rem 0.5rem;
+  box-shadow: $box-shadow;
+  margin-right: auto;
+  margin-left: auto;
+  width: 450px;
+
+  &__body {
+    padding: 0.5rem 1rem;
+    max-height: calc(100vh - 28rem);
+
+    @include media-breakpoint-down(md) {
+      max-height: calc(100vh - 29rem);
+    }
+  }
+
+  &__heading {
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1.5rem 1.5rem 1.5rem;
+  }
+
+  &__item {
+    padding: 1.5rem;
+    background-color: $color-white;
+    border-radius: calc(#{$border-radius} - 2px);
+    cursor: pointer;
+
+    &__wrapper {
+      padding: 3px;
+      border-radius: $border-radius;
+      background: $color-gradient;
+      margin-bottom: 0.5rem;
+      box-shadow: $box-shadow;
+    }
+  }
+}
+
+.register {
+  &__button {
+    border-radius: $border-radius;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+
+    &--active {
+      background: $color-gradient;
+      color: $color-white;
+    }
+  }
+}
