@@ -1,0 +1,25 @@
+@import '~src/styles/variables';
+
+.hint {
+  position: absolute;
+  bottom:5em;
+  right: 3em;
+  background-color: white;
+  width: 15vw;
+  border: 3px solid;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 1em;
+
+  &--success {
+    @include setColor($color-successful);
+  }
+
+  &--info {
+    @include setColor($color-info);
+  }
+
+  &--error {
+    @include setColor($color-error);
+  }
+}

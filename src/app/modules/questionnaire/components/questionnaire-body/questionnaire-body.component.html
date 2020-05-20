@@ -7,4 +7,7 @@
             (changeQuestionnaire)="setActiveQuestionnaire($event)"></app-questionnaire-nav>
         <app-questionnaire-item [questionnaire]="questionnaire" (loadQuestionnaire)="loadQuestionnaire()"></app-questionnaire-item>
     </ng-container>
+    <app-hint *ngIf="error" [text]="error" [statusCode]="error" [type]="HintType.error"></app-hint>
+    <!-- <app-hint [text]="info" [type]="HintType.info"></app-hint> -->
+    <app-hint [text]="success" [type]="HintType.success"></app-hint>
 </div>

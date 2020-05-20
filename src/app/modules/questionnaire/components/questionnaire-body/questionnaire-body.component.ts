@@ -3,6 +3,7 @@ import { QuestionService, FirebaseQuestionObject } from '../../../../services/qu
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
+import { HintType } from '../../../../components/hint/hint.component';
 
 
 
@@ -17,11 +18,12 @@ export class QuestionnaireBodyComponent implements OnInit {
     loadingOverview = true;
     loadingQuestions = true;
     error = null;
+    success = 'Loaded data successfully';
     activeQuestionnaireItem: Questionnaire;
     activeQuestionnaire = '';
+    HintType = HintType;
 
-    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) {
-    }
+    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) { }
 
     ngOnInit(): void {
         this.loadQuestionnaires();
