@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from 'src/app/services/question/question.service';
-import {Questionnaire} from "../../../../services/questionnaire/questionnaire.service";
+import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from '../../../../services/question/question.service';
 
 @Component({
     selector: 'app-question',
@@ -19,6 +18,17 @@ export class QuestionComponent implements OnInit {
     @Input() type: QuestionType;
 
     @Output() loadQuestionnaire = new EventEmitter();
+    defaultBuzzerAnswer: BuzzerAnswer = {
+        id: 0,
+        title: 'Your BuzzerQuestion Answer here',
+        image: null,
+        isTrue: false
+    };
+    defaultTimeLineAnswer: TimeLineAnswer = {
+        id: 0,
+        title: 'Your TimeLineQuestion Answer here',
+        image: null
+    };
 
 
     constructor(private questionService: QuestionService) {
@@ -26,9 +36,9 @@ export class QuestionComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.type === 0) {
+        if (this.type === QuestionType.TimeLine) {
             this.questionType = 'TimeLineQuestions';
-        } else if (this.type === 1) {
+        } else if (this.type === QuestionType.Buzzer) {
             this.questionType = 'BuzzerQuestions';
         }
     }
@@ -36,62 +46,27 @@ export class QuestionComponent implements OnInit {
     addQuestion() {
         this.showQuestionView = true;
 
-        if (this.type === 1) {
-            const answerTrue: BuzzerAnswer = {
-                id: 0,
-                title: 'Your BuzzerQuestion Answer here',
-                image: null,
-                isTrue: true
-            };
-            const answerFalse: BuzzerAnswer = {
-                id: 1,
-                title: 'Your BuzzerQuestion Answer here',
-                image: null,
-                isTrue: false
-            };
-            const answerFalse2: BuzzerAnswer = {
-                id: 2,
-                title: 'Your BuzzerQuestion Answer here',
-                image: null,
-                isTrue: false
-            };
-            const answerFalse3: BuzzerAnswer = {
-                id: 3,
-                title: 'Your BuzzerQuestion Answer here',
-                image: null,
-                isTrue: false
-            };
+        if (this.type === QuestionType.Buzzer) {
             this.question = {
                 id: -1,
                 title: 'Is this a new Buzzer question?',
-                answers: [answerTrue, answerFalse, answerFalse2, answerFalse3],
+                answers: [
+                    { ...this.defaultBuzzerAnswer, isTrue: true },
+                    { ...this.defaultBuzzerAnswer, id: 1 },
+                    { ...this.defaultBuzzerAnswer, id: 2 },
+                    { ...this.defaultBuzzerAnswer, id: 3 }
+                ],
                 type: QuestionType.Buzzer,
             };
-        } else if (this.type === 0) {
-            const answer: TimeLineAnswer = {
-                id: 0,
-                title: 'Your TimeLineQuestion Answer here',
-                image: null
-            };
-            const answer2: TimeLineAnswer = {
-                id: 1,
-                title: 'Your TimeLineQuestion Answer here',
-                image: null
-            };
-            const answer3: TimeLineAnswer = {
-                id: 2,
-                title: 'Your TimeLineQuestion Answer here',
-                image: null
-            };
-            const answer4: TimeLineAnswer = {
-                id: 3,
-                title: 'Your TimeLineQuestion Answer here',
-                image: null
-            };
+        } else if (this.type === QuestionType.TimeLine) {
             this.question = {
                 id: -1,
                 title: 'Is this a new TimeLine question?',
-                answers: [answer, answer2, answer3, answer4],
+                answers: [
+                    { ...this.defaultTimeLineAnswer },
+                    { ...this.defaultTimeLineAnswer, id: 1 },
+                    { ...this.defaultTimeLineAnswer, id: 2 },
+                    { ...this.defaultTimeLineAnswer, id: 3 }],
                 type: QuestionType.TimeLine,
             };
         }
@@ -127,7 +102,7 @@ export class QuestionComponent implements OnInit {
 
     onRemoveQuestion(question: Question) {
         const id = this.questions.questions.indexOf(question);
-        if ( id > -1 ) {
+        if (id > -1) {
             this.questions.questions.splice(id, 1);
         }
         this.questionService.updateQuestion(this.questions, question.type);
