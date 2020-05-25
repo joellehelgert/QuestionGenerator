@@ -1,6 +1,6 @@
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 // We need a base Entity interface that our models will extend
 export interface Entity {
@@ -20,7 +20,7 @@ export class FirestoreCrudService<T extends Entity> {
   }
 
   setFirestoreBasePath(path) {
-      this.collection = this.afs.collection(path);
+    this.collection = this.afs.collection(path);
   }
 
   /**
@@ -69,8 +69,11 @@ export class FirestoreCrudService<T extends Entity> {
             const payloadId = doc.payload.id;
             return { path: payloadId, ...data };
           }
-        })
-      );
+        }),
+        catchError(error => {
+          console.error('error', error);
+          return of<T>();
+        }));
   }
 
   /*
@@ -85,6 +88,10 @@ export class FirestoreCrudService<T extends Entity> {
           data.path = a.payload.doc.id;
           return data;
         });
+      }),
+      catchError(error => {
+        console.error('error', error);
+        return of<T[]>();
       })
     );
   }
