@@ -10,7 +10,7 @@
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item" *ngFor="let questions of questionnaire.questions; let i = index" [class.active]="i == 0">
-               <app-question [questions]="questions"[questionnaireTitle]="questionnaire.title" [questionnaireTitle]="questionnaire.title" [type]="i">
+               <app-question [questions]="questions"[questionnaireTitle]="questionnaire.title" [questionnaireTitle]="questionnaire.title" [type]="i" (loadQuestionnaire)="onLoadQuestionnaire()">
                </app-question>
               </div>
             </div>

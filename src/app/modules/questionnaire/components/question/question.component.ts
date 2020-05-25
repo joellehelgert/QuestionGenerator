@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from 'src/app/services/question/question.service';
+import {Questionnaire} from "../../../../services/questionnaire/questionnaire.service";
 
 @Component({
     selector: 'app-question',
@@ -16,6 +17,8 @@ export class QuestionComponent implements OnInit {
     @Input() questionnaireTitle = '';
     @Input() questions: FirebaseQuestionObject;
     @Input() type: QuestionType;
+
+    @Output() loadQuestionnaire = new EventEmitter();
 
 
     constructor(private questionService: QuestionService) {
@@ -119,6 +122,7 @@ export class QuestionComponent implements OnInit {
             this.questionService.updateQuestion(this.questions, question.type);
         }
         this.showQuestionView = false;
+        this.loadQuestionnaire.emit();
     }
 
     onRemoveQuestion(question: Question) {

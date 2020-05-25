@@ -5,6 +5,6 @@
         <pre *ngIf="error"> {{ error }} </pre>
         <app-questionnaire-nav [questionnaires]="questionnaires" [activeQuestionnaireItem]="activeQuestionnaireItem"
             (changeQuestionnaire)="setActiveQuestionnaire($event)"></app-questionnaire-nav>
-        <app-questionnaire-item [questionnaire]="questionnaire"></app-questionnaire-item>
+        <app-questionnaire-item [questionnaire]="questionnaire" (loadQuestionnaire)="loadQuestionnaire()"></app-questionnaire-item>
     </ng-container>
 </div>
