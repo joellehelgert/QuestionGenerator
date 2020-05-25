@@ -8,11 +8,12 @@
         </div>
 
         <div class="question__item__body">
-            <input [value]="tempQuestion.title" class="question__item__title" (input)="onInputTitle($event)">
+
+            <input placeholder="Is this a new question?" [value]="tempQuestion.title" class="question__item__title" (input)="onInputTitle($event)">
             <div class="question__item__body__inner">
                 <div class="answer__wrapper" *ngFor="let answer of tempQuestion.answers; trackBy: trackByFn; let i = index">
                     <div class="answer__item__wrapper">
-                        <input [value]="answer.title" class="answer__item" (input)="onInputAnswer(i, $event)">
+                        <input placeholder="New Answer" [value]="answer.title" class="answer__item" (input)="onInputAnswer(i, $event)">
                     </div>
                     <ng-container *ngIf="tempQuestion.type === 1 && !answer.isTrue">
                         <span class="question__true" (click)="onCheckboxClick(i)"></span>
@@ -23,6 +24,13 @@
                 </div>
             </div>
         </div>
+
+        <ng-container *ngFor="let error of errors">
+            <ng-container *ngIf="error.isTrue">
+                <div class="error"><fa-icon [icon]="faTimes"></fa-icon> {{ error. message }}</div>
+            </ng-container>
+        </ng-container>
+
 
         <div class="question__item__footer">
             <span class="question__item__save" (click)="save()">Save Question</span>

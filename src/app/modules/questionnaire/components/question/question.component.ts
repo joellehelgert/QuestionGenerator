@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from '../../../../services/question/question.service';
+import {count} from "rxjs/operators";
+
+interface Error {
+    isTrue: boolean;
+    message: string;
+}
 
 @Component({
     selector: 'app-question',
@@ -12,6 +18,19 @@ export class QuestionComponent implements OnInit {
     showQuestionView = false;
     question: Question;
     questionType: string;
+    noTitleError: Error = {
+        isTrue: false,
+        message: 'Please insert a question title.',
+    };
+    noAnswerError: Error = {
+        isTrue: false,
+        message: 'Please insert a value for every answer.',
+    };
+    noIsTrueError: Error = {
+        isTrue: false,
+        message: 'Please mark one answer as true (only one).',
+    };
+    errors: Error[] = [this.noTitleError, this.noAnswerError, this.noIsTrueError];
 
     @Input() questionnaireTitle = '';
     @Input() questions: FirebaseQuestionObject;
@@ -77,27 +96,62 @@ export class QuestionComponent implements OnInit {
         this.question = question;
     }
 
-    onSaveQuestion(question: Question) {
-        if (question.id < 0) {
-            const length = this.questions.questions.length;
-            if (length < 1) {
-                question.id = 0;
-            } else {
-                question.id = this.questions.questions[length - 1].id + 1;
-            }
-            this.questions.questions.push(question);
-            this.questionService.updateQuestion(this.questions, question.type);
-        } else {
-            this.questions.questions.map(q => {
-                if (q.id === question.id) {
-                    return question;
-                }
-                return q;
-            });
-            this.questionService.updateQuestion(this.questions, question.type);
+    hasErrors(question: Question): boolean {
+        let countIsTrue = 0;
+        let returnValue = false;
+        // check if the question has a title
+        if (question.title === '') {
+            this.noTitleError.isTrue = true;
+            returnValue = true;
         }
-        this.showQuestionView = false;
-        this.loadQuestionnaire.emit();
+        // check if each answer has a title
+        question.answers.forEach((answer) => {
+            if (answer.title === '') {
+                this.noAnswerError.isTrue = true;
+                returnValue = true;
+            }
+        });
+        // check if at least one answer is true
+        if (question.type === QuestionType.Buzzer) {
+            question.answers.forEach((answer) => {
+                if ((answer as BuzzerAnswer).isTrue === true) {
+                    countIsTrue++;
+                }
+            });
+            if (countIsTrue !== 1) {
+                this.noIsTrueError.isTrue = true;
+                returnValue = true;
+            }
+        }
+        return returnValue;
+    }
+
+    onSaveQuestion(question: Question) {
+        this.errors.forEach((error) => {
+            error.isTrue = false;
+        });
+        if (!this.hasErrors(question)) {
+            if (question.id < 0) {
+                const length = this.questions.questions.length;
+                if (length < 1) {
+                    question.id = 0;
+                } else {
+                    question.id = this.questions.questions[length - 1].id + 1;
+                }
+                this.questions.questions.push(question);
+                this.questionService.updateQuestion(this.questions, question.type);
+            } else {
+                this.questions.questions.map(q => {
+                    if (q.id === question.id) {
+                        return question;
+                    }
+                    return q;
+                });
+                this.questionService.updateQuestion(this.questions, question.type);
+            }
+            this.showQuestionView = false;
+            this.loadQuestionnaire.emit();
+        }
     }
 
     onRemoveQuestion(question: Question) {
@@ -108,6 +162,7 @@ export class QuestionComponent implements OnInit {
         this.questionService.updateQuestion(this.questions, question.type);
 
         this.showQuestionView = false;
+        this.loadQuestionnaire.emit();
     }
 
     onCloseClicked() {

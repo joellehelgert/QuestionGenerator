@@ -216,3 +216,12 @@
     }
   }
 }
+
+.error {
+  color: $color-primary;
+  font-style: italic;
+
+  &:first-of-type {
+    margin-top: 1rem;
+  }
+}

@@ -25,5 +25,5 @@
 
 <div *ngIf="showQuestionView">
     <app-question-item-view (closeClicked)="onCloseClicked()" (saveQuestion)="onSaveQuestion(question)" (removeQuestion)="onRemoveQuestion(question)"
-        [questionnaire]="questionnaireTitle" [question]="question" [questionType]="questionType"></app-question-item-view>
+        [questionnaire]="questionnaireTitle" [question]="question" [questionType]="questionType" [errors]="errors"></app-question-item-view>
 </div>

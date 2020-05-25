@@ -1,6 +1,7 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {faTimes, faAngleRight, faPlus, faCheck, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Answer, BuzzerAnswer, Question} from 'src/app/services/question/question.service';
+import {QuestionType} from "../../../../services/question/question.service";
 
 @Component({
   selector: 'app-question-item-view',
@@ -17,6 +18,7 @@ export class QuestionItemViewComponent implements OnInit {
     @Input() question: Question;
     @Input() questionnaire = '';
     @Input() questionType = '';
+    @Input() errors: Error[];
     @Output() closeClicked = new EventEmitter<MouseEvent>();
     @Output() saveQuestion = new EventEmitter();
     @Output() removeQuestion = new EventEmitter();
@@ -33,7 +35,7 @@ export class QuestionItemViewComponent implements OnInit {
 
     save() {
         this.saveQuestion.emit(this.tempQuestion);
-        this.tempQuestion = null;
+        // this.tempQuestion = null;
     }
     remove() {
         this.removeQuestion.emit(this.tempQuestion);
