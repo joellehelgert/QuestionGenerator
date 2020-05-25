@@ -18,16 +18,15 @@ export class QuestionComponent implements OnInit {
     @Input() type: QuestionType;
 
     @Output() loadQuestionnaire = new EventEmitter();
+
     defaultBuzzerAnswer: BuzzerAnswer = {
         id: 0,
-        title: 'Your BuzzerQuestion Answer here',
-        image: null,
+        title: '',
         isTrue: false
     };
     defaultTimeLineAnswer: TimeLineAnswer = {
         id: 0,
-        title: 'Your TimeLineQuestion Answer here',
-        image: null
+        title: '',
     };
 
 
@@ -49,7 +48,7 @@ export class QuestionComponent implements OnInit {
         if (this.type === QuestionType.Buzzer) {
             this.question = {
                 id: -1,
-                title: 'Is this a new Buzzer question?',
+                title: '',
                 answers: [
                     { ...this.defaultBuzzerAnswer, isTrue: true },
                     { ...this.defaultBuzzerAnswer, id: 1 },
@@ -61,12 +60,13 @@ export class QuestionComponent implements OnInit {
         } else if (this.type === QuestionType.TimeLine) {
             this.question = {
                 id: -1,
-                title: 'Is this a new TimeLine question?',
+                title: '',
                 answers: [
                     { ...this.defaultTimeLineAnswer },
                     { ...this.defaultTimeLineAnswer, id: 1 },
                     { ...this.defaultTimeLineAnswer, id: 2 },
-                    { ...this.defaultTimeLineAnswer, id: 3 }],
+                    { ...this.defaultTimeLineAnswer, id: 3 }
+                ],
                 type: QuestionType.TimeLine,
             };
         }

@@ -16,17 +16,17 @@ export interface Answer {
 export interface Question extends Entity {
   id: number;
   title: string;
-  answers: Answer[] | BuzzerAnswer[];
+  answers: Answer[] | BuzzerAnswer[] | TimeLineAnswer[];
   type: QuestionType;
 }
 
 export interface BuzzerAnswer extends Answer {
-  image: ImageData;
+  image?: ImageData;
   isTrue: boolean;
 }
 
 export interface TimeLineAnswer extends Answer {
-  image: ImageData;
+  image?: ImageData;
 }
 
 /**
