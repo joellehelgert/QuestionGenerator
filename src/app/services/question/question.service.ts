@@ -16,7 +16,7 @@ export interface Answer {
 export interface Question extends Entity {
   id: number;
   title: string;
-  answers: Answer[];
+  answers: Answer[] | BuzzerAnswer[];
   type: QuestionType;
 }
 
@@ -53,8 +53,8 @@ export class QuestionService {
   }
 
   getAllQuestions(path: string, parentPath?: string) {
-      this.crudService.setFirestoreBasePath(parentPath);
-      return this.crudService.get(path);
+    this.crudService.setFirestoreBasePath(parentPath);
+    return this.crudService.get(path);
   }
 
   updateQuestion(questions: FirebaseQuestionObject, type: QuestionType) {
