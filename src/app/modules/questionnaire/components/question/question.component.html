@@ -7,11 +7,15 @@
     </div>
 
     <div class="question__body">
-        <div class="question__item__wrapper" *ngFor="let question of questions.questions;">
-            <div class="question__item" (click)="updateQuestion(question)">
-                {{ question.title }}
-            </div>
-        </div>
+        <ng-container *ngFor="let question of questions.questions;">
+            <ng-container *ngIf="question.title">
+                <div class="question__item__wrapper" >
+                    <div class="question__item" (click)="updateQuestion(question)">
+                        {{ question.title }}
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
     </div>
 
     <div class="question__footer">
