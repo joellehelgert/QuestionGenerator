@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
-import { Question, QuestionService, FirebaseQuestionObject } from '../question/question.service';
+import { Question } from '../question/question.service';
 import { map } from 'rxjs/operators';
 
 export interface Questionnaire extends Entity {
@@ -29,11 +29,9 @@ interface Reference {
 })
 export class QuestionnaireService {
   private crudService: FirestoreCrudService<Questionnaire>;
-  private questionService: QuestionService;
 
   constructor(private firestore: AngularFirestore) {
     this.crudService = new FirestoreCrudService<Questionnaire>(firestore, 'questionaires');
-    this.questionService = new QuestionService(firestore);
   }
 
   // Questionnaire

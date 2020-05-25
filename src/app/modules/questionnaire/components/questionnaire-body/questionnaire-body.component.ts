@@ -3,6 +3,7 @@ import { QuestionService, FirebaseQuestionObject } from '../../../../services/qu
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
+import { HintType } from '../../../../components/hint/hint.component';
 
 
 
@@ -17,11 +18,12 @@ export class QuestionnaireBodyComponent implements OnInit {
     loadingOverview = true;
     loadingQuestions = true;
     error = null;
+    success = null;
     activeQuestionnaireItem: Questionnaire;
     activeQuestionnaire = '';
+    HintType = HintType;
 
-    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) {
-    }
+    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) { }
 
     ngOnInit(): void {
         this.loadQuestionnaires();
@@ -37,13 +39,13 @@ export class QuestionnaireBodyComponent implements OnInit {
         this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
             tap(() => {
                 this.error = null;
+                this.success = null;
                 this.loadingQuestions = true;
             }),
             switchMap((search) => {
                 if (search) {
                     const result = this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
                         catchError(error => {
-                            console.error('error', error);
                             this.error = error;
                             return of({} as Questionnaire);
                         })
@@ -51,7 +53,7 @@ export class QuestionnaireBodyComponent implements OnInit {
                     return result;
                 }
 
-                return of({} as Questionnaire); // creates an empty observable
+                return of<Questionnaire>(); // creates an empty observable
             }),
         ).subscribe((questionnaire) => {
             this.questionnaire = questionnaire;
@@ -62,7 +64,7 @@ export class QuestionnaireBodyComponent implements OnInit {
                             if (question) {
                                 return [question];
                             }
-                            return of({} as FirebaseQuestionObject); // creates an empty observable
+                            return of<FirebaseQuestionObject>(); // creates an empty observable
                         })
                     ).subscribe((data: FirebaseQuestionObject) => {
                         this.loadingQuestions = false;
@@ -81,6 +83,7 @@ export class QuestionnaireBodyComponent implements OnInit {
         this.questionnaireService.getAllQuestionnaires().pipe(
             tap(() => {
                 this.error = null;
+                this.success = null;
                 this.loadingOverview = true;
                 this.loadingQuestions = true;
             }),
@@ -93,13 +96,21 @@ export class QuestionnaireBodyComponent implements OnInit {
                     }));
                 }
 
-                return of([] as Questionnaire[]); // creates an empty observable
+                return of<Questionnaire[]>(); // creates an empty observable
             }),
         ).subscribe((questionnaires) => {
-            this.loadingOverview = false;
-            this.questionnaires = questionnaires;
-            this.questionnaires.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-            this.setActiveQuestionnaire(this.questionnaires[0]);
+            if (questionnaires && questionnaires.length > 0) {
+                this.success = 'Data loading was successfully! 🎉';
+                this.loadingOverview = false;
+                this.questionnaires = questionnaires;
+                this.questionnaires.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+                this.setActiveQuestionnaire(this.questionnaires[0]);
+            } else {
+                this.loadingOverview = false;
+                this.loadingQuestions = false;
+                this.error = 'Sorry, a fatal error occured. Please try again. 🚫';
+            }
+
         });
     }
 }

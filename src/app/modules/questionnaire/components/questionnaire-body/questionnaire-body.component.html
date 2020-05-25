@@ -1,10 +1,13 @@
 <div class="questionnaire__wrapper">
     <app-loading *ngIf="loadingOverview || loadingQuestions"> </app-loading>
-
-    <ng-container *ngIf="!loadingOverview && !loadingQuestions">
-        <pre *ngIf="error"> {{ error }} </pre>
+    <div *ngIf="error">{{error}}</div>
+    <ng-container *ngIf="!loadingOverview && !loadingQuestions && !error">
         <app-questionnaire-nav [questionnaires]="questionnaires" [activeQuestionnaireItem]="activeQuestionnaireItem"
             (changeQuestionnaire)="setActiveQuestionnaire($event)"></app-questionnaire-nav>
-        <app-questionnaire-item [questionnaire]="questionnaire" (loadQuestionnaire)="loadQuestionnaire()"></app-questionnaire-item>
+        <app-questionnaire-item [questionnaire]="questionnaire" (loadQuestionnaire)="loadQuestionnaire()">
+        </app-questionnaire-item>
     </ng-container>
+    <app-hint *ngIf="error" [text]="error" [statusCode]="error" [type]="HintType.error"></app-hint>
+    <!-- <app-hint [text]="info" [type]="HintType.info"></app-hint> -->
+    <app-hint *ngIf="success" [text]="success" [type]="HintType.success"></app-hint>
 </div>

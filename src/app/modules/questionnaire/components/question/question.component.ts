@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from '../../../../services/question/question.service';
-import {count} from "rxjs/operators";
+import { count } from "rxjs/operators";
 
 interface Error {
     isTrue: boolean;
@@ -130,6 +130,7 @@ export class QuestionComponent implements OnInit {
         this.errors.forEach((error) => {
             error.isTrue = false;
         });
+
         if (!this.hasErrors(question)) {
             if (question.id < 0) {
                 const length = this.questions.questions.length;
@@ -139,7 +140,13 @@ export class QuestionComponent implements OnInit {
                     question.id = this.questions.questions[length - 1].id + 1;
                 }
                 this.questions.questions.push(question);
-                this.questionService.updateQuestion(this.questions, question.type);
+                this.questionService.updateQuestion(this.questions, question.type)
+                    .then(() => {
+                        this.loadQuestionnaire.emit();
+                    })
+                    .catch((error) => {
+                        console.error('error during updating question', error);
+                    });
             } else {
                 this.questions.questions.map(q => {
                     if (q.id === question.id) {
@@ -147,10 +154,15 @@ export class QuestionComponent implements OnInit {
                     }
                     return q;
                 });
-                this.questionService.updateQuestion(this.questions, question.type);
+                this.questionService.updateQuestion(this.questions, question.type)
+                    .then(() => {
+                        this.loadQuestionnaire.emit();
+                    })
+                    .catch((error) => {
+                        console.error('error during updating question', error);
+                    });
             }
             this.showQuestionView = false;
-            this.loadQuestionnaire.emit();
         }
     }
 

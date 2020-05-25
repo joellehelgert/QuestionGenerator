@@ -29,3 +29,8 @@
     }
   }
 }
+
+@mixin setColor ($color) {
+  color: $color;
+  border-color: $color;
+}
