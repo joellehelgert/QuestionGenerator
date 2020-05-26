@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './modules/login/login/login.component';
 import { RegisterComponent } from './modules/login/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     QuestionnaireModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
   ],
   providers: [],

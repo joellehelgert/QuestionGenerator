@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {Entity, FirestoreCrudService} from '../CRUD/crud.service';
-import {AngularFirestore} from '@angular/fire/firestore';
+import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 export interface Auth extends Entity {
-  id: number;
   username: string;
   email: string;
   password: string;
-  passwordValidation: string;
 }
 
 @Injectable({
@@ -15,12 +15,19 @@ export interface Auth extends Entity {
 })
 export class AuthService {
   private crudService: FirestoreCrudService<Auth>;
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    private auth: AngularFireAuth,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.crudService = new FirestoreCrudService<Auth>(firestore, 'auth');
   }
 
   addUser(user: Auth) {
     return this.crudService.add(user);
   }
+
+
 
 }

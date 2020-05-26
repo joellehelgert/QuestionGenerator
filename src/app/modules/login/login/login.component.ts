@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, NgForm, FormControl} from '@angular/forms';
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,29 +11,35 @@ import {FormBuilder, FormGroup, Validators, NgForm, FormControl} from '@angular/
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private auth: AngularFireAuth,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['', Validators.required],
+      password: ['', [Validators.required]]
     });
   }
   /*Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')*/
   get form() { return this.loginForm.controls; }
-  onSubmit() {
+  onSubmit(formData) {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
     console.warn(this.loginForm.value);
-    console.log('Submit');
 
-    // display form values on success
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value, null, 4));
-  }
-  onReset() {
-    this.submitted = false;
-    this.loginForm.reset();
+    if (formData.valid) {
+      this.auth.signInWithEmailAndPassword(formData.value.email, formData.value.password).then(
+        (success) => {
+          this.router.navigate(['/questionnaire']);
+        }).catch(
+        (err) => {
+          console.log('Error Login');
+        });
+    }
   }
 }

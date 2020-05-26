@@ -4,11 +4,7 @@
       <h3 class="auth__heading">Registrieren</h3>
     </div>
 
-    <form [formGroup]="registerForm" class="form-group auth__body" (ngSubmit)="onSubmit()">
-      <div *ngIf="submitted && registerForm.invalid" class="register--error">
-        Registrierung kann nicht abgeschlossen werden. Fehler im Formular.
-      </div>
-
+    <form [formGroup]="registerForm" #formData='ngForm' class="form-group auth__body" (ngSubmit)="onSubmit(formData)">
       <div class="auth__item__wrapper">
         <input type="username" id="username" name="username"
                class="form-control auth__item" formControlName="username" placeholder="Benutzername"
@@ -19,12 +15,18 @@
       </div>
 
       <div class="auth__item__wrapper">
-        <input type="email" id="email" name="email"
+        <input type="email" id="email" name="email" email
                class="form-control auth__item" formControlName="email" placeholder="E-Mail"
                [ngClass]="{ 'is-invalid': form.email.touched && form.email.errors }">
       </div>
-      <div *ngIf="form.email.invalid && form.email.touched" class="register--error">
-        Bitte gib eine valide Mail Adresse ein :)
+
+      <div *ngIf="(form.email.invalid && form.email.touched) || form.email.dirty">
+        <div *ngIf="form.email.errors?.required" class="register--error">
+          E-Mail darf nicht leer sein.
+        </div>
+        <div *ngIf="form.email.dirty && form.email.errors" class="register--error">
+          E-Mail nicht valide.
+        </div>
       </div>
 
       <div class="auth__item__wrapper">
@@ -40,12 +42,17 @@
                class="auth__item" formControlName="passwordmatch" placeholder="Passwort wiederholen"
                [ngClass]="{ 'is-invalid': form.passwordmatch.invalid && form.passwordmatch.touched }">
       </div>
-      <div *ngIf="form.passwordmatch.invalid && form.passwordmatch.touched" class="register--error">
+      <div *ngIf="form.passwordmatch.errors && form.passwordmatch.touched" class="register--error">
         Passwörter stimmen nicht überein.
       </div>
 
+      <div *ngIf="submitted && registerForm.invalid" class="register--error">
+      Registrierung kann nicht abgeschlossen werden. Fehler im Formular.
+    </div>
+
       <div class="submit">
-        <button class="form-control submit__button" type="submit" [disabled]="registerForm.invalid">Registrieren</button>
+        <button class="form-control submit__button" type="submit">Registrieren</button>
+        <!--[disabled]="registerForm.invalid"-->
       </div>
 
       <div class="auth__footer">
