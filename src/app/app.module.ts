@@ -11,6 +11,7 @@ import { FooterModule } from './modules/footer/footer.module';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './modules/login/login/login.component';
 import { RegisterComponent } from './modules/login/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { RegisterComponent } from './modules/login/register/register.component';
     QuestionnaireModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

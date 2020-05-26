@@ -1,60 +1,129 @@
 @import '~src/styles/variables';
 
+.register {
+  &__wrapper {
+    display: flex;
+    margin: 2rem 0 3rem 0;
+    height: calc(100vh - 12rem);
+    position: relative;
+
+    @include media-breakpoint-down(md) {
+      display: block;
+      height: calc(100vh - 13.7rem);
+    }
+  }
+
+  &--error {
+    color: $color-primary;
+    opacity: 0.7;
+    font-family: $font-family-default;
+    font-size: 0.7rem;
+    margin: 1px 0 0px 10px;
+  }
+}
+
 .auth {
   border-radius: $border-radius;
   padding: 1.5rem 0.5rem;
   box-shadow: $box-shadow;
-  margin-right: auto;
+  width: 80vw;
+  max-width: 600px;
   margin-left: auto;
-  width: 450px;
+  margin-right: auto;
 
   &__body {
-    padding: 0.5rem 1rem;
-    max-height: calc(100vh - 28rem);
+    padding: 0rem 2rem;
 
     @include media-breakpoint-down(md) {
-      max-height: calc(100vh - 29rem);
+      padding: 0em 1em;
     }
   }
 
   &__heading {
-    margin: 0;
+    margin: 20px auto;
+    font-size: 1.5em;
+    font-family: "Roboto Condensed", sans-serif;
+
+    @include media-breakpoint-down(md) {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
-    margin: 0 1.5rem 1.5rem 1.5rem;
   }
 
   &__item {
-    padding: 1.5rem;
+    padding: 1em 1.5rem;
     background-color: $color-white;
     border-radius: calc(#{$border-radius} - 2px);
-    cursor: pointer;
+    width: calc(100% - 3rem);
+    border: none;
+    font-family: $font-family-default;
+    font-size: 1rem;
 
     &__wrapper {
       padding: 3px;
       border-radius: $border-radius;
       background: $color-gradient;
-      margin-bottom: 0.5rem;
+      margin-top: 1rem;
       box-shadow: $box-shadow;
+      flex: 1;
+    }
+  }
+  &__footer {
+    text-align: center;
+    position: relative;
+    margin-bottom: auto;
+
+    span {
+      font-family: $font-family-default;
+      font-size: 0.8rem;
+
+      a {
+        color: $color-secondary;
+        text-decoration: underline;
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
     }
   }
 }
 
-.register {
-  &__button {
-    border-radius: $border-radius;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
-    white-space: nowrap;
-    text-align: center;
-    cursor: pointer;
+.submit {
+  text-align: center;
 
-    &--active {
-      background: $color-gradient;
-      color: $color-white;
-    }
+  &__button {
+    padding: 0.5rem 2rem;
+    border-radius: $border-radius;
+    text-align: center;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    color: $color-white;
+    background: $color-gradient;
+    transition-duration: 0.6s;
   }
+  button:hover {
+    background: $color-gradient;
+    box-shadow: 0 0 6px 6px rgba(0, 0, 0, 0.2);
+    color: $color-white;
+  }
+
+  button:disabled {
+    cursor: auto;
+    box-shadow: none;
+  }
+}
+
+.is-invalid {
+  background-color: $color-gradient;
+  opacity: 0.9;
 }
