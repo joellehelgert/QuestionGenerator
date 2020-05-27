@@ -2,7 +2,7 @@ import { browser, by, element } from 'protractor';
 
 export class AppPage {
   navigateTo(): Promise<unknown> {
-    return browser.get(browser.baseUrl) as Promise<unknown>;
+    return browser.get('/questionnaire') as Promise<unknown>;
   }
 
   getTitleText(): Promise<string> {
@@ -42,7 +42,12 @@ export class AppPage {
       answers.each((answer) => {
         answer.element(by.css('.answer__item')).sendKeys('Default answer');
       });
-      element(by.css('app-question-item-view .question__item__footer .question__item__save')).click();
+      browser.waitForAngularEnabled(false);
+      element(by.css('app-question-item-view .question__item__footer .question__item__save')).click().then(() => {
+          browser.sleep(2000);
+          expect(this.getLastQuestionTitle()).toBe(title);
+      });
+
   }
 
   updateQuestionTitle(title: string) {
@@ -50,11 +55,19 @@ export class AppPage {
       const titleInput = element(by.css('app-question-item-view .question__item__title'));
       titleInput.clear();
       titleInput.sendKeys(title);
-      element(by.css('app-question-item-view .question__item__footer .question__item__save')).click();
+      browser.waitForAngularEnabled(false);
+      element(by.css('app-question-item-view .question__item__footer .question__item__save')).click().then(() => {
+          browser.sleep(1000);
+          expect(this.getLastQuestionTitle()).toBe(title);
+      });
   }
 
   removeLastQuestion() {
       element(by.css('app-questionnaire-item .questionnaire__body .carousel-item.active .question__body .question__item__wrapper:last-of-type .question__item')).click();
-      element(by.css('app-question-item-view .question__item__footer .question__item__delete')).click();
+      browser.waitForAngularEnabled(false);
+      element(by.css('app-question-item-view .question__item__footer .question__item__delete')).click().then(() => {
+          browser.sleep(1000);
+          expect(this.getLastQuestionTitle()).not.toBe('Question Title Updated');
+      });
   }
 }
