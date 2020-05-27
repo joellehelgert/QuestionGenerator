@@ -19,7 +19,7 @@ export class LoggedInGuard implements CanActivate, CanActivateChild, CanLoad{
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('canAcrivate');
+    console.log('canActivate' + this.isLoggedIn());
     return this.isLoggedIn();
   }
 
@@ -44,7 +44,6 @@ export class LoggedInGuard implements CanActivate, CanActivateChild, CanLoad{
     if (!this.authService.isLoggedIn()) {
       return this.router.createUrlTree(['/login']);
     }
-
     return true;
   }
 }

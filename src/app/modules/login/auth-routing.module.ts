@@ -4,6 +4,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {LoggedInGuard} from "./guard/logged-in.guard";
 import {LoggedOutGuard} from "./guard/logged-out.guard";
+import {LogoutComponent} from "./logout/logout.component";
 
 
 const routes: Routes = [{
@@ -13,7 +14,7 @@ const routes: Routes = [{
 }, {
   path: 'logout',
   canActivate: [LoggedInGuard],
-  component: LoginComponent,
+  component: LogoutComponent,
 }, {
   path: 'register',
   canActivate: [LoggedOutGuard],

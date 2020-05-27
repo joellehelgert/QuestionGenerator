@@ -6,6 +6,7 @@ import {LoggedInGuard} from "../login/guard/logged-in.guard";
 
 const routes: Routes = [{
   path: '',
+  canActivate: [LoggedInGuard],
   component: QuestionnaireBodyComponent,
 }];
 

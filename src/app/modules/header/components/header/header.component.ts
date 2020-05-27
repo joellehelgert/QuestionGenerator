@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
-import {AuthService} from "../../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-header',

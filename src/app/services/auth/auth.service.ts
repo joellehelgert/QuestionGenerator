@@ -2,6 +2,7 @@ import {Injectable, NgZone} from '@angular/core';
 import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import {switchMap, map, tap} from "rxjs/operators";
 
 
 @Injectable({
@@ -15,23 +16,20 @@ export class AuthService {
     private router: Router,
     public ngZone: NgZone,
   ) {
+    this.auth.authState.subscribe(user => {
+      if (user){
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user'));
+      } else {
+        localStorage.setItem('user', null);
+        JSON.parse(localStorage.getItem('user'));
+      }
+    });
   }
   login(email: string, password: string) {
-
     this.auth.signInWithEmailAndPassword(email, password).then(
       (success) => {
-
-        this.auth.authState.subscribe(user => {
-          if (user){
-            this.userData = user;
-            localStorage.setItem('user', JSON.stringify(this.userData));
-            JSON.parse(localStorage.getItem('user'));
-          } else {
-            localStorage.setItem('user', null);
-            JSON.parse(localStorage.getItem('user'));
-          }
-        });
-
         this.ngZone.run(() => {
           console.log('worked');
           this.router.navigate(['/questionnaire']);
@@ -46,7 +44,11 @@ export class AuthService {
     return localStorage.getItem('user') || null;*/
     const user = JSON.parse(localStorage.getItem('user'));
     console.log(user);
-    return (user !== null && user.emailVerified !== false);
+    if (user !== null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   logout() {

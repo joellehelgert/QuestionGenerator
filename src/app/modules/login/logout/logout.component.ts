@@ -1,7 +1,8 @@
-/*import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from "../../../services/auth/auth.service";
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-logout',
@@ -24,4 +25,4 @@ export class LogoutComponent implements OnInit {
       window.alert(error.message);
     });
   }
-}*/
+}

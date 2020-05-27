@@ -1,4 +1,4 @@
-/*import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogoutComponent } from './logout.component';
 
@@ -23,4 +23,4 @@ describe('LogoutComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-*/
+
