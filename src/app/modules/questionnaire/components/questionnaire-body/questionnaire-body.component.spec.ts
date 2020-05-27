@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionnaireBodyComponent } from './questionnaire-body.component';
-import { BuzzerAnswer, TimeLineAnswer } from 'src/app/services/question/question.service';
+import { BuzzerAnswer, TimeLineAnswer, Question, QuestionType } from '../../../../services/question/question.service';
+import { Questionnaire } from '../../../../services/questionnaire/questionnaire.service';
 // buzzerQuestion
 const buzzerAnswer1: BuzzerAnswer = {
   id: 1,
@@ -22,12 +23,12 @@ const buzzerAnswer3: BuzzerAnswer = {
   image: null,
 };
 
-// const buzzerQuestion1: Question = {
-//     id: 1,
-//     title: 'Whats the buzzer?',
-//     answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3, buzzerAnswer1],
-//     type: QuestionType.Buzzer
-// };
+const buzzerQuestion1: Question = {
+  id: 1,
+  title: 'Whats the buzzer?',
+  answers: [buzzerAnswer1, buzzerAnswer2, buzzerAnswer3, buzzerAnswer1],
+  type: QuestionType.Buzzer
+};
 
 
 // timelineQuestion
@@ -47,40 +48,43 @@ const timeLineAnswer3: TimeLineAnswer = {
   image: null,
 };
 
-// const timeLineQuestion1: Question = {
-//     id: 1,
-//     title: 'Whats the Time Line?',
-//     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
-//     type: QuestionType.TimeLine
-// };
+const timeLineQuestion1: Question = {
+  id: 1,
+  title: 'Whats the Time Line?',
+  answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
+  type: QuestionType.TimeLine
+};
 
-// const timeLineQuestion2: Question = {
-//     id: 2,
-//     title: 'Hello Time Line?',
-//     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
-//     type: QuestionType.TimeLine
-// };
+const timeLineQuestion2: Question = {
+  id: 2,
+  title: 'Hello Time Line?',
+  answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
+  type: QuestionType.TimeLine
+};
 
-// const timeLineQuestion3: Question = {
-//     id: 3,
-//     title: 'Whoop whoop',
-//     answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
-//     type: QuestionType.TimeLine
-// };
+const timeLineQuestion3: Question = {
+  id: 3,
+  title: 'Whoop whoop',
+  answers: [timeLineAnswer1, timeLineAnswer2, timeLineAnswer3, timeLineAnswer3],
+  type: QuestionType.TimeLine
+};
 
-// questionnaire
-// const questionnaire1: Questionnaire = {
-//     id: 1,
-//     title: 'Questionnaire Test 1',
-//     museumId: 'test-museum',
-//     questions: [buzzerQuestion1,
-//         buzzerQuestion1, buzzerQuestion1,
-//         buzzerQuestion1, timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
-//     isActive: true
-// };
+const questionnaire1: Questionnaire = {
+  id: 1,
+  title: 'Questionnaire Test 1',
+  museumId: 'test-museum',
+  questions: {
+    path: 'testpath',
+    questions: [buzzerQuestion1,
+      buzzerQuestion1, buzzerQuestion1,
+      buzzerQuestion1, timeLineQuestion1, timeLineQuestion2, timeLineQuestion3],
+  },
+  questionReferences: [],
+  isActive: true
+};
 
 
-describe('QuestionnairBodyComponent', () => {
+xdescribe('QuestionnairBodyComponent', () => {
   let component: QuestionnaireBodyComponent;
   let fixture: ComponentFixture<QuestionnaireBodyComponent>;
 
@@ -94,6 +98,8 @@ describe('QuestionnairBodyComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionnaireBodyComponent);
     component = fixture.componentInstance;
+    component.questionnaires = [questionnaire1, questionnaire1];
+    component.questionnaire = questionnaire1;
     fixture.detectChanges();
   });
 
