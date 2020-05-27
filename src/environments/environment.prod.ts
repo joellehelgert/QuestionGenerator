@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   firebase: {
+    apiPath: 'http://localhost:8080',
     apiKey: 'AIzaSyAbNjv3ixaawMTjvnKyR_dAYWvFD-EjJlE',
     authDomain: 'adorableapi.firebaseapp.com',
     databaseURL: 'https://adorableapi.firebaseio.com',

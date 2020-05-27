@@ -1,33 +1,58 @@
-import { Injectable } from '@angular/core';
-import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
-import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {Injectable, NgZone} from '@angular/core';
+import { Router} from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-export interface Auth extends Entity {
-  username: string;
-  email: string;
-  password: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private crudService: FirestoreCrudService<Auth>;
+  userData;
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private route: ActivatedRoute
+    public ngZone: NgZone,
   ) {
-    this.crudService = new FirestoreCrudService<Auth>(firestore, 'auth');
+  }
+  login(email: string, password: string) {
+
+    this.auth.signInWithEmailAndPassword(email, password).then(
+      (success) => {
+
+        this.auth.authState.subscribe(user => {
+          if (user){
+            this.userData = user;
+            localStorage.setItem('user', JSON.stringify(this.userData));
+            JSON.parse(localStorage.getItem('user'));
+          } else {
+            localStorage.setItem('user', null);
+            JSON.parse(localStorage.getItem('user'));
+          }
+        });
+
+        this.ngZone.run(() => {
+          console.log('worked');
+          this.router.navigate(['/questionnaire']);
+        });
+      }).catch((error) => {
+      localStorage.setItem('user', null);
+      window.alert(error.message);
+    });
+  }
+  isLoggedIn() {
+    /*return localStorage.getItem('user') != null;
+    return localStorage.getItem('user') || null;*/
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    return (user !== null && user.emailVerified !== false);
   }
 
-  addUser(user: Auth) {
-    return this.crudService.add(user);
+  logout() {
+    return this.auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['/login']);
+    });
   }
-
-
-
 }

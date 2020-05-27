@@ -4,7 +4,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
-
 @NgModule({
   declarations: [HeaderComponent],
   exports: [HeaderComponent],

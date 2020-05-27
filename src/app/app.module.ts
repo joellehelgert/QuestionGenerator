@@ -9,19 +9,18 @@ import { QuestionnaireModule } from './modules/questionnaire/questionnaire.modul
 import { HeaderModule } from './modules/header/header.module';
 import { FooterModule } from './modules/footer/footer.module';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './modules/login/login/login.component';
-import { RegisterComponent } from './modules/login/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HttpClientModule } from '@angular/common/http';
+import {AuthModule} from "./modules/login/auth.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
   ],
   imports: [
     BrowserModule,
+    AuthModule,
     AppRoutingModule,
     HeaderModule,
     FooterModule,
@@ -30,6 +29,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AngularFirestoreModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

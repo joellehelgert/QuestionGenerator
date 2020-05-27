@@ -5,7 +5,7 @@
       <h3 class="auth__heading">Login</h3>
     </div>
 
-    <form [formGroup]="loginForm" #formData='ngForm' class="auth__body" (ngSubmit)="onSubmit(formData)">
+    <form [formGroup]="loginForm" class="auth__body" (ngSubmit)="onSubmit()">
       <div class="auth__item__wrapper">
         <input type="email" class="auth__item"
                formControlName="email" placeholder="E-Mail" email
