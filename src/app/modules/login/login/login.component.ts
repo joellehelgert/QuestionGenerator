@@ -19,12 +19,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required]]
     });
   }
-  /*Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')*/
-  get form() { return this.loginForm.controls; }
   onSubmit(formData) {
     this.submitted = true;
     if (this.loginForm.invalid) {

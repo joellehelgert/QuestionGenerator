@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import { passwordMatch } from '../passwordMatch.directive';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -21,16 +20,23 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordmatch: ['', Validators.required],
+      username: ['', [Validators.required]],
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required]],
+      passwordRepeat: ['', [Validators.required]],
     }, {
-      validators: passwordMatch('password', 'passwordmatch')
+      validators: (formGroup) => {
+        const pw = formGroup.value.password;
+        const pwRepeat = formGroup.value.passwordRepeat;
+
+        if (pw && pwRepeat && pw !== pwRepeat) {
+          return { passwordRepeat: true };
+        }
+
+        return null;
+      }
     });
   }
-  /*Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')*/
-  get form() { return this.registerForm.controls; }
   onSubmit(formData) {
     this.submitted = true;
     if (this.registerForm.invalid) {

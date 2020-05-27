@@ -4,60 +4,56 @@
       <h3 class="auth__heading">Registrieren</h3>
     </div>
 
-    <form [formGroup]="registerForm" #formData='ngForm' class="form-group auth__body" (ngSubmit)="onSubmit(formData)">
+    <form [formGroup]="registerForm" #formData='ngForm' class="auth__body" (ngSubmit)="onSubmit(formData)">
       <div class="auth__item__wrapper">
-        <input type="username" id="username" name="username"
-               class="form-control auth__item" formControlName="username" placeholder="Benutzername"
-               [ngClass]="{ 'is-invalid': form.username.touched && form.username.errors }" >
+        <input type="username" class="auth__item"
+               formControlName="username" placeholder="Benutzername"
+               [class.is-invalid]="registerForm.get('username').touched && registerForm.get('username').errors">
       </div>
-      <div *ngIf="form.username.invalid && form.username.touched" class="register--error" >
-        Bitte gib einen Benutzernamen an :)
-      </div>
+      <ng-container *ngTemplateOutlet="required; context: { $implicit: 'username' }"></ng-container>
 
       <div class="auth__item__wrapper">
-        <input type="email" id="email" name="email" email
-               class="form-control auth__item" formControlName="email" placeholder="E-Mail"
-               [ngClass]="{ 'is-invalid': form.email.touched && form.email.errors }">
+        <input type="email" class="auth__item"
+               formControlName="email" placeholder="E-Mail" email
+               [class.is-invalid]="registerForm.get('email').touched && registerForm.get('email').errors">
       </div>
-
-      <div *ngIf="(form.email.invalid && form.email.touched) || form.email.dirty">
-        <div *ngIf="form.email.errors?.required" class="register--error">
-          E-Mail darf nicht leer sein.
-        </div>
-        <div *ngIf="form.email.dirty && form.email.errors" class="register--error">
-          E-Mail nicht valide.
-        </div>
-      </div>
+      <ng-container *ngTemplateOutlet="required; context: { $implicit: 'email' }"></ng-container>
 
       <div class="auth__item__wrapper">
-        <input type="password" id="password" name="password"
-               class="auth__item" formControlName="password" placeholder="Passwort"
-               [ngClass]="{ 'is-invalid': form.password.touched && form.password.errors }">
+        <input type="password" class="auth__item"
+               formControlName="password" placeholder="Passwort"
+               [class.is-invalid]="registerForm.get('password').touched && registerForm.get('password').errors">
       </div>
-      <div *ngIf="form.password.invalid && form.password.touched" class="register--error">
-        Bitte gib ein valides Passwort ein :)
-      </div>
+      <ng-container *ngTemplateOutlet="required; context: { $implicit: 'password' }"></ng-container>
+
       <div class="auth__item__wrapper">
-        <input type="password" id="passwordmatch" name="passwordmatch"
-               class="auth__item" formControlName="passwordmatch" placeholder="Passwort wiederholen"
-               [ngClass]="{ 'is-invalid': form.passwordmatch.invalid && form.passwordmatch.touched }">
+        <input type="password" class="auth__item"
+               formControlName="passwordRepeat" placeholder="Passwort wiederholen"
+               [class.is-invalid]="registerForm.get('passwordRepeat').invalid && registerForm.get('passwordRepeat').touched">
       </div>
-      <div *ngIf="form.passwordmatch.errors && form.passwordmatch.touched" class="register--error">
-        Passwörter stimmen nicht überein.
+      <ng-container *ngTemplateOutlet="required; context: { $implicit: 'passwordRepeat' }"></ng-container>
+      <div *ngIf="registerForm.errors?.passwordRepeat" class="register--error">
+        Passwörter stimmen nicht überein!
       </div>
 
       <div *ngIf="submitted && registerForm.invalid" class="register--error">
-      Registrierung kann nicht abgeschlossen werden. Fehler im Formular.
-    </div>
+        Registrierung kann nicht abgeschlossen werden. Fehler im Formular.
+      </div>
 
       <div class="submit">
         <button class="form-control submit__button" type="submit">Registrieren</button>
-        <!--[disabled]="registerForm.invalid"-->
       </div>
 
       <div class="auth__footer">
         <span class="login">Schon Mitglied? <a [routerLink]="['/login']">Zum Login.</a></span>
       </div>
     </form>
+
+    <ng-template #required let-fieldName>
+      <div *ngIf="registerForm.get(fieldName).errors?.required && registerForm.get(fieldName).touched" class="register--error">
+        Dieses Feld darf nicht leer sein.
+      </div>
+    </ng-template>
+
   </div>
 </div>

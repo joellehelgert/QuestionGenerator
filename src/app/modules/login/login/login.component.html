@@ -5,37 +5,40 @@
       <h3 class="auth__heading">Login</h3>
     </div>
 
-    <form [formGroup]="loginForm" #formData='ngForm' class="form-group auth__body" (ngSubmit)="onSubmit(formData)">
+    <form [formGroup]="loginForm" #formData='ngForm' class="auth__body" (ngSubmit)="onSubmit(formData)">
+      <div class="auth__item__wrapper">
+        <input type="email" class="auth__item"
+               formControlName="email" placeholder="E-Mail" email
+               [class.is-invalid]="loginForm.get('email').touched && loginForm.get('email').errors">
+      </div>
+      <ng-container *ngTemplateOutlet="required; context: { $implicit: 'email' }"></ng-container>
+
+      <div class="auth__item__wrapper">
+        <input type="password" class="auth__item"
+               formControlName="password" placeholder="Passwort"
+               [class.is-invalid]="loginForm.get('password').touched && loginForm.get('password').errors">
+      </div>
+      <ng-container *ngTemplateOutlet="required; context: { $implicit: 'password' }"></ng-container>
+
       <div *ngIf="submitted && loginForm.invalid" class="login--error">
         Login kann nicht abgeschlossen werden. Fehler im Formular.
       </div>
 
-      <div class="auth__item__wrapper">
-        <input type="email" id="email" name="email"
-               class="form-control auth__item" formControlName="email" placeholder="E-Mail"
-               [ngClass]="{ 'is-invalid': form.email.touched && form.email.errors }">
-      </div>
-      <div *ngIf="form.email.invalid && form.email.touched" class="login--error">
-        Bitte gib eine valide Mail Adresse ein :)
-      </div>
-
-      <div class="auth__item__wrapper">
-        <input type="password" id="password" name="password"
-               class="auth__item" formControlName="password" placeholder="Passwort"
-               [ngClass]="{ 'is-invalid': form.password.touched && form.password.errors }">
-      </div>
-      <div *ngIf="form.password.invalid && form.password.touched" class="login--error">
-        Passwort ist falsch :/
-      </div>
-
       <div class="submit">
-        <button class="form-control submit__button" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button class="form-control submit__button" type="submit">Login</button>
       </div>
 
       <div class="auth__footer">
         <span class="login">Noch kein Mitglied? <a [routerLink]="['/register']">Registriere dich hier.</a></span>
       </div>
     </form>
+
+    <ng-template #required let-fieldName>
+      <div *ngIf="loginForm.get(fieldName).errors?.required && loginForm.get(fieldName).touched" class="login--error">
+        Dieses Feld darf nicht leer sein.
+      </div>
+    </ng-template>
+
   </div>
 
 </div>
