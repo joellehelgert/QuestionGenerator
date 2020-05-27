@@ -6,7 +6,9 @@ describe('workspace-project App', () => {
 
   beforeEach(() => {
     page = new AppPage();
+    browser.waitForAngularEnabled(true);
   });
+
 
   it('should display question generator title', () => {
     page.navigateTo();
@@ -20,35 +22,31 @@ describe('workspace-project App', () => {
       expect(page.getQuestionnaireTitleText()).toEqual('secondQuestionnaire');
   });
 
-  // not able to get type afterwards
-  /*
-  it('should navigate through question types with the slider', () => {
+
+  it('should navigate through question types with the slider', async () => {
       page.navigateTo();
       expect(page.getQuestionTypeTitleText()).toEqual('TimeLineQuestions');
       page.navigateTroughQuestions();
-      browser.wait(expect(page.getQuestionTypeTitleText()).toEqual('BuzzerQuestions'), 5000);
+      browser.driver.sleep(2000); // sleeps for sliding
+      expect(await page.getQuestionTypeTitleText()).toEqual('BuzzerQuestions');
   });
-  */
 
-  it('should add question', () => {
+  it('should add question', async () => {
       page.navigateTo();
+      expect(page.getLastQuestionTitle()).not.toBe('Question Title 1');
       page.addQuestion('Question Title 1');
-      // Task error
-      // expect(page.getLastQuestionTitle()).toBe('Question Title 1');
   });
 
-  it('should remove question', () => {
+  it('should update a question', async () => {
+    page.navigateTo();
+    expect(page.getLastQuestionTitle()).toBe('Question Title 1');
+    page.updateQuestionTitle('Question Title Updated');
+  });
+
+  it('should remove question', async () => {
       page.navigateTo();
+      expect(page.getLastQuestionTitle()).toBe('Question Title Updated');
       page.removeLastQuestion();
-      // Task error
-      // expect(page.getLastQuestionTitle()).not.toBe('Question Title 1');
-  });
-
-  it('should update a question', () => {
-      page.navigateTo();
-      page.updateQuestionTitle('Question Title Updated');
-      // Task error
-      // expect(page.getLastQuestionTitle()).toBe('Question Title Updated');
   });
 
   afterEach(async () => {
