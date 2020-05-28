@@ -9,14 +9,12 @@ import { QuestionnaireNavComponent } from './components/questionnaire-nav/questi
 import { QuestionItemViewComponent } from './components/question-item-view/question-item-view.component';
 import { QuestionnaireService } from '../../services/questionnaire/questionnaire.service';
 import { LoadingComponent } from '../loading/loading/loading.component';
-import { HintComponent } from 'src/app/components/hint/hint.component';
 import { QuestionnaireRoutingModule } from './questionnaire-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    HintComponent,
     LoadingComponent,
     QuestionComponent,
     QuestionnaireItemComponent,
