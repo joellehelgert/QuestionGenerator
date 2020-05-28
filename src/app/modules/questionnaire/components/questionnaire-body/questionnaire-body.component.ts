@@ -3,7 +3,9 @@ import { QuestionService, FirebaseQuestionObject } from '../../../../services/qu
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
-import { HintType } from '../../../../components/hint/hint.component';
+import { HintType } from '../../../hint/components/hint.component';
+import { Store } from '@ngxs/store';
+import { AddSuccess } from 'src/app/states/HintState';
 
 
 
@@ -23,7 +25,7 @@ export class QuestionnaireBodyComponent implements OnInit {
     activeQuestionnaire = '';
     HintType = HintType;
 
-    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService) { }
+    constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService, private store: Store) { }
 
     ngOnInit(): void {
         this.loadQuestionnaires();
@@ -73,6 +75,8 @@ export class QuestionnaireBodyComponent implements OnInit {
                         } else {
                             this.questionnaire.questions.push(data);
                         }
+
+                        this.store.dispatch(new AddSuccess('Data loading was successfully! 🎉'));
                     });
                 });
             }
@@ -100,6 +104,7 @@ export class QuestionnaireBodyComponent implements OnInit {
             }),
         ).subscribe((questionnaires) => {
             if (questionnaires && questionnaires.length > 0) {
+                this.store.dispatch(new AddSuccess('Data loading was successfully! 🎉'));
                 this.success = 'Data loading was successfully! 🎉';
                 this.loadingOverview = false;
                 this.questionnaires = questionnaires;

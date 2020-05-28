@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { BuzzerAnswer, Question, QuestionType, TimeLineAnswer, QuestionService, FirebaseQuestionObject } from '../../../../services/question/question.service';
-import { count } from "rxjs/operators";
+import { count } from 'rxjs/operators';
 
 interface Error {
     isTrue: boolean;

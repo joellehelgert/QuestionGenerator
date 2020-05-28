@@ -2,8 +2,8 @@ import {Injectable, NgZone} from '@angular/core';
 import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {switchMap, map, tap} from "rxjs/operators";
-import { environment } from "../../../environments/environment";
+import {switchMap, map, tap} from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({

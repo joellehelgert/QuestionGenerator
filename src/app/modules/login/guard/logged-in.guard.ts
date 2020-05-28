@@ -8,7 +8,7 @@ import {
   CanActivateChild, CanLoad, UrlSegment, Route
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import {AuthService} from "../../../services/auth/auth.service";
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
