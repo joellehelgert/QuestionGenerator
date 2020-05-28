@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from "../../../services/auth/auth.service";
-import {switchMap} from "rxjs/operators";
-import {faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-logout',
@@ -11,19 +9,24 @@ import {faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
   styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent implements OnInit {
-  faSignOut = faSignOutAlt;
+  clickEventsubscription: Subscription;
   constructor(
     private authService: AuthService,
     private router: Router,
 
-  ) { }
-
-  ngOnInit(): void {
-    this.authService.logout().then(
-      (success) => {
-        this.router.navigate(['/login']);
-      }).catch((error) => {
-      window.alert(error.message);
+  ) {
+    this.clickEventsubscription = this.authService.getClickEvent().subscribe(() => {
+      this.authService.logout().then(
+        (success) => {
+          this.router.navigate(['/login']);
+        }).catch((error) => {
+        window.alert(error.message);
+      });
     });
   }
+
+  ngOnInit(): void {
+    this.router.navigate(['/login']);
+  }
+
 }
