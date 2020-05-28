@@ -27,15 +27,13 @@ export class AuthService {
           if (user){
             this.userData = user;
             this.setUser(JSON.stringify(this.userData));
+            console.log('worked');
+            this.router.navigate(['/questionnaire']);
             // JSON.parse(localStorage.getItem('user'));
           } else {
             // this.setUser(null);
             // JSON.parse(localStorage.getItem('user'));
           }
-        });
-        this.ngZone.run(() => {
-          console.log('worked');
-          this.router.navigate(['/questionnaire']);
         });
       }).catch((error) => {
       this.setUser(null); // localStorage.setItem('user', null);
