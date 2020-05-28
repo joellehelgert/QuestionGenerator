@@ -20,7 +20,7 @@
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'password' }"></ng-container>
 
-      <div *ngIf="submitted && loginForm.invalid" class="login--error">
+      <div *ngIf="submitted && loginForm.errors" class="login--error">
         Login kann nicht abgeschlossen werden. Fehler im Formular.
       </div>
 

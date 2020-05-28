@@ -3,6 +3,7 @@ import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {switchMap, map, tap} from "rxjs/operators";
+import { environment } from "../../../environments/environment";
 
 
 @Injectable({
@@ -16,35 +17,35 @@ export class AuthService {
     private router: Router,
     public ngZone: NgZone,
   ) {
-    this.auth.authState.subscribe(user => {
-      if (user){
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user'));
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
-      }
-    });
+
   }
   login(email: string, password: string) {
     this.auth.signInWithEmailAndPassword(email, password).then(
       (success) => {
+
+        this.auth.authState.subscribe(user => {
+          if (user){
+            this.userData = user;
+            this.setUser(JSON.stringify(this.userData));
+            // JSON.parse(localStorage.getItem('user'));
+          } else {
+            // this.setUser(null);
+            // JSON.parse(localStorage.getItem('user'));
+          }
+        });
         this.ngZone.run(() => {
           console.log('worked');
           this.router.navigate(['/questionnaire']);
         });
       }).catch((error) => {
-      localStorage.setItem('user', null);
+      this.setUser(null); // localStorage.setItem('user', null);
       window.alert(error.message);
     });
   }
   isLoggedIn() {
-    /*return localStorage.getItem('user') != null;
-    return localStorage.getItem('user') || null;*/
-    const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
-    if (user !== null) {
+    // const user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.getUser());
+    if (this.getUser() !== null) {
       return true;
     } else {
       return false;
@@ -53,8 +54,20 @@ export class AuthService {
 
   logout() {
     return this.auth.signOut().then(() => {
-      localStorage.removeItem('user');
+      this.deleteUser();
       this.router.navigate(['/login']);
     });
+  }
+
+  setUser(JSONstring: string) {
+    localStorage.setItem('user', JSONstring);
+  }
+
+  getUser(): string | null {
+    return localStorage.getItem('user') || null;
+  }
+
+  deleteUser() {
+    localStorage.removeItem('user');
   }
 }

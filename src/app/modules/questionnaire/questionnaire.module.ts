@@ -23,7 +23,7 @@ import { QuestionnaireRoutingModule } from './questionnaire-routing.module';
     QuestionnaireBodyComponent,
     QuestionnaireNavComponent,
     QuestionItemViewComponent],
-  exports: [QuestionComponent, QuestionnaireItemComponent, QuestionnaireBodyComponent, QuestionnaireNavComponent],
+  exports: [QuestionComponent, QuestionnaireItemComponent, QuestionnaireBodyComponent, QuestionnaireNavComponent, LoadingComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,

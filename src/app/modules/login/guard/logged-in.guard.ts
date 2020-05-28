@@ -35,12 +35,9 @@ export class LoggedInGuard implements CanActivate, CanActivateChild, CanLoad{
       this.router.navigate(['/login']);
       return false;
     }
-
-    // everything is fine. Start loading the module...
     return true;
   }
   isLoggedIn() {
-    // checks if the user is not logged in. If so, the user will be redirected to the login page
     if (!this.authService.isLoggedIn()) {
       return this.router.createUrlTree(['/login']);
     }
