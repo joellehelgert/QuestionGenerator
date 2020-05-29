@@ -1,6 +1,6 @@
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { AddError, AddSuccess } from 'src/app/states/HintState';
 
@@ -39,7 +39,7 @@ export class FirestoreCrudService<T extends Entity> {
           .doc(path)
           .set(entity)
           .then(ref => {
-            this.store.dispatch(new AddSuccess('adding your changes was successfully!'))
+            this.store.dispatch(new AddSuccess('adding your changes was successful! 🎉'))
             resolve(entity);
           }).catch(error => {
             this.store.dispatch(new AddError({statusCode: 500, message: 'We could not add your changes, please try again.'}));
@@ -112,12 +112,14 @@ export class FirestoreCrudService<T extends Entity> {
         .doc<T>(entity.path as string)
         .set(entity)
         .then(() => {
+          console.log('updatet');
+          this.store.dispatch(new AddSuccess( 'Your update was successful. 🎉'));
           resolve({
             ...entity,
           });
         }).catch(error => {
           console.error(error);
-          this.store.dispatch(new AddError({statusCode: 500, message: 'We could not update your changes, please try again.'}));
+          this.store.dispatch(new AddError({statusCode: 500, message: '❌ We could not update your changes, please try again.'}));
           reject();
         });
     });
@@ -129,10 +131,11 @@ export class FirestoreCrudService<T extends Entity> {
         .doc<T>(path)
         .delete()
         .then(() => {
+          this.store.dispatch(new AddSuccess( 'Your deletion was successful. 🎉'));
           resolve();
         }).catch(error => {
           console.error(error);
-          this.store.dispatch(new AddError({statusCode: 500, message: 'We could not delete the entity, please try again.'}));
+          this.store.dispatch(new AddError({statusCode: 500, message: '❌ We could not delete the entity, please try again.'}));
           reject();
         });
     });

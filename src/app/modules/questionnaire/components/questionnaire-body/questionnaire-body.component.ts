@@ -19,7 +19,6 @@ export class QuestionnaireBodyComponent implements OnInit {
     loadingOverview = true;
     loadingQuestions = true;
     error = null;
-    success = null;
     activeQuestionnaireItem: Questionnaire;
     activeQuestionnaire = '';
 
@@ -39,7 +38,6 @@ export class QuestionnaireBodyComponent implements OnInit {
         this.questionnaireService.getQuestionnaire(this.activeQuestionnaire).pipe(
             tap(() => {
                 this.error = null;
-                this.success = null;
                 this.loadingQuestions = true;
             }),
             switchMap((search) => {
@@ -83,7 +81,6 @@ export class QuestionnaireBodyComponent implements OnInit {
         this.questionnaireService.getAllQuestionnaires().pipe(
             tap(() => {
                 this.error = null;
-                this.success = null;
                 this.loadingOverview = true;
                 this.loadingQuestions = true;
             }),
@@ -100,7 +97,7 @@ export class QuestionnaireBodyComponent implements OnInit {
             }),
         ).subscribe((questionnaires) => {
             if (questionnaires && questionnaires.length > 0) {
-                this.store.dispatch(new AddSuccess('Data loading was successfully! 🎉'));
+                this.store.dispatch(new AddSuccess('Data loading was successful! 🎉'));
                 this.loadingOverview = false;
                 this.questionnaires = questionnaires;
                 this.questionnaires.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
