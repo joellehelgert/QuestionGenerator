@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
+import {AuthService} from "../../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -19,6 +21,8 @@ export class HeaderComponent implements OnInit {
 
   onClick() {
     console.log('sign out clicked');
+    this.router.navigate(['/logout']);
+    this.authService.sendClickEvent();
   }
 
 }

@@ -1,7 +1,8 @@
-import {Injectable, NgZone} from '@angular/core';
+import {Injectable } from '@angular/core';
 import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable, Subject } from "rxjs";
 import {switchMap, map, tap} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
@@ -11,38 +12,51 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   userData;
+  private subject = new Subject<any>();
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    public ngZone: NgZone,
   ) {
 
   }
+  /*
+  getCurrentUser(){
+    return new Promise<any>((resolve, reject) => {
+      this.auth.onAuthStateChanged( user => {
+        if (user) {
+          resolve(user);
+          console.log(user);
+        } else {
+          reject('No user logged in');
+        }
+      });
+    });
+  }*/
   login(email: string, password: string) {
-    this.auth.signInWithEmailAndPassword(email, password).then(
+    console.log(this.auth.idToken);
+    console.log(this.auth.idTokenResult);
+    return this.auth.signInWithEmailAndPassword(email, password).then(
       (success) => {
-
         this.auth.authState.subscribe(user => {
           if (user){
             this.userData = user;
             this.setUser(JSON.stringify(this.userData));
-            console.log('worked');
+            // this.auth.signInWithCustomToken();
+            // this.auth.onAuthStateChanged()
             this.router.navigate(['/questionnaire']);
-            // JSON.parse(localStorage.getItem('user'));
           } else {
-            // this.setUser(null);
-            // JSON.parse(localStorage.getItem('user'));
+            this.setUser(null);
           }
         });
       }).catch((error) => {
-      this.setUser(null); // localStorage.setItem('user', null);
+      this.setUser(null);
+      return error;
       window.alert(error.message);
     });
   }
   isLoggedIn() {
-    // const user = JSON.parse(localStorage.getItem('user'));
-    console.log(this.getUser());
+    // console.log(this.getUser());
     if (this.getUser() !== null) {
       return true;
     } else {
@@ -67,5 +81,12 @@ export class AuthService {
 
   deleteUser() {
     localStorage.removeItem('user');
+  }
+
+  sendClickEvent() {
+    this.subject.next();
+  }
+  getClickEvent(): Observable<any>{
+    return this.subject.asObservable();
   }
 }

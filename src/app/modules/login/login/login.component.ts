@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators, NgForm, FormControl} from '@angular/
 import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth/auth.service';
+import {catchError, switchMap} from "rxjs/operators";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -12,6 +14,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  error: Error = null;
   constructor(
     private formBuilder: FormBuilder,
     private auth: AngularFireAuth,
