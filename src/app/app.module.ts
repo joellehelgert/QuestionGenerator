@@ -14,7 +14,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { HttpClientModule } from '@angular/common/http';
 import {AuthModule} from './modules/login/auth.module';
 import { HintState } from './states/HintState';
-import { HintComponent } from './modules/hint/components/hint.component';
 import { HintModule } from './modules/hint/hint.module';
 
 @NgModule({
@@ -37,6 +36,6 @@ import { HintModule } from './modules/hint/hint.module';
     HintModule
   ],
   providers: [],
-  bootstrap: [AppComponent, HintComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
