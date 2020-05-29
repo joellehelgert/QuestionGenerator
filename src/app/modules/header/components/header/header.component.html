@@ -1,4 +1,6 @@
 <div class="header">
     <span class="header__title">Question Generator</span>
-    <span class="header__icon" (click)="onClick()"><fa-icon [icon]="faSignOut"></fa-icon></span>
+    <ng-container *ngIf="authService.isLoggedIn()">
+        <span class="header__icon" (click)="onClick()"><fa-icon [icon]="faSignOut"></fa-icon></span>
+    </ng-container>
 </div>
