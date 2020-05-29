@@ -4,12 +4,12 @@
   &__wrapper {
     display: flex;
     margin: 2rem 0 3rem 0;
-    height: calc(100vh - 12rem);
+    min-height: calc(100vh - 12rem);
     position: relative;
 
     @include media-breakpoint-down(md) {
       display: block;
-      height: calc(100vh - 13.7rem);
+      min-height: calc(100vh - 13.7rem);
     }
   }
 

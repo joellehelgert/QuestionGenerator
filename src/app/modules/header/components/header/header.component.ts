@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
   onClick() {
     console.log('sign out clicked');
     this.router.navigate(['/logout']);
-    this.authService.sendClickEvent();
   }
 
 }

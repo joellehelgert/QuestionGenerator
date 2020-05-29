@@ -11,24 +11,23 @@ import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent implements OnInit {
-  clickEventsubscription: Subscription;
   constructor(
     private authService: AuthService,
     private router: Router,
 
   ) {
-    this.clickEventsubscription = this.authService.getClickEvent().subscribe(() => {
-      this.authService.logout().then(
-        (success) => {
-          this.router.navigate(['/login']);
-        }).catch((error) => {
-        window.alert(error.message);
-      });
-    });
+
   }
 
   ngOnInit(): void {
-    this.router.navigate(['/login']);
+    this.authService.logout().then(
+      (success) => {
+        this.router.navigate(['/login']);
+      }).catch((error) => {
+      window.alert(error.message);
+    });
   }
+
+
 
 }

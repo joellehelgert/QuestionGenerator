@@ -7,7 +7,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 import { of } from 'rxjs';
 import {RouterTestingModule} from "@angular/router/testing";
 
-describe('LoginComponent', () => {
+xdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let router: Router;
