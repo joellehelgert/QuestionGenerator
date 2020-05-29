@@ -3,6 +3,8 @@ import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, Subject } from "rxjs";
+import {switchMap, map, tap} from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -40,8 +42,8 @@ export class AuthService {
           if (user){
             this.userData = user;
             this.setUser(JSON.stringify(this.userData));
-            //this.auth.signInWithCustomToken();
-            //this.auth.onAuthStateChanged()
+            // this.auth.signInWithCustomToken();
+            // this.auth.onAuthStateChanged()
             this.router.navigate(['/questionnaire']);
           } else {
             this.setUser(null);
