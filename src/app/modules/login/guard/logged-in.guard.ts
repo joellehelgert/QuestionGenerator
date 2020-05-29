@@ -19,14 +19,12 @@ export class LoggedInGuard implements CanActivate, CanActivateChild, CanLoad{
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('canActivate' + this.isLoggedIn());
     return this.isLoggedIn();
   }
 
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('canAcrivateChild');
     return this.isLoggedIn();
   }
 

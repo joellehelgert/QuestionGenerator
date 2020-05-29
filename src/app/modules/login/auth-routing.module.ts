@@ -6,7 +6,6 @@ import {LoggedInGuard} from './guard/logged-in.guard';
 import {LoggedOutGuard} from './guard/logged-out.guard';
 import {LogoutComponent} from './logout/logout.component';
 
-
 const routes: Routes = [{
   path: 'login',
   canActivate: [LoggedOutGuard],

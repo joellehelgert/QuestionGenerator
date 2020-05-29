@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators, NgForm, FormControl} from '@angular/forms';
-import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth/auth.service';
-import {catchError, switchMap} from "rxjs/operators";
-import {of} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -35,15 +33,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (this.loginForm.valid) {
-      console.log('login');
       this.authService.login(email, password);
-      /*this.auth.signInWithEmailAndPassword(formData.value.email, formData.value.password).then(
-        (success) => {
-          this.router.navigate(['/questionnaire']);
-        }).catch(
-        (err) => {
-          console.log('Error Login');
-        });*/
     }
   }
 }
