@@ -9,12 +9,14 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {AuthService} from '../../../services/auth/auth.service';
+import {AuthState} from "../../../states/AuthState";
+import {Store} from "@ngxs/store";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggedOutGuard implements CanActivate, CanActivateChild {
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private store: Store) {
   }
 
   canActivate(
@@ -29,12 +31,10 @@ export class LoggedOutGuard implements CanActivate, CanActivateChild {
   }
 
   check() {
-    // checks if the user is logged in. If so go to the dashboard instead
-    if (this.authService.isLoggedIn()) {
+    const isAuthenticated = this.store.selectSnapshot(AuthState.isAuthenticated);
+    if (isAuthenticated) {
       return this.router.createUrlTree(['/questionnaire']);
     }
-
-    // ... otherwise let the user pass
     return true;
   }
 }

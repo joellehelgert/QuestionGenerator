@@ -2,9 +2,8 @@ import {Injectable } from '@angular/core';
 import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, Subject } from 'rxjs';
-import {Store} from "@ngxs/store";
-import {AddError} from "../../states/HintState";
+import { Observable, of, Subject } from 'rxjs';
+import { Store } from "@ngxs/store";
 
 
 @Injectable({
@@ -21,51 +20,24 @@ export class AuthService {
   ) {
 
   }
-  /*
-  getCurrentUser(){
-    return new Promise<any>((resolve, reject) => {
-      this.auth.onAuthStateChanged( user => {
-        if (user) {
-          resolve(user);
-          console.log(user);
-        } else {
-          reject('No user logged in');
-        }
-      });
-    });
-  }*/
-  login(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password).then(
-      (success) => {
-        this.auth.authState.subscribe(user => {
-          if (user){
-            this.userData = user;
-            this.setUser(JSON.stringify(this.userData));
-            this.router.navigate(['/questionnaire']);
-          } else {
-            this.setUser(null);
-            this.store.dispatch(new AddError({statusCode: 400, message: 'There is no user with this email address'}));
-          }
-        });
-      }).catch((error) => {
-        this.store.dispatch(new AddError({statusCode: 400, message: 'There is no user with this email address'}));
+
+  login(email: string, password: string): Observable<{ token: string }> {
+    this.auth.authState.subscribe(user => {
+      if (user){
+        this.userData = user;
+        this.setUser(JSON.stringify(this.userData));
+      } else {
         this.setUser(null);
-        return error;
+      }
     });
-  }
-  isLoggedIn() {
-    if (this.getUser() !== null) {
-      return true;
-    } else {
-      return false;
-    }
+    return of({
+      token: this.getUser()
+    });
   }
 
-  logout() {
-    return this.auth.signOut().then(() => {
-      this.deleteUser();
-      this.router.navigate(['/login']);
-    });
+  logout(stateToken): Observable<null>{
+    this.deleteUser(stateToken);
+    return of(null);
   }
 
   setUser(JSONstring: string) {
@@ -76,7 +48,8 @@ export class AuthService {
     return localStorage.getItem('user') || null;
   }
 
-  deleteUser() {
+  deleteUser(stateToken) {
     localStorage.removeItem('user');
+    localStorage.removeItem('stateToken');
   }
 }

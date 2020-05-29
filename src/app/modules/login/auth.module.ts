@@ -6,6 +6,8 @@ import {RegisterComponent} from './register/register.component';
 import {AuthService} from '../../services/auth/auth.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {LogoutComponent} from './logout/logout.component';
+import { NgxsModule } from "@ngxs/store";
+import { AuthState } from "../../states/AuthState";
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import {LogoutComponent} from './logout/logout.component';
   imports: [
     AuthRoutingModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([AuthState]),
   ],
   exports: [
   ],

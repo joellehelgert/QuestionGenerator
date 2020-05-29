@@ -34,7 +34,7 @@ import { HintModule } from './modules/hint/hint.module';
     AngularFireAuthModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HintModule
+    HintModule,
   ],
   providers: [],
   bootstrap: [AppComponent, HintComponent]

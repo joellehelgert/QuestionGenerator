@@ -9,12 +9,14 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {AuthService} from '../../../services/auth/auth.service';
+import {Store} from "@ngxs/store";
+import {AuthState} from "../../../states/AuthState";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggedInGuard implements CanActivate, CanActivateChild, CanLoad{
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private store: Store) {
   }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -29,14 +31,17 @@ export class LoggedInGuard implements CanActivate, CanActivateChild, CanLoad{
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.authService.isLoggedIn()) {
+    const isAuthenticated = this.store.selectSnapshot(AuthState.isAuthenticated);
+    if (!isAuthenticated) {
       this.router.navigate(['/login']);
       return false;
     }
     return true;
   }
+
   isLoggedIn() {
-    if (!this.authService.isLoggedIn()) {
+    const isAuthenticated = this.store.selectSnapshot(AuthState.isAuthenticated);
+    if (!isAuthenticated) {
       return this.router.createUrlTree(['/login']);
     }
     return true;

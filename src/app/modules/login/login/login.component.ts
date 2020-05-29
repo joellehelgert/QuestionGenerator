@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth/auth.service';
+import {AddError} from "../../../states/HintState";
+import {Store} from "@ngxs/store";
+import {Login} from "../../../states/AuthState";
 
 @Component({
   selector: 'app-login',
@@ -13,11 +16,13 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   error: Error = null;
+  readonly type = '[Auth] Login';
   constructor(
     private formBuilder: FormBuilder,
     private auth: AngularFireAuth,
     private router: Router,
     private authService: AuthService,
+    public store: Store,
   ) { }
 
   ngOnInit(): void {
@@ -28,12 +33,17 @@ export class LoginComponent implements OnInit {
   }
   onSubmit() {
     const { email, password } = this.loginForm.value;
+    console.log(email.toString());
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
     if (this.loginForm.valid) {
-      this.authService.login(email, password);
+      this.store.dispatch(new Login({
+        email: email.toString(),
+        password: password.toString(),
+      }));
+      // this.authService.login(this.payload);
     }
   }
 }
