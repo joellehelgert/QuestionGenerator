@@ -3,11 +3,8 @@ import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, Subject } from 'rxjs';
-import {switchMap, map, tap} from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import {Store} from "@ngxs/store";
 import {AddError} from "../../states/HintState";
-import {SimpleErrorObject} from "../../states/HintState";
 
 
 @Injectable({
@@ -38,16 +35,12 @@ export class AuthService {
     });
   }*/
   login(email: string, password: string) {
-    console.log(this.auth.idToken);
-    console.log(this.auth.idTokenResult);
     return this.auth.signInWithEmailAndPassword(email, password).then(
       (success) => {
         this.auth.authState.subscribe(user => {
           if (user){
             this.userData = user;
             this.setUser(JSON.stringify(this.userData));
-            // this.auth.signInWithCustomToken();
-            // this.auth.onAuthStateChanged()
             this.router.navigate(['/questionnaire']);
           } else {
             this.setUser(null);
@@ -61,7 +54,6 @@ export class AuthService {
     });
   }
   isLoggedIn() {
-    // console.log(this.getUser());
     if (this.getUser() !== null) {
       return true;
     } else {
@@ -86,12 +78,5 @@ export class AuthService {
 
   deleteUser() {
     localStorage.removeItem('user');
-  }
-
-  sendClickEvent() {
-    this.subject.next();
-  }
-  getClickEvent(): Observable<any>{
-    return this.subject.asObservable();
   }
 }

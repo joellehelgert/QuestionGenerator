@@ -8,20 +8,20 @@
     <form [formGroup]="loginForm" class="auth__body" (ngSubmit)="onSubmit()">
       <div class="auth__item__wrapper">
         <input type="email" class="auth__item"
-               formControlName="email" placeholder="E-Mail" email
+               formControlName="email" placeholder="E-mail*" email
                [class.is-invalid]="loginForm.get('email').touched && loginForm.get('email').errors">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'email' }"></ng-container>
 
       <div class="auth__item__wrapper">
         <input type="password" class="auth__item"
-               formControlName="password" placeholder="Passwort"
+               formControlName="password" placeholder="Password*"
                [class.is-invalid]="loginForm.get('password').touched && loginForm.get('password').errors">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'password' }"></ng-container>
 
       <div *ngIf="submitted && loginForm.errors" class="login--error">
-        Login kann nicht abgeschlossen werden. Fehler im Formular.
+        Login cannot be completed. An error exists in the form.
       </div>
 
       <div class="submit">
@@ -29,13 +29,13 @@
       </div>
 
       <div class="auth__footer">
-        <span class="login">Noch kein Mitglied? <a [routerLink]="['/register']">Registriere dich hier.</a></span>
+        <span class="login">Not a member yet? <a [routerLink]="['/register']">Register here.</a></span>
       </div>
     </form>
 
     <ng-template #required let-fieldName>
       <div *ngIf="loginForm.get(fieldName).errors?.required && loginForm.get(fieldName).touched" class="login--error">
-        Dieses Feld darf nicht leer sein.
+        This field must be filled!
       </div>
     </ng-template>
 

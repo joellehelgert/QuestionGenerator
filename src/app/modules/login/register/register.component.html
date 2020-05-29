@@ -1,57 +1,57 @@
 <div class="register__wrapper">
   <div class="auth">
     <div class="auth__header">
-      <h3 class="auth__heading">Registrieren</h3>
+      <h3 class="auth__heading">Register</h3>
     </div>
 
     <form [formGroup]="registerForm" #formData='ngForm' class="auth__body" (ngSubmit)="onSubmit(formData)">
       <div class="auth__item__wrapper">
         <input type="username" class="auth__item"
-               formControlName="username" placeholder="Benutzername"
+               formControlName="username" placeholder="Username*"
                [class.is-invalid]="registerForm.get('username').touched && registerForm.get('username').errors">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'username' }"></ng-container>
 
       <div class="auth__item__wrapper">
         <input type="email" class="auth__item"
-               formControlName="email" placeholder="E-Mail" email
+               formControlName="email" placeholder="E-mail*" email
                [class.is-invalid]="registerForm.get('email').touched && registerForm.get('email').errors">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'email' }"></ng-container>
 
       <div class="auth__item__wrapper">
         <input type="password" class="auth__item"
-               formControlName="password" placeholder="Passwort"
+               formControlName="password" placeholder="Password*"
                [class.is-invalid]="registerForm.get('password').touched && registerForm.get('password').errors">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'password' }"></ng-container>
 
       <div class="auth__item__wrapper">
         <input type="password" class="auth__item"
-               formControlName="passwordRepeat" placeholder="Passwort wiederholen"
+               formControlName="passwordRepeat" placeholder="Repeat password*"
                [class.is-invalid]="registerForm.get('passwordRepeat').invalid && registerForm.get('passwordRepeat').touched">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'passwordRepeat' }"></ng-container>
       <div *ngIf="registerForm.errors?.passwordRepeat" class="register--error">
-        Passwörter stimmen nicht überein!
+        Passwords do not match!
       </div>
 
       <div *ngIf="submitted && registerForm.invalid" class="register--error">
-        Registrierung kann nicht abgeschlossen werden. Fehler im Formular.
+        Registration cannot be completed. An error exists in the form.
       </div>
 
       <div class="submit">
-        <button class="form-control submit__button" type="submit">Registrieren</button>
+        <button class="form-control submit__button" type="submit">Register</button>
       </div>
 
       <div class="auth__footer">
-        <span class="login">Schon Mitglied? <a [routerLink]="['/login']">Zum Login.</a></span>
+        <span class="login">Already a member? <a [routerLink]="['/login']">Back to login.</a></span>
       </div>
     </form>
 
     <ng-template #required let-fieldName>
       <div *ngIf="registerForm.get(fieldName).errors?.required && registerForm.get(fieldName).touched" class="register--error">
-        Dieses Feld darf nicht leer sein.
+        This field must be filled!
       </div>
     </ng-template>
 
