@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
+import { Store } from '@ngxs/store';
 
 export enum QuestionType {
   TimeLine,
@@ -45,8 +46,8 @@ export interface FirebaseQuestionObject {
 export class QuestionService {
   private crudService: FirestoreCrudService<FirebaseQuestionObject>;
 
-  constructor(private firestore: AngularFirestore) {
-    this.crudService = new FirestoreCrudService<FirebaseQuestionObject>(firestore, 'buzzerQuestions');
+  constructor(private firestore: AngularFirestore,  private store: Store) {
+    this.crudService = new FirestoreCrudService<FirebaseQuestionObject>(firestore, 'buzzerQuestions', store);
   }
 
   getAllQuestions(path: string, parentPath?: string) {

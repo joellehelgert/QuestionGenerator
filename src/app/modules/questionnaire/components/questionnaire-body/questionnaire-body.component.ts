@@ -3,9 +3,10 @@ import { QuestionService, FirebaseQuestionObject } from '../../../../services/qu
 import { Questionnaire, QuestionnaireService } from '../../../../services/questionnaire/questionnaire.service';
 import { of } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
-import { HintType } from '../../../hint/components/hint.component';
 import { Store } from '@ngxs/store';
-import { AddSuccess } from 'src/app/states/HintState';
+import { AddSuccess, AddError } from 'src/app/states/HintState';
+
+
 
 @Component({
     selector: 'app-questionnaire-body',
@@ -52,7 +53,7 @@ export class QuestionnaireBodyComponent implements OnInit {
                     return result;
                 }
 
-                return of<Questionnaire>(); // creates an empty observable
+                return of<Questionnaire>();
             }),
         ).subscribe((questionnaire) => {
             this.questionnaire = questionnaire;
@@ -63,7 +64,7 @@ export class QuestionnaireBodyComponent implements OnInit {
                             if (question) {
                                 return [question];
                             }
-                            return of<FirebaseQuestionObject>(); // creates an empty observable
+                            return of<FirebaseQuestionObject>();
                         })
                     ).subscribe((data: FirebaseQuestionObject) => {
                         this.loadingQuestions = false;
@@ -72,8 +73,6 @@ export class QuestionnaireBodyComponent implements OnInit {
                         } else {
                             this.questionnaire.questions.push(data);
                         }
-
-                        this.store.dispatch(new AddSuccess('Data loading was successfully! 🎉'));
                     });
                 });
             }
@@ -91,7 +90,7 @@ export class QuestionnaireBodyComponent implements OnInit {
             switchMap((search) => {
                 if (search) {
                     return this.questionnaireService.getAllQuestionnaires().pipe(catchError(error => {
-                        console.error('error', error);
+                        this.store.dispatch(new AddError({statusCode: 500, message: "We could not load the specific questionnaire, please try again later"}));
                         this.error = error;
                         return of([]);
                     }));
@@ -102,7 +101,6 @@ export class QuestionnaireBodyComponent implements OnInit {
         ).subscribe((questionnaires) => {
             if (questionnaires && questionnaires.length > 0) {
                 this.store.dispatch(new AddSuccess('Data loading was successfully! 🎉'));
-                this.success = 'Data loading was successfully! 🎉';
                 this.loadingOverview = false;
                 this.questionnaires = questionnaires;
                 this.questionnaires.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
@@ -110,8 +108,13 @@ export class QuestionnaireBodyComponent implements OnInit {
             } else {
                 this.loadingOverview = false;
                 this.loadingQuestions = false;
-                this.error = 'Sorry, a fatal error occured. Please try again. 🚫';
             }
+
+        },
+        (error) =>{
+            this.loadingQuestions = false;
+            this.loadingOverview = false;
+            this.error = error;
         });
     }
 }

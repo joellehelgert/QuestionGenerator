@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
+import { Store } from '@ngxs/store';
 
 export interface Museum extends Entity {
   name: string;
@@ -12,8 +13,8 @@ export interface Museum extends Entity {
 export class MuseumService {
   private crudService: FirestoreCrudService<Museum>;
 
-  constructor(private firestore: AngularFirestore) {
-    this.crudService = new FirestoreCrudService<Museum>(firestore, 'museums');
+  constructor(private firestore: AngularFirestore,  private store: Store) {
+    this.crudService = new FirestoreCrudService<Museum>(firestore, 'museums', store);
   }
 
   getAllMuseums() {

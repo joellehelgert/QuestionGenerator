@@ -1,6 +1,6 @@
 <div class="questionnaire__wrapper">
     <app-loading *ngIf="loadingOverview || loadingQuestions"> </app-loading>
-    <div *ngIf="error">{{error}}</div>
+    <div *ngIf="error"> We are sorry an error occured. Please try again!</div>
     <ng-container *ngIf="!loadingOverview && !loadingQuestions && !error">
         <app-questionnaire-nav [questionnaires]="questionnaires" [activeQuestionnaireItem]="activeQuestionnaireItem"
             (changeQuestionnaire)="setActiveQuestionnaire($event)"></app-questionnaire-nav>

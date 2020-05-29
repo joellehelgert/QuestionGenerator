@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Entity, FirestoreCrudService } from '../CRUD/crud.service';
 import { Question } from '../question/question.service';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
 
 export interface Questionnaire extends Entity {
   id: number;
@@ -30,8 +31,8 @@ interface Reference {
 export class QuestionnaireService {
   private crudService: FirestoreCrudService<Questionnaire>;
 
-  constructor(private firestore: AngularFirestore) {
-    this.crudService = new FirestoreCrudService<Questionnaire>(firestore, 'questionaires');
+  constructor(private firestore: AngularFirestore, private store: Store) {
+    this.crudService = new FirestoreCrudService<Questionnaire>(firestore, 'questionaires', store);
   }
 
   // Questionnaire
