@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {AddError} from "../../../states/HintState";
-import {Store} from "@ngxs/store";
+import { AddError } from '../../../states/HintState';
+import { Store } from '@ngxs/store';
 
 
 @Component({

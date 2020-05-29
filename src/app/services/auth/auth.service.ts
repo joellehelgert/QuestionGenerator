@@ -2,9 +2,8 @@ import {Injectable } from '@angular/core';
 import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, Subject } from 'rxjs';
-import {Store} from "@ngxs/store";
-import {AddError} from "../../states/HintState";
+import { Store } from '@ngxs/store';
+import { AddError } from '../../states/HintState';
 
 
 @Injectable({
@@ -20,19 +19,7 @@ export class AuthService {
   ) {
 
   }
-  /*
-  getCurrentUser(){
-    return new Promise<any>((resolve, reject) => {
-      this.auth.onAuthStateChanged( user => {
-        if (user) {
-          resolve(user);
-          console.log(user);
-        } else {
-          reject('No user logged in');
-        }
-      });
-    });
-  }*/
+
   login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password).then(
       (success) => {

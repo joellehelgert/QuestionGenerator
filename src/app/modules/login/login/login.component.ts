@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from '../../../services/auth/auth.service';
-import {AddError} from "../../../states/HintState";
-import {Store} from "@ngxs/store";
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
+import { AddError } from '../../../states/HintState';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-login',

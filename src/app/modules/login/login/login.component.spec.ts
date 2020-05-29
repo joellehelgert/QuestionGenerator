@@ -4,23 +4,26 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthService} from "../../../services/auth/auth.service";
 import {RouterTestingModule} from "@angular/router/testing";
+import {Store} from "@ngxs/store";
 
 const LoginData = {
   email: '123456@gmx.net',
   password: '123456'
 }
 
-xdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let router: Router;
   let authService: AuthService;
   let emailInput: HTMLInputElement;
   let passwordInput: HTMLInputElement;
+  let store: Store;
 
   beforeEach(async(() => {
     router = jasmine.createSpyObj('Router', ['navigate']);
     authService = jasmine.createSpyObj('AuthService', ['login']);
+    store = jasmine.createSpyObj('Router', ['error']);
 
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
@@ -31,6 +34,9 @@ xdescribe('LoginComponent', () => {
       }, {
         provide: Router,
         useValue: router,
+      }, {
+        provide: Store,
+        useValue: store,
       }],
     })
       .compileComponents();

@@ -29,12 +29,9 @@ export class LoggedOutGuard implements CanActivate, CanActivateChild {
   }
 
   check() {
-    // checks if the user is logged in. If so go to the dashboard instead
     if (this.authService.isLoggedIn()) {
       return this.router.createUrlTree(['/questionnaire']);
     }
-
-    // ... otherwise let the user pass
     return true;
   }
 }
