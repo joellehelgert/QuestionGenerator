@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import {AddError} from "../../../states/HintState";
+import {Store} from "@ngxs/store";
 
 
 @Component({
@@ -16,6 +18,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private auth: AngularFireAuth,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -40,9 +43,9 @@ export class RegisterComponent implements OnInit {
   onSubmit(formData) {
     this.submitted = true;
     if (this.registerForm.invalid) {
-      return;
+      this.store.dispatch(new AddError({statusCode: 500, message: '❌ Form cannot be submitted.'}));
+      throw new Error("Some error occured");
     }
-    console.warn(this.registerForm.value);
 
     if (formData.valid) {
       this.auth.createUserWithEmailAndPassword(formData.value.email, formData.value.password).then(

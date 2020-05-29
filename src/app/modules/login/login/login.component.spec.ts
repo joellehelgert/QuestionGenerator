@@ -1,11 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthService} from "../../../services/auth/auth.service";
-import { of } from 'rxjs';
 import {RouterTestingModule} from "@angular/router/testing";
+
+const LoginData = {
+  email: '123456@gmx.net',
+  password: '123456'
+}
 
 xdescribe('LoginComponent', () => {
   let component: LoginComponent;
@@ -45,9 +48,18 @@ xdescribe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('input should exist', () => {
+  it('component initial state', () => {
     expect(emailInput).not.toBeFalsy();
     expect(passwordInput).not.toBeFalsy();
+    expect(component.submitted).toBeFalsy();
+    expect(component.loginForm).toBeDefined();
+    expect(component.loginForm.invalid).toBeTruthy();
+    expect(component.error).toBeFalsy();
+  });
+
+  it('submitted should be true when onSubmit()', () => {
+    component.onSubmit();
+    expect(component.submitted).toBeTruthy();
   });
 
   it('email not empty and valid test', (done) => {
@@ -92,6 +104,22 @@ xdescribe('LoginComponent', () => {
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('.login--error')).not.toBeNull();
       expect(component.loginForm.value.password).toBe('12', 'password length is too short');
+      done();
+    });
+  });
+
+  it('test login call', (done) => {
+    fixture.whenStable().then(() => {
+      emailInput.value = 'email';
+      emailInput.dispatchEvent(new Event('input'));
+      passwordInput.value = 'password';
+      passwordInput.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(component.loginForm.valid).toBeTrue();
+
+      component.onSubmit();
+      expect(authService.login).toHaveBeenCalledWith('email', 'password');
+      expect(router.navigate).toHaveBeenCalled();
       done();
     });
   });

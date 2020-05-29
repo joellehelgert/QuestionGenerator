@@ -10,7 +10,4 @@ describe('LoggedOutGuard', () => {
     guard = TestBed.inject(LoggedOutGuard);
   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
 });

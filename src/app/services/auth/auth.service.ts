@@ -12,7 +12,6 @@ import {AddError} from "../../states/HintState";
 })
 export class AuthService {
   userData;
-  private subject = new Subject<any>();
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
@@ -44,13 +43,12 @@ export class AuthService {
             this.router.navigate(['/questionnaire']);
           } else {
             this.setUser(null);
-            this.store.dispatch(new AddError({statusCode: 400, message: 'There is no user with this email address'}));
           }
         });
       }).catch((error) => {
-        this.store.dispatch(new AddError({statusCode: 400, message: 'There is no user with this email address'}));
+        this.store.dispatch(new AddError({statusCode: 500, message: '❌ There is no user with this email address.'}));
         this.setUser(null);
-        return error;
+        throw new Error("Some error occured");
     });
   }
   isLoggedIn() {

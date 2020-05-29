@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth/auth.service';
+import {AddError} from "../../../states/HintState";
+import {Store} from "@ngxs/store";
 
 @Component({
   selector: 'app-login',
@@ -15,23 +16,25 @@ export class LoginComponent implements OnInit {
   error: Error = null;
   constructor(
     private formBuilder: FormBuilder,
-    private auth: AngularFireAuth,
     private router: Router,
     private authService: AuthService,
+    private store: Store,
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['123456@gmx.net', [Validators.email, Validators.required]],
-      password: ['123456', [Validators.required]]
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
   onSubmit() {
     const { email, password } = this.loginForm.value;
     this.submitted = true;
     if (this.loginForm.invalid) {
-      return;
+      this.store.dispatch(new AddError({statusCode: 500, message: '❌ Please enter a valid email address.'}));
+      throw new Error("Some error occured");
     }
+
     if (this.loginForm.valid) {
       this.authService.login(email, password);
     }

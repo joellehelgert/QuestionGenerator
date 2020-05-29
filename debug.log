@@ -2,3 +2,6 @@
 [0527/101025.653:ERROR:exception_snapshot_win.cc(98)] thread ID 18528 not found in process
 [0527/101025.687:ERROR:process_reader_win.cc(123)] NtOpenThread: {Zugriff verweigert} Ein Prozess hat einen Zugriff auf ein Objekt angefordert, aber ihm wurden nicht die Rechte für den Zugriff erteilt. (0xc0000022)
 [0527/101025.687:ERROR:exception_snapshot_win.cc(98)] thread ID 18596 not found in process
+[0529/183658.916:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Program Files (x86)\Cuppat\Reports\Dump: Das System kann den angegebenen Pfad nicht finden. (0x3)
+[0529/183658.964:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: Die Pipe wurde beendet. (0x6D)
+[0529/183658.965:ERROR:crash_report_database_win.cc(580)] CreateDirectory C:\Program Files (x86)\Cuppat\Reports\Dump: Das System kann den angegebenen Pfad nicht finden. (0x3)
