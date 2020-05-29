@@ -39,8 +39,6 @@ export interface FirebaseQuestionObject {
   questions: Question[];
 }
 
-
-
 @Injectable({
   providedIn: 'root'
 })

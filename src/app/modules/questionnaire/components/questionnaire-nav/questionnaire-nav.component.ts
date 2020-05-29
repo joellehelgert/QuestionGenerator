@@ -18,8 +18,7 @@ export class QuestionnaireNavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onOpen() {
     this.selectOpen = !this.selectOpen;

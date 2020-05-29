@@ -7,8 +7,6 @@ import { HintType } from '../../../hint/components/hint.component';
 import { Store } from '@ngxs/store';
 import { AddSuccess } from 'src/app/states/HintState';
 
-
-
 @Component({
     selector: 'app-questionnaire-body',
     templateUrl: './questionnaire-body.component.html',
@@ -115,7 +113,6 @@ export class QuestionnaireBodyComponent implements OnInit {
                 this.loadingQuestions = false;
                 this.error = 'Sorry, a fatal error occured. Please try again. 🚫';
             }
-
         });
     }
 }

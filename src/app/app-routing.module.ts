@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './modules/login/login/login.component';
 import {LoggedInGuard} from './modules/login/guard/logged-in.guard';
 
-
 const routes: Routes = [
   {
     path: 'questionnaire',
