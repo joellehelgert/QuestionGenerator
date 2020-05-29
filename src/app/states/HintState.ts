@@ -49,6 +49,12 @@ export class HintState {
       return state.errors;
   }
 
+  // ----- Successes ------
+  @Selector()
+  static getSuccesses(state: HintStateModel) {
+      return state.successes;
+  }
+
 
   @Action(AddError)
   addError(ctx: StateContext<HintStateModel>, action: AddError) {
@@ -70,12 +76,6 @@ export class HintState {
       ...state,
       errors: newErrors,
     });
-  }
-
-  // ----- Successes ------
-  @Selector()
-  static getSuccesses(state: HintStateModel) {
-      return state.successes;
   }
 
   @Action(AddSuccess)

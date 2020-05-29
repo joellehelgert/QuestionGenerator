@@ -87,7 +87,7 @@ export class QuestionnaireBodyComponent implements OnInit {
             switchMap((search) => {
                 if (search) {
                     return this.questionnaireService.getAllQuestionnaires().pipe(catchError(error => {
-                        this.store.dispatch(new AddError({statusCode: 500, message: "We could not load the specific questionnaire, please try again later"}));
+                        this.store.dispatch(new AddError({statusCode: 500, message: 'We could not load the specific questionnaire, please try again later'}));
                         this.error = error;
                         return of([]);
                     }));
@@ -108,7 +108,7 @@ export class QuestionnaireBodyComponent implements OnInit {
             }
 
         },
-        (error) =>{
+        (error) => {
             this.loadingQuestions = false;
             this.loadingOverview = false;
             this.error = error;

@@ -2,14 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
-import {AuthService} from "../../../services/auth/auth.service";
-import {RouterTestingModule} from "@angular/router/testing";
-import {Store} from "@ngxs/store";
+import {AuthService} from '../../../services/auth/auth.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Store} from '@ngxs/store';
 
 const LoginData = {
   email: '123456@gmx.net',
   password: '123456'
-}
+};
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -31,7 +31,7 @@ describe('LoginComponent', () => {
       providers: [{
         provide: AuthService,
         useValue: authService,
-      },{
+      }, {
         provide: Store,
         useValue: store,
       },
@@ -91,7 +91,6 @@ describe('LoginComponent', () => {
       emailInput.value = LoginData.email;
       emailInput.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-      console.log(fixture.nativeElement);
       expect(component.loginForm.valid).toBeFalsy();
       expect(fixture.nativeElement.querySelector('.login--error')).toBeTruthy();
       expect(fixture.nativeElement.querySelector('.login--error').textContent).toContain('This field must be filled!');

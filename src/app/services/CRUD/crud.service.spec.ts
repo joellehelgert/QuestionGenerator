@@ -77,7 +77,7 @@ describe('Firestore CRUD Service', () => {
   let httpMock: HttpTestingController;
   let service: FirestoreCrudService<FirebaseQuestionObject>;
   let angularFirestore: AngularFirestore;
-  let store: Store;
+  const store: Store;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

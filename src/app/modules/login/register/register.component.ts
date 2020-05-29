@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
     if (this.registerForm.invalid) {
       this.store.dispatch(new AddError({statusCode: 500, message: '❌ Form cannot be submitted.'}));
-      throw new Error("Some error occured");
+      throw new Error('Some error occured');
     }
 
     if (formData.valid) {

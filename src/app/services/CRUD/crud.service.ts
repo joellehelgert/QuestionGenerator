@@ -39,7 +39,7 @@ export class FirestoreCrudService<T extends Entity> {
           .doc(path)
           .set(entity)
           .then(ref => {
-            this.store.dispatch(new AddSuccess('adding your changes was successful! 🎉'))
+            this.store.dispatch(new AddSuccess('adding your changes was successful! 🎉'));
             resolve(entity);
           }).catch(error => {
             this.store.dispatch(new AddError({statusCode: 500, message: 'We could not add your changes, please try again.'}));
@@ -76,10 +76,10 @@ export class FirestoreCrudService<T extends Entity> {
               return { path: payloadId, ...data };
             } else {
               this.store.dispatch(new AddError({statusCode: 500, message: `We are sorry some error occured during data loading on path: ${this.collection.ref.path}`}));
-              throw new Error("Some error occured");
+              throw new Error('Some error occured');
             }
         })
-      )}
+      ); }
 
   /*
    * Our list method will get all the Entities in the Collection
@@ -88,7 +88,7 @@ export class FirestoreCrudService<T extends Entity> {
     return this.collection.snapshotChanges().pipe(
       // Again we want to build a Typed JS Object from the Document
       map(changes => {
-          if(changes && changes.length > 0) {
+          if (changes && changes.length > 0) {
             return changes.map(a => {
               const data = a.payload.doc.data() as T;
               data.path = a.payload.doc.id;
@@ -96,7 +96,7 @@ export class FirestoreCrudService<T extends Entity> {
             });
           } else {
             this.store.dispatch(new AddError({statusCode: 500, message: `We are sorry some error occured during data loading on path: ${this.collection.ref.path}`}));
-            throw new Error("Some error occured");
+            throw new Error('Some error occured');
           }
       })
     );
@@ -112,7 +112,6 @@ export class FirestoreCrudService<T extends Entity> {
         .doc<T>(entity.path as string)
         .set(entity)
         .then(() => {
-          console.log('updatet');
           this.store.dispatch(new AddSuccess( 'Your update was successful. 🎉'));
           resolve({
             ...entity,

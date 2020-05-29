@@ -21,9 +21,9 @@ export class ErrorHintComponent implements OnInit {
 
   show() {
     this.visible = true;
-    setTimeout(() =>{
+    setTimeout(() => {
       this.visible = false;
-      this.store.dispatch(new RemoveLastError())
+      this.store.dispatch(new RemoveLastError());
     }, this.delay);
   }
 

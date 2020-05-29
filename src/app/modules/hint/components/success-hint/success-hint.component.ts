@@ -21,9 +21,9 @@ export class SuccessHintComponent implements OnInit {
 
   show() {
     this.visible = true;
-    setTimeout(() =>{
+    setTimeout(() => {
       this.visible = false;
-      this.store.dispatch(new RemoveLastSuccess())
+      this.store.dispatch(new RemoveLastSuccess());
     }, this.delay);
   }
 

@@ -35,7 +35,7 @@ export class AuthService {
       }).catch((error) => {
         this.store.dispatch(new AddError({statusCode: 401, message: '❌ There is no user with this email address.'}));
         this.setUser(null);
-        throw new Error("Some error occured");
+        throw new Error('Some error occured');
     });
   }
   isLoggedIn() {
