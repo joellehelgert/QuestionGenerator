@@ -1,0 +1,8 @@
+<div class="hint-container">
+  <ng-container *ngIf="errors$">
+    <app-error-hint *ngFor="let error of errors$ | async" [error]="error"></app-error-hint>
+  </ng-container>
+  <ng-container *ngIf="successes$">
+    <app-success-hint *ngFor="let success of successes$ | async" [success]="success"></app-success-hint>
+  </ng-container>
+</div>

@@ -9,7 +9,6 @@ export interface SimpleErrorObject {
 export interface HintStateModel {
   errors: SimpleErrorObject[];
   successes: string[];
-  hints: string[];
 }
 
 
@@ -39,7 +38,6 @@ export class RemoveLastSuccess {
   defaults: {
     errors: [],
     successes: [],
-    hints: []
   }
 })
 @Injectable()
