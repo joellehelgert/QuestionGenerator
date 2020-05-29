@@ -21,7 +21,6 @@ export class QuestionnaireBodyComponent implements OnInit {
     success = null;
     activeQuestionnaireItem: Questionnaire;
     activeQuestionnaire = '';
-    HintType = HintType;
 
     constructor(private questionnaireService: QuestionnaireService, private questionService: QuestionService, private store: Store) { }
 

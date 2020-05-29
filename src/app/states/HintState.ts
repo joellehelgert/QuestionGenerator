@@ -51,10 +51,10 @@ export class HintState {
 
 
   @Action(AddError)
-  addError(ctx: StateContext<HintStateModel>, error: SimpleErrorObject) {
+  addError(ctx: StateContext<HintStateModel>, action: AddError) {
     const state = ctx.getState();
     const newErrors = state.errors;
-    newErrors.push(error);
+    newErrors.push(action.error);
     ctx.setState({
       ...state,
       errors: newErrors,
@@ -62,7 +62,7 @@ export class HintState {
   }
 
   @Action(RemoveLastError)
-  removeLastError(ctx: StateContext<HintStateModel>, error: SimpleErrorObject) {
+  removeLastError(ctx: StateContext<HintStateModel>, action: RemoveLastError) {
     const state = ctx.getState();
     const newErrors = state.errors;
     newErrors.splice(newErrors.length - 1, 1);
@@ -72,11 +72,17 @@ export class HintState {
     });
   }
 
+  // ----- Successes ------
+  @Selector()
+  static getSuccesses(state: HintStateModel) {
+      return state.successes;
+  }
+
   @Action(AddSuccess)
-  addsuccess(ctx: StateContext<HintStateModel>, success: string) {
+  addsuccess(ctx: StateContext<HintStateModel>, action: AddSuccess) {
     const state = ctx.getState();
     const newSuccesses = state.successes;
-    newSuccesses.push(success);
+    newSuccesses.push(action.success);
     ctx.setState({
       ...state,
       successes: newSuccesses,
@@ -84,7 +90,7 @@ export class HintState {
   }
 
   @Action(RemoveLastSuccess)
-  removeLastsuccess(ctx: StateContext<HintStateModel>, success: string) {
+  removeLastsuccess(ctx: StateContext<HintStateModel>, action: RemoveLastSuccess) {
     const state = ctx.getState();
     const newSuccesses = state.successes;
     newSuccesses.splice(newSuccesses.length - 1, 1);
