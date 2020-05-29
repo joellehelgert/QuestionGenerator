@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {LogoutComponent} from './logout/logout.component';
 import { NgxsModule } from "@ngxs/store";
 import { AuthState } from "../../states/AuthState";
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,6 @@ import { AuthState } from "../../states/AuthState";
     AuthRoutingModule,
     CommonModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([AuthState]),
   ],
   exports: [
   ],

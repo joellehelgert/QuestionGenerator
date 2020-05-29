@@ -40,8 +40,8 @@ export class AuthService {
     return of(null);
   }
 
-  setUser(JSONstring: string) {
-    localStorage.setItem('user', JSONstring);
+  setUser(stateToken: string) {
+    localStorage.setItem('user', stateToken);
   }
 
   getUser(): string | null {

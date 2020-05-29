@@ -16,6 +16,8 @@ import {AuthModule} from './modules/login/auth.module';
 import { HintState } from './states/HintState';
 import { HintComponent } from './modules/hint/components/hint.component';
 import { HintModule } from './modules/hint/hint.module';
+import {AuthState} from "./states/AuthState";
+import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,10 @@ import { HintModule } from './modules/hint/hint.module';
     ReactiveFormsModule,
     HttpClientModule,
     HintModule,
+    NgxsModule.forRoot([AuthState]),
+    NgxsStoragePluginModule.forRoot({
+      key: 'auth.token'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent, HintComponent]

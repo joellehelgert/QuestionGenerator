@@ -11,14 +11,9 @@ export interface AuthStateModel {
   email: string | null;
 }
 
-export interface LoginObject {
-  email: string;
-  password: string;
-}
-
 export class Login {
   static readonly type = '[Auth] Login';
-  constructor(public payload: LoginObject) {}
+  constructor(public payload: { email: string; password: string }) {}
 }
 
 export class Logout {
