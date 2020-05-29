@@ -2,3 +2,15 @@ body {
   margin: 0;
   font-family: $font-family-default;
 }
+
+input {
+  &:focus {
+    outline: none;
+  }
+}
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
