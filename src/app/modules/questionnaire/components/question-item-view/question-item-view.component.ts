@@ -11,7 +11,6 @@ import {QuestionType} from '../../../../services/question/question.service';
 export class QuestionItemViewComponent implements OnInit {
     faTimes = faTimes;
     faAngleRight = faAngleRight;
-    faPlus = faPlus;
     faTrash = faTrash;
     faCheck = faCheck;
     tempQuestion: Question = null;
