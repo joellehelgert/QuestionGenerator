@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HintComponent } from './components/hint.component';
-import { Store } from '@ngxs/store';
-
-
+import { ErrorHintComponent } from './components/error-hint/error-hint.component';
+import { SuccessHintComponent } from './components/success-hint/success-hint.component';
+import { HintComponent } from './components/hint/hint.component';
 
 @NgModule({
-  declarations: [HintComponent],
+  declarations: [HintComponent, ErrorHintComponent, SuccessHintComponent],
   imports: [
     CommonModule
   ],
-  exports: [HintComponent],
-  providers: [Store]
+  exports: [HintComponent]
 })
 export class HintModule { }
