@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.loginForm.value;
     this.submitted = true;
     if (this.loginForm.invalid) {
-      this.store.dispatch(new AddError({statusCode: 500, message: '❌ Please enter a valid email address.'}));
-      throw new Error("Some error occured");
+      this.store.dispatch(new AddError({statusCode: 401, message: '❌ Password or email is wrong.'}));
+      throw new Error('Some error occured');
     }
 
     if (this.loginForm.valid) {

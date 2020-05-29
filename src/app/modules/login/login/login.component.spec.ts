@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthService} from "../../../services/auth/auth.service";
 import {RouterTestingModule} from "@angular/router/testing";
@@ -23,7 +23,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     router = jasmine.createSpyObj('Router', ['navigate']);
     authService = jasmine.createSpyObj('AuthService', ['login']);
-    store = jasmine.createSpyObj('Router', ['error']);
+    store = jasmine.createSpyObj('Store', ['error', 'dispatch']);
 
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
@@ -31,13 +31,12 @@ describe('LoginComponent', () => {
       providers: [{
         provide: AuthService,
         useValue: authService,
-      }, {
-        provide: Router,
-        useValue: router,
-      }, {
+      },{
         provide: Store,
         useValue: store,
-      }],
+      },
+      FormBuilder
+      ],
     })
       .compileComponents();
   }));
@@ -63,69 +62,65 @@ describe('LoginComponent', () => {
     expect(component.error).toBeFalsy();
   });
 
-  it('submitted should be true when onSubmit()', () => {
-    component.onSubmit();
-    expect(component.submitted).toBeTruthy();
-  });
-
   it('email not empty and valid test', (done) => {
     fixture.whenStable().then(() => {
-      passwordInput.value = 'ignored';
-      emailInput.value = 'hallo@gmx.net';
-      emailInput.dispatchEvent(new Event('input'));
-      expect(fixture.nativeElement.querySelector('.login--error')).toBeNull();
-      expect(component.loginForm.value.email).toBe('hallo@gmx.net');
-
       emailInput.value = '';
       emailInput.dispatchEvent(new Event('input'));
+      component.loginForm.controls.email.markAsTouched();
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('.login--error')).not.toBeNull();
-      expect(component.loginForm.value.email).toBe('', 'email should be set to empty string');
+      expect(fixture.nativeElement.querySelector('.login--error').textContent).toContain('This field must be filled!');
 
-      emailInput.value = 'hallo';
+      emailInput.value = LoginData.email;
       emailInput.dispatchEvent(new Event('input'));
+      passwordInput.value = LoginData.password;
+      passwordInput.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('.login--error')).not.toBeNull();
-      expect(component.loginForm.value.email).toBe('hallo', 'not a valid email');
+      expect(component.loginForm.valid).toBeTrue();
+      expect(fixture.nativeElement.querySelector('.login--error')).toBeNull();
+      expect(component.loginForm.value.email).toBe(LoginData.email);
       done();
     });
   });
 
   it('password not empty test', (done) => {
     fixture.whenStable().then(() => {
-      emailInput.value = 'ignored';
-      passwordInput.value = '123456';
+      passwordInput.value = '';
+      component.loginForm.controls.password.markAsTouched();
       passwordInput.dispatchEvent(new Event('input'));
+      emailInput.value = LoginData.email;
+      emailInput.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      console.log(fixture.nativeElement);
+      expect(component.loginForm.valid).toBeFalsy();
+      expect(fixture.nativeElement.querySelector('.login--error')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('.login--error').textContent).toContain('This field must be filled!');
+
+      emailInput.value = LoginData.email;
+      emailInput.dispatchEvent(new Event('input'));
+      passwordInput.value = LoginData.password;
+      passwordInput.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(component.loginForm.valid).toBeTrue();
       expect(fixture.nativeElement.querySelector('.login--error')).toBeNull();
       expect(component.loginForm.value.password).toBe('123456');
 
-      passwordInput.value = '';
-      passwordInput.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('.login--error')).not.toBeNull();
-      expect(component.loginForm.value.password).toBe('', 'password should be set to empty string');
-
-      passwordInput.value = '12';
-      passwordInput.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('.login--error')).not.toBeNull();
-      expect(component.loginForm.value.password).toBe('12', 'password length is too short');
       done();
     });
   });
 
   it('test login call', (done) => {
     fixture.whenStable().then(() => {
-      emailInput.value = 'email';
+      emailInput.value = LoginData.email;
       emailInput.dispatchEvent(new Event('input'));
-      passwordInput.value = 'password';
+      passwordInput.value = LoginData.password;
       passwordInput.dispatchEvent(new Event('input'));
       fixture.detectChanges();
       expect(component.loginForm.valid).toBeTrue();
 
       component.onSubmit();
-      expect(authService.login).toHaveBeenCalledWith('email', 'password');
-      expect(router.navigate).toHaveBeenCalled();
+      expect(component.submitted).toBeTruthy();
+      expect(authService.login).toHaveBeenCalledWith(LoginData.email, LoginData.password);
       done();
     });
   });
