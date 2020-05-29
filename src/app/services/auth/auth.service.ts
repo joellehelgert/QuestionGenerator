@@ -5,6 +5,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, Subject } from 'rxjs';
 import {switchMap, map, tap} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import {Store} from "@ngxs/store";
+import {AddError} from "../../states/HintState";
+import {SimpleErrorObject} from "../../states/HintState";
 
 
 @Injectable({
@@ -17,6 +20,7 @@ export class AuthService {
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
+    private store: Store
   ) {
 
   }
@@ -47,12 +51,13 @@ export class AuthService {
             this.router.navigate(['/questionnaire']);
           } else {
             this.setUser(null);
+            this.store.dispatch(new AddError({statusCode: 400, message: 'There is no user with this email address'}));
           }
         });
       }).catch((error) => {
-      this.setUser(null);
-      return error;
-      window.alert(error.message);
+        this.store.dispatch(new AddError({statusCode: 400, message: 'There is no user with this email address'}));
+        this.setUser(null);
+        return error;
     });
   }
   isLoggedIn() {
