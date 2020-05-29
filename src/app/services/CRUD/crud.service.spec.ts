@@ -5,6 +5,7 @@ import { FirestoreCrudService } from './crud.service';
 import { FirebaseQuestionObject, QuestionType } from '../question/question.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
+import { Store } from '@ngxs/store';
 
 const question = {
   path: 'question1',
@@ -76,6 +77,7 @@ describe('Firestore CRUD Service', () => {
   let httpMock: HttpTestingController;
   let service: FirestoreCrudService<FirebaseQuestionObject>;
   let angularFirestore: AngularFirestore;
+  let store: Store;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -87,7 +89,7 @@ describe('Firestore CRUD Service', () => {
 
     angularFirestore = TestBed.inject(AngularFirestore);
     httpMock = TestBed.inject(HttpTestingController);
-    service = new FirestoreCrudService<FirebaseQuestionObject>(angularFirestore, 'testpath');
+    service = new FirestoreCrudService<FirebaseQuestionObject>(angularFirestore, 'testpath', store);
   });
 
   afterEach(() => {

@@ -1,6 +1,8 @@
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
+import { AddError, AddSuccess } from 'src/app/states/HintState';
 
 // We need a base Entity interface that our models will extend
 export interface Entity {
@@ -14,7 +16,7 @@ export class FirestoreCrudService<T extends Entity> {
   /* We need to ask for the AngularFirestore Injectable
    * and a Collection Name to use in Firestore
    */
-  constructor(private afs: AngularFirestore, collectionName: string) {
+  constructor(private afs: AngularFirestore, collectionName: string, private store: Store) {
     // We then create the reference to this Collection
     this.collection = this.afs.collection(collectionName);
   }
@@ -37,7 +39,11 @@ export class FirestoreCrudService<T extends Entity> {
           .doc(path)
           .set(entity)
           .then(ref => {
+            this.store.dispatch(new AddSuccess('adding your changes was successfully!'))
             resolve(entity);
+          }).catch(error => {
+            this.store.dispatch(new AddError({statusCode: 500, message: 'We could not add your changes, please try again.'}));
+            reject();
           });
       } else {
         // If no ID is set, allow Firestore to Auto-Generate one
@@ -64,17 +70,16 @@ export class FirestoreCrudService<T extends Entity> {
         // We want to map the document into a Typed JS Object
         map(doc => {
           // Only if the entity exists should we build an object out of it
-          if (doc.payload.exists) {
-            const data = doc.payload.data() as T;
-            const payloadId = doc.payload.id;
-            return { path: payloadId, ...data };
-          }
-        }),
-        catchError(error => {
-          console.error('error', error);
-          return of<T>();
-        }));
-  }
+            if (doc.payload.exists) {
+              const data = doc.payload.data() as T;
+              const payloadId = doc.payload.id;
+              return { path: payloadId, ...data };
+            } else {
+              this.store.dispatch(new AddError({statusCode: 500, message: `We are sorry some error occured during data loading on path: ${this.collection.ref.path}`}));
+              throw new Error("Some error occured");
+            }
+        })
+      )}
 
   /*
    * Our list method will get all the Entities in the Collection
@@ -83,15 +88,16 @@ export class FirestoreCrudService<T extends Entity> {
     return this.collection.snapshotChanges().pipe(
       // Again we want to build a Typed JS Object from the Document
       map(changes => {
-        return changes.map(a => {
-          const data = a.payload.doc.data() as T;
-          data.path = a.payload.doc.id;
-          return data;
-        });
-      }),
-      catchError(error => {
-        console.error('error', error);
-        return of<T[]>();
+          if(changes && changes.length > 0) {
+            return changes.map(a => {
+              const data = a.payload.doc.data() as T;
+              data.path = a.payload.doc.id;
+              return data;
+            });
+          } else {
+            this.store.dispatch(new AddError({statusCode: 500, message: `We are sorry some error occured during data loading on path: ${this.collection.ref.path}`}));
+            throw new Error("Some error occured");
+          }
       })
     );
   }
@@ -109,6 +115,10 @@ export class FirestoreCrudService<T extends Entity> {
           resolve({
             ...entity,
           });
+        }).catch(error => {
+          console.error(error);
+          this.store.dispatch(new AddError({statusCode: 500, message: 'We could not update your changes, please try again.'}));
+          reject();
         });
     });
   }
@@ -120,6 +130,10 @@ export class FirestoreCrudService<T extends Entity> {
         .delete()
         .then(() => {
           resolve();
+        }).catch(error => {
+          console.error(error);
+          this.store.dispatch(new AddError({statusCode: 500, message: 'We could not delete the entity, please try again.'}));
+          reject();
         });
     });
   }
