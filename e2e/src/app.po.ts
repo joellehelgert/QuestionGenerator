@@ -1,6 +1,9 @@
 import { browser, by, element } from 'protractor';
 
 export class AppPage {
+  navigateToLogin(): Promise<unknown> {
+    return browser.get('/login') as Promise<unknown>;
+  }
   navigateTo(): Promise<unknown> {
     return browser.get('/questionnaire') as Promise<unknown>;
   }
@@ -66,6 +69,19 @@ export class AppPage {
       element(by.css('app-question-item-view .question__item__footer .question__item__delete')).click().then(() => {
           browser.sleep(1000);
           expect(this.getLastQuestionTitle()).not.toBe('Question Title Updated');
+      });
+  }
+
+  login() {
+      const emailInput = element(by.css('.auth__item--email'));
+      const passwordInput = element(by.css('.auth__item--password'));
+      emailInput.clear();
+      emailInput.sendKeys('123456@gmx.net');
+      passwordInput.clear();
+      passwordInput.sendKeys('123456');
+      browser.waitForAngularEnabled(false);
+      element(by.css('.submit__button')).click().then(() => {
+          browser.driver.sleep(2000);
       });
   }
 }

@@ -9,6 +9,10 @@ describe('workspace-project App', () => {
     browser.waitForAngularEnabled(true);
   });
 
+  it('should display question generator title', () => {
+      page.navigateToLogin();
+      page.login();
+  });
 
   it('should display question generator title', () => {
     page.navigateTo();

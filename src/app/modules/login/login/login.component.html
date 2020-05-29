@@ -7,14 +7,14 @@
 
     <form [formGroup]="loginForm" class="auth__body" (ngSubmit)="onSubmit()">
       <div class="auth__item__wrapper">
-        <input type="email" class="auth__item"
+        <input type="email" class="auth__item auth__item--email"
                formControlName="email" placeholder="E-mail*" email
                [class.is-invalid]="loginForm.get('email').touched && loginForm.get('email').errors">
       </div>
       <ng-container *ngTemplateOutlet="required; context: { $implicit: 'email' }"></ng-container>
 
       <div class="auth__item__wrapper">
-        <input type="password" class="auth__item"
+        <input type="password" class="auth__item auth__item--password"
                formControlName="password" placeholder="Password*"
                [class.is-invalid]="loginForm.get('password').touched && loginForm.get('password').errors">
       </div>
