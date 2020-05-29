@@ -23,7 +23,6 @@ export class AppPage {
           .getText() as Promise<string>;
   }
 
-
   navigateTroughQuestionnaires() {
       element(by.css('app-questionnaire-nav .questionnaire__nav--mobile .questionnaire__item')).click();
       element(by.css('app-questionnaire-nav .questionnaire__nav--mobile .questionnaire__item__wrapper .questionnaire__item:last-of-type'))
@@ -47,7 +46,6 @@ export class AppPage {
           browser.sleep(2000);
           expect(this.getLastQuestionTitle()).toBe(title);
       });
-
   }
 
   updateQuestionTitle(title: string) {

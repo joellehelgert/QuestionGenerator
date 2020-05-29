@@ -2,7 +2,7 @@ import {Injectable } from '@angular/core';
 import { Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject } from 'rxjs';
 import {switchMap, map, tap} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 

@@ -1,7 +1,6 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
-import {faTimes, faAngleRight, faPlus, faCheck, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faTimes, faAngleRight, faCheck, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Answer, BuzzerAnswer, Question} from 'src/app/services/question/question.service';
-import {QuestionType} from '../../../../services/question/question.service';
 
 @Component({
   selector: 'app-question-item-view',
@@ -11,7 +10,6 @@ import {QuestionType} from '../../../../services/question/question.service';
 export class QuestionItemViewComponent implements OnInit {
     faTimes = faTimes;
     faAngleRight = faAngleRight;
-    faPlus = faPlus;
     faTrash = faTrash;
     faCheck = faCheck;
     tempQuestion: Question = null;
@@ -35,7 +33,6 @@ export class QuestionItemViewComponent implements OnInit {
 
     save() {
         this.saveQuestion.emit(this.tempQuestion);
-        // this.tempQuestion = null;
     }
     remove() {
         this.removeQuestion.emit(this.tempQuestion);
@@ -53,5 +50,4 @@ export class QuestionItemViewComponent implements OnInit {
     onCheckboxClick(index: number) {
         (this.tempQuestion.answers[index] as BuzzerAnswer).isTrue = !(this.tempQuestion.answers[index] as BuzzerAnswer).isTrue;
     }
-
 }

@@ -14,8 +14,7 @@ export class QuestionnaireItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onLoadQuestionnaire(): void {
       this.loadQuestionnaire.emit();
